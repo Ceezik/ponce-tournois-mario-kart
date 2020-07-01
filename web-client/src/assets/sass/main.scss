@@ -1,0 +1,87 @@
+@import 'normalize', 'variables', 'loader', 'auth';
+
+body,
+button {
+    font-family: 'Nunito', sans-serif;
+    color: $main-text-color;
+}
+
+input {
+    box-sizing: border-box;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #f3f3f4;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+input:focus {
+    background-color: transparent;
+    border: 1px solid $main-color;
+}
+
+button:focus,
+input:focus {
+    outline: none;
+}
+
+.btnPrimary {
+    background-color: $main-color;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 6px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.btnPrimary:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btnPrimary:hover,
+.btnPrimary:focus {
+    cursor: pointer;
+    background-color: $main-color-dark;
+}
+
+.btnPrimary[disabled],
+.btnPrimary:disabled {
+    background-color: #fda3cf;
+    cursor: initial;
+}
+
+.inputErrorMessage {
+    margin-top: 0.5rem;
+    color: $error-color;
+}
+
+.inputInvalid {
+    background-color: transparent;
+    border-color: $error-color;
+}
+
+.inputLabel {
+    font-weight: bold;
+}
+
+.formMessage {
+    color: white;
+    margin-bottom: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+
+    &__error {
+        background-color: $error-color;
+    }
+
+    &__success {
+        background-color: $success-color;
+    }
+}
+
+.app__container {
+    margin: 5rem 0;
+}
