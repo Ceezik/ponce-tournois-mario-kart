@@ -14,10 +14,13 @@ module.exports = (sequelize, DataTypes) => {
             username: {
                 type: DataTypes.STRING,
                 unique: true,
+                allowNull: false,
+                validate: { len: [3, 50] },
             },
             twitchId: {
                 type: DataTypes.STRING,
                 unique: true,
+                allowNull: false,
             },
         },
         {
