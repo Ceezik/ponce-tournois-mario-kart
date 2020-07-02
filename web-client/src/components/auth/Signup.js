@@ -6,6 +6,11 @@ import Input from '../form/Input';
 import Button from '../form/Button';
 import { useAuth } from '../../utils/useAuth';
 
+const USERNAME_FORMAT =
+    "Votre nom d'utilisateur ne doit contenir que des caractères alphanumériques";
+const USERNAME_LENGTH =
+    "Votre nom d'utilisateur doit faire entre 3 et 50 caractères";
+
 function Signup() {
     const { defaultUsername, twitchId, token } = queryString.parse(
         window.location.search
@@ -39,10 +44,17 @@ function Signup() {
                             label="Nom d'utilisateur"
                             validationSchema={{
                                 required: 'Ce champ est obligatoire',
+                                minLength: {
+                                    value: 3,
+                                    message: USERNAME_LENGTH,
+                                },
+                                maxLength: {
+                                    value: 50,
+                                    message: USERNAME_LENGTH,
+                                },
                                 pattern: {
                                     value: /^[a-zA-Z0-9_]*$/i,
-                                    message:
-                                        "Votre nom d'utilisateur ne doit contenir que des caractères alphanumériques",
+                                    message: USERNAME_FORMAT,
                                 },
                             }}
                             defaultValue={defaultUsername}
