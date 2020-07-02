@@ -30,6 +30,12 @@ export const AuthProvider = ({ children }) => {
             });
     };
 
+    const signout = () => {
+        Cookies.remove('token');
+        setUser(null);
+        history.push('/');
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -37,6 +43,7 @@ export const AuthProvider = ({ children }) => {
                 user,
                 setUser,
                 signup,
+                signout,
             }}
         >
             {!loading && children}

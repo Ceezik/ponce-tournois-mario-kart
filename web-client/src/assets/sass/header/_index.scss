@@ -1,0 +1,165 @@
+@import '../variables';
+
+header {
+    max-width: 100%;
+    padding: 0.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.header__nav {
+    display: flex;
+    align-items: center;
+}
+
+.header__logo {
+    width: 3rem;
+    height: 3rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.header__logo:hover {
+    transform: scale(1.1);
+}
+
+.header__navList {
+    padding: 0;
+    margin-left: 5rem;
+    display: flex;
+}
+
+.header__navList > li {
+    list-style: none;
+    cursor: pointer;
+}
+
+.header__navListItem {
+    padding: 0 1rem;
+}
+
+.header__navListItem--active {
+    position: relative;
+}
+
+.header__navListItem--active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 2.55rem;
+    width: 100%;
+    height: 3px;
+    background-color: $main-color;
+    border-radius: 2px 2px 0 0;
+}
+
+.header__authButton {
+    border-radius: 6px;
+    outline: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #9147ff;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.header__authButton:hover {
+    background-color: #8737ff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.header__authButton > span {
+    margin-left: 0.75rem;
+}
+
+.header__profilPicture {
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.header__dropdownWrapper {
+    position: relative;
+}
+
+.header__dropdown {
+    position: absolute;
+    width: 150px;
+    z-index: 900;
+    right: 0;
+    top: 40px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    padding: 0.25rem 1rem;
+    display: none;
+}
+
+.header__dropdown--closed {
+    display: none;
+}
+
+.header__dropdown--open {
+    display: initial;
+}
+
+.header__dropdownNavList {
+    padding: 0;
+}
+
+.header__dropdownNavList li {
+    list-style: none;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.header__dropdownNavList li:hover {
+    cursor: pointer;
+    color: $main-color;
+}
+
+.header__hamburger {
+    color: $tertiary-text-color;
+}
+
+.header__smNavList {
+    margin-top: 2rem;
+    padding: 0;
+}
+
+.header__smNavList > li {
+    padding: 0.25rem 0;
+    list-style: none;
+}
+
+.header__smNavListItem--active {
+    color: $main-color;
+}
+
+.header__smAuthButton {
+    margin: 1.5rem 0;
+}
+
+.header__smProfilWrapper {
+    margin: 1.5rem 0;
+}
+
+.header__smProfilLinks {
+    margin-top: 1rem;
+    color: $tertiary-text-color;
+}
+
+.header__smProfilLinks > div {
+    padding: 0.25rem 0;
+}

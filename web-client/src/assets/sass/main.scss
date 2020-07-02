@@ -1,9 +1,18 @@
-@import 'normalize', 'variables', 'loader', 'auth';
+@import 'normalize', 'variables', 'loader', 'auth', 'header';
 
 body,
 button {
     font-family: 'Nunito', sans-serif;
     color: $main-text-color;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 input {
@@ -54,7 +63,7 @@ input:focus {
 }
 
 .inputErrorMessage {
-    margin-top: 0.5rem;
+    margin: 0.5rem 0;
     color: $error-color;
 }
 
@@ -80,6 +89,13 @@ input:focus {
     &__success {
         background-color: $success-color;
     }
+}
+
+hr {
+    border: none;
+    height: 1px;
+    color: #e6e6e6;
+    background-color: #e6e6e6;
 }
 
 .app__container {
