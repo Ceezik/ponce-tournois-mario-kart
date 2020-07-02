@@ -4,6 +4,8 @@ import Signup from './components/auth/Signup';
 import history from './utils/history';
 import { AuthProvider } from './utils/useAuth';
 import Header from './components/utils/Header';
+import AdminWrapper from './components/admin/AdminWrapper';
+import AdminRoute from './components/auth/AdminRoute';
 
 function App() {
     return (
@@ -12,6 +14,8 @@ function App() {
                 <Header />
                 <Switch>
                     <Route exact path="/signup" component={Signup} />
+
+                    <AdminRoute path="/admin" component={AdminWrapper} />
                 </Switch>
             </AuthProvider>
         </Router>
