@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useFormContext } from './Form';
 import Loader from '../utils/Loader';
 
-function Button({ children, loading, disabled, ...props }) {
+function Button({ children, loading, disabled, primary = true, ...props }) {
     const { errors } = useFormContext();
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
@@ -29,7 +29,11 @@ function Button({ children, loading, disabled, ...props }) {
                       }
                     : {}
             }
-            disabled={disabled || Object.entries(errors).length > 0 || loading}
+            disabled={
+                primary
+                    ? disabled || Object.entries(errors).length > 0 || loading
+                    : disabled || loading
+            }
         >
             {loading ? <Loader /> : children}
         </button>
