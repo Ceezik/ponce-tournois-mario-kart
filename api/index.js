@@ -24,6 +24,7 @@ const errorHandler = (err, req, res, next) => {
     }
 };
 
+require('./passport');
 require('./routes-api')(app);
 
 io.on('connection', (socket) => {
