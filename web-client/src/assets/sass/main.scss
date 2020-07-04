@@ -1,4 +1,4 @@
-@import 'normalize', 'variables', 'loader', 'auth', 'header';
+@import 'normalize', 'variables', 'loader', 'auth', 'header', 'cups';
 
 body,
 button {
@@ -60,6 +60,21 @@ input:focus {
 .btnPrimary:disabled {
     background-color: #fda3cf;
     cursor: initial;
+}
+
+.btnSecondary {
+    background-color: white;
+    color: $main-color;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.btnSecondary:hover,
+.btnSecondary:focus {
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .inputErrorMessage {

@@ -106,4 +106,14 @@ module.exports = {
                 .catch((err) => next(err));
         },
     ],
+
+    isAdmin: (req, res, next) => {
+        if (req.user.isAdmin) {
+            return next();
+        }
+        throw {
+            status: 403,
+            message: "Vous n'êtes pas autorisé à effectuer cette action",
+        };
+    },
 };

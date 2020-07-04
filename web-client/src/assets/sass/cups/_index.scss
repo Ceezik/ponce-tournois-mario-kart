@@ -1,0 +1,42 @@
+.cupsList__track,
+.cupsList__cup {
+    margin: 1rem 0;
+    padding: 1rem 0;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #e6e6e6;
+    transition: box-shadow 0.3s ease;
+}
+
+.cupsList__cup {
+    text-transform: capitalize;
+}
+
+.cupsList__cup:hover {
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cupsList__track--skeleton,
+.cupsList__cup--skeleton {
+    margin: 1rem 0;
+    padding: 1rem 0;
+}
+
+.cupsList__cup--selected {
+    color: $main-color;
+    border: 1px solid $main-color;
+}
+
+.cupsList__addCupIcon {
+    color: $main-color;
+    margin-right: 1rem;
+}
+
+.cupsList__addCupForm {
+    margin-top: 2.5rem;
+}
+
+.cupsList__tracksWrapper {
+    margin-top: 3rem;
+}
