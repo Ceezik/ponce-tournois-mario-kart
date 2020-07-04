@@ -40,9 +40,10 @@ function TournamentsWrapper() {
     };
 
     const fetchTournaments = (page, pageSize) => {
-        socket.emit('getTournaments', { page, pageSize }, (err) =>
-            setError(err)
-        );
+        socket.emit('getTournaments', { page, pageSize }, (err) => {
+            setError(err);
+            setLoading(false);
+        });
     };
 
     return (
