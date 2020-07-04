@@ -5,7 +5,7 @@ function Input({ children, name, validationSchema, label, ...rest }) {
     const { register, errors } = useFormContext();
 
     return (
-        <>
+        <div className="inputWrapper">
             {label && <label className="inputLabel">{label}</label>}
             <input
                 name={name}
@@ -17,7 +17,7 @@ function Input({ children, name, validationSchema, label, ...rest }) {
             <div className="inputErrorMessage">
                 {errors[name] && errors[name].message}
             </div>
-        </>
+        </div>
     );
 }
 

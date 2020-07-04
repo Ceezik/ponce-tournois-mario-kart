@@ -1,13 +1,16 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import socketIo from 'socket.io-client';
 import { signup as _signup, getProfil } from '../services/auth';
 import history from '../utils/history';
+import { useSocket } from './useSocket';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { setSocket } = useSocket();
 
     useEffect(() => {
         getProfil()
@@ -15,6 +18,13 @@ export const AuthProvider = ({ children }) => {
             .catch(() => {})
             .finally(() => setLoading(false));
     }, []);
+
+    useEffect(() => {
+        const url = user
+            ? `${process.env.REACT_APP_API_URL}?userId=${user.id}&isAdmin=${user.isAdmin}`
+            : process.env.REACT_APP_API_URL;
+        setSocket(socketIo(url));
+    }, [user, setSocket]);
 
     const signup = (user, setError, setLoading) => {
         setLoading(true);

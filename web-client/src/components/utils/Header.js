@@ -198,7 +198,7 @@ function MobileHeader() {
                                         signout();
                                     }}
                                 >
-                                    Déconnexion
+                                    <span>Déconnexion</span>
                                 </Col>
                             </Row>
                         </div>

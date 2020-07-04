@@ -6,18 +6,21 @@ import { AuthProvider } from './utils/useAuth';
 import Header from './components/utils/Header';
 import AdminWrapper from './components/admin/AdminWrapper';
 import AdminRoute from './components/auth/AdminRoute';
+import { SocketProvider } from './utils/useSocket';
 
 function App() {
     return (
         <Router history={history}>
-            <AuthProvider>
-                <Header />
-                <Switch>
-                    <Route exact path="/signup" component={Signup} />
+            <SocketProvider>
+                <AuthProvider>
+                    <Header />
+                    <Switch>
+                        <Route exact path="/signup" component={Signup} />
 
-                    <AdminRoute path="/admin" component={AdminWrapper} />
-                </Switch>
-            </AuthProvider>
+                        <AdminRoute path="/admin" component={AdminWrapper} />
+                    </Switch>
+                </AuthProvider>
+            </SocketProvider>
         </Router>
     );
 }
