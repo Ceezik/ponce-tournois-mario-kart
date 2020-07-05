@@ -1,5 +1,6 @@
 @import '../variables';
 
+.tournament__title,
 .tournamentsList__title {
     margin-top: 3rem;
 }
@@ -32,4 +33,12 @@
     cursor: pointer;
     color: $tertiary-text-color;
     font-style: italic;
+}
+
+.tournament__infos {
+    margin: 2.5rem 0;
+}
+
+.tournament__infos > p {
+    margin: 0.5rem 0;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-grid-system';
+import moment from 'moment';
 import Form from '../../form/Form';
 import Input from '../../form/Input';
 import Button from '../../form/Button';
@@ -7,7 +8,11 @@ import Button from '../../form/Button';
 const NAME_LENGTH = 'Le nom doit faire entre 3 et 50 caractères';
 const NUMBER_VALIDATION = 'Veuillez entrer un nombre compris entre 1 et 100000';
 
-function TournamentForm({ onSubmit, loading, error }) {
+function TournamentForm({ onSubmit, tournament = null, loading, error }) {
+    const formatDate = (date) => {
+        return moment(date).format('YYYY-MM-DDTHH:mm');
+    };
+
     return (
         <Form onSubmit={onSubmit}>
             {error && (
@@ -18,6 +23,7 @@ function TournamentForm({ onSubmit, loading, error }) {
                 label="Nom *"
                 name="name"
                 placeholder="Ave - xx"
+                defaultValue={tournament && tournament.name}
                 validationSchema={{
                     required: 'Ce champ est obligatoire',
                     minLength: {
@@ -35,6 +41,7 @@ function TournamentForm({ onSubmit, loading, error }) {
                 label="Nombre de fleurs"
                 name="nbParticipants"
                 type="number"
+                defaultValue={tournament && tournament.nbParticipants}
                 validationSchema={{
                     min: {
                         value: 1,
@@ -51,7 +58,7 @@ function TournamentForm({ onSubmit, loading, error }) {
                 label="Nombre maximum de courses *"
                 name="nbMaxRaces"
                 type="number"
-                defaultValue={24}
+                defaultValue={tournament ? tournament.nbMaxRaces : 24}
                 validationSchema={{
                     required: 'Ce champ est obligatoire',
                     min: {
@@ -69,6 +76,7 @@ function TournamentForm({ onSubmit, loading, error }) {
                 label="Date de début *"
                 name="startDate"
                 type="datetime-local"
+                defaultValue={tournament && formatDate(tournament.startDate)}
                 validationSchema={{ required: 'Ce champ est obligatoire' }}
             />
 
@@ -76,6 +84,7 @@ function TournamentForm({ onSubmit, loading, error }) {
                 label="Date de fin *"
                 name="endDate"
                 type="datetime-local"
+                defaultValue={tournament && formatDate(tournament.endDate)}
                 validationSchema={{ required: 'Ce champ est obligatoire' }}
             />
 
@@ -86,7 +95,7 @@ function TournamentForm({ onSubmit, loading, error }) {
                         className="btnPrimary"
                         loading={loading}
                     >
-                        Créer
+                        {tournament ? 'Modifier' : 'Créer'}
                     </Button>
                 </Col>
             </Row>

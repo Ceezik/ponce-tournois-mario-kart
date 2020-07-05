@@ -28,6 +28,8 @@ function AddTournamentForm() {
             setLoading(false);
             history.push(`/admin/tournaments/${tournament.id}`);
         });
+
+        return () => socket.off('createTournament');
     }, []);
 
     return (
