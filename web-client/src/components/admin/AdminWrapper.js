@@ -1,27 +1,41 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Switch } from 'react-router-dom';
 import { Row, Col, Container } from 'react-grid-system';
 import AdminRoute from '../auth/AdminRoute';
 import CupsWrapper from './cups/CupsWrapper';
 import AddTournamentForm from './tournaments/AddTournamentForm';
 import TournamentsWrapper from './tournaments/TournamentsWrapper';
+import TournamentWrapper from './tournaments/TournamentWrapper';
+import EditTournamentWrapper from './tournaments/EditTournamentWrapper';
 
 function AdminWrapper() {
     return (
         <>
             <AdminHeader />
 
-            <AdminRoute exact path="/admin/cups" component={CupsWrapper} />
-            <AdminRoute
-                exact
-                path="/admin/tournaments"
-                component={TournamentsWrapper}
-            />
-            <AdminRoute
-                exact
-                path="/admin/tournaments/create"
-                component={AddTournamentForm}
-            />
+            <Switch>
+                <AdminRoute exact path="/admin/cups" component={CupsWrapper} />
+                <AdminRoute
+                    exact
+                    path="/admin/tournaments"
+                    component={TournamentsWrapper}
+                />
+                <AdminRoute
+                    exact
+                    path="/admin/tournaments/create"
+                    component={AddTournamentForm}
+                />
+                <AdminRoute
+                    exact
+                    path="/admin/tournaments/:tournamentId"
+                    component={TournamentWrapper}
+                />
+                <AdminRoute
+                    exact
+                    path="/admin/tournaments/:tournamentId/edit"
+                    component={EditTournamentWrapper}
+                />
+            </Switch>
         </>
     );
 }

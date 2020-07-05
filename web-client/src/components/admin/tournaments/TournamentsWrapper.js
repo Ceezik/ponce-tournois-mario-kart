@@ -33,6 +33,11 @@ function TournamentsWrapper() {
 
     useEffect(() => {
         fetchTournaments(tournaments.length / PAGE_SIZE, PAGE_SIZE);
+
+        return () => {
+            socket.off('getTournaments');
+            socket.off('refreshTournaments');
+        };
     }, []);
 
     const loadMoreTournaments = () => {
