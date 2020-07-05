@@ -1,0 +1,44 @@
+@import '../variables';
+
+.tournament__title,
+.tournamentsList__title {
+    margin-top: 3rem;
+}
+
+.tournamentsList__tournament {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #e6e6e6;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.tournamentsList__tournament:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tournamentsList__tournament--skeleton {
+    margin: 1rem 0;
+    padding: 2rem 0rem;
+}
+
+.tournamentsList__tournamentName {
+    margin: 0;
+    margin-bottom: 0.25rem;
+}
+
+.tournamentsList__tournamentDates {
+    cursor: pointer;
+    color: $tertiary-text-color;
+    font-style: italic;
+}
+
+.tournament__infos {
+    margin: 2.5rem 0;
+}
+
+.tournament__infos > p {
+    margin: 0.5rem 0;
+}

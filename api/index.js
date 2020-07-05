@@ -28,7 +28,8 @@ require('./passport');
 require('./routes-api')(app);
 
 io.on('connection', (socket) => {
-    require('./routes-socket')(io, socket);
+    const { userId, isAdmin } = socket.handshake.query;
+    require('./routes-socket')(io, socket, userId, isAdmin);
 });
 
 app.use(errorHandler);
