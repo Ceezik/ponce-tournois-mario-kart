@@ -2,9 +2,9 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
     class Tournament extends Model {
-        static nameIsUnique(name) {
+        static nameIsUnique(name, id = null) {
             return this.findOne({ where: { name } })
-                .then((c) => (c ? false : true))
+                .then((c) => (c ? c.id === id : true))
                 .catch((err) => false);
         }
     }

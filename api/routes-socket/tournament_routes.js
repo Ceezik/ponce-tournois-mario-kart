@@ -12,4 +12,16 @@ module.exports = (io, socket, userId, isAdmin) => {
             onError("Vous n'êtes pas autorisé à effectuer cette action");
         }
     });
+
+    socket.on('getTournament', (id, onError) => {
+        tournament_ctrl.getById(socket, onError, id);
+    });
+
+    socket.on('updateTournament', (tournament, onError) => {
+        if (isAdmin) {
+            tournament_ctrl.updateById(io, socket, onError, tournament);
+        } else {
+            onError("Vous n'êtes pas autorisé à effectuer cette action");
+        }
+    });
 };
