@@ -40,6 +40,7 @@ function AddTournamentForm() {
 
                     <TournamentForm
                         onSubmit={onSubmit}
+                        onCancel={() => history.push('/admin/tournaments')}
                         loading={loading}
                         error={error}
                     />

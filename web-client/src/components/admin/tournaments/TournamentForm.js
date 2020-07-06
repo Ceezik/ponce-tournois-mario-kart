@@ -8,7 +8,13 @@ import Button from '../../form/Button';
 const NAME_LENGTH = 'Le nom doit faire entre 3 et 50 caractères';
 const NUMBER_VALIDATION = 'Veuillez entrer un nombre compris entre 1 et 100000';
 
-function TournamentForm({ onSubmit, tournament = null, loading, error }) {
+function TournamentForm({
+    onSubmit,
+    onCancel,
+    tournament = null,
+    loading,
+    error,
+}) {
     const formatDate = (date) => {
         return moment(date).format('YYYY-MM-DDTHH:mm');
     };
@@ -89,6 +95,15 @@ function TournamentForm({ onSubmit, tournament = null, loading, error }) {
             />
 
             <Row justify="end">
+                <Col xs="content">
+                    <button
+                        type="button"
+                        className="btnSecondary"
+                        onClick={onCancel}
+                    >
+                        Annuler
+                    </button>
+                </Col>
                 <Col xs="content">
                     <Button
                         type="submit"

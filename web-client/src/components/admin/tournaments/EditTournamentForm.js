@@ -38,6 +38,9 @@ function EditTournamentForm({ tournament }) {
             <TournamentForm
                 tournament={tournament}
                 onSubmit={onSubmit}
+                onCancel={() =>
+                    history.push(`/admin/tournaments/${tournament.id}`)
+                }
                 loading={loading}
                 error={error}
             />
