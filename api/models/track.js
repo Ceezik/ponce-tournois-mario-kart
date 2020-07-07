@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Track.associate = (db) => {
         Track.belongsTo(db.Cup);
+        Track.hasMany(db.Race);
     };
 
     return Track;
