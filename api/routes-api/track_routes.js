@@ -3,9 +3,9 @@ const auth_ctrl = require('../controllers/auth_ctrl');
 
 module.exports = [
     {
-        url: '/cups/:cupId/tracks',
+        url: '/tracks',
         method: 'get',
-        func: track_ctrl.getByCup,
+        func: track_ctrl.getAll,
     },
 
     {

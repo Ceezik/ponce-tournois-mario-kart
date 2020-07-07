@@ -1,9 +1,8 @@
 const db = require('../models');
 
 module.exports = {
-    getByCup: (req, res, next) => {
-        return req.cup
-            .getTracks()
+    getAll: (req, res, next) => {
+        return db.Track.findAll()
             .then((tracks) => res.json(tracks))
             .catch((err) => next(err));
     },
