@@ -1,0 +1,34 @@
+@import '../variables';
+
+.participation {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.participation__title {
+    color: $main-color;
+    margin-bottom: 0.5rem;
+}
+
+.participation__race {
+    padding: 0.75rem 0;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+    border: 1px solid #e6e6e6;
+}
+
+.participation__race--skeleton {
+    padding: 0.75rem 0;
+    margin: 0.5rem 0;
+}
+
+.participation
+    .participation__raceWrapper:nth-child(2n + 1)
+    .participation__race {
+    background-color: #f7f7f7;
+}
+
+.participation__addRaceBtn {
+    color: $main-color;
+    margin-right: 1rem;
+}

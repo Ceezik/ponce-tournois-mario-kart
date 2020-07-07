@@ -36,9 +36,20 @@
 }
 
 .tournament__infos {
-    margin: 2.5rem 0;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    padding: 0 1rem;
+    margin: 0.5rem 0;
 }
 
-.tournament__infos > p {
-    margin: 0.5rem 0;
+.tournament__info {
+    margin: 1rem 0;
+}
+
+.tournament__info > label {
+    color: $tertiary-text-color;
+}
+
+.tournament__info > h4 {
+    margin: 0.5rem 0 0 0;
 }
