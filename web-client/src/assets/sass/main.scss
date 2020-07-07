@@ -1,5 +1,5 @@
 @import 'normalize', 'variables', 'loader', 'auth', 'header', 'cups',
-    'tournaments';
+    'tournaments', 'participations';
 
 body,
 button {
@@ -116,6 +116,10 @@ hr {
     height: 1px;
     color: #e6e6e6;
     background-color: #e6e6e6;
+}
+
+table {
+    width: 100%;
 }
 
 .app__container {
