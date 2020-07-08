@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-grid-system';
 import _ from 'lodash';
 import { useSocket } from '../../../utils/useSocket';
-import Participation from './Participation';
+import Participation from '../../participations/Participation';
 import ParticipationSkeleton from './ParticipationSkeleton';
 
 function PonceParticipation({ tournament }) {
@@ -10,14 +10,6 @@ function PonceParticipation({ tournament }) {
     const [participation, setParticipation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    socket.off('addRace').on('addRace', (race) => {
-        if (participation && race.ParticipationId === participation.id) {
-            const newParticipation = _.cloneDeep(participation);
-            newParticipation.Races.push(race);
-            setParticipation(newParticipation);
-        }
-    });
 
     useEffect(() => {
         socket.on('getPonceParticipation', (participation) => {
@@ -30,10 +22,7 @@ function PonceParticipation({ tournament }) {
             setLoading(false);
         });
 
-        return () => {
-            socket.off('getPonceParticipation');
-            socket.off('addRace');
-        };
+        return () => socket.off('getPonceParticipation');
     }, []);
 
     return loading ? (
@@ -47,6 +36,7 @@ function PonceParticipation({ tournament }) {
     ) : (
         <Participation
             participation={participation}
+            refreshParticipation={setParticipation}
             nbMaxRaces={tournament.nbMaxRaces}
         />
     );

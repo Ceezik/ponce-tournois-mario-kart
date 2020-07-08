@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col } from 'react-grid-system';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
-import AddRaceBtn from './AddRaceBtn';
+import AddRaceBtn from '../admin/participations/AddRaceBtn';
+import { useSocket } from '../../utils/useSocket';
 
-function Participation({ participation, nbMaxRaces }) {
+function Participation({
+    participation,
+    refreshParticipation,
+    nbMaxRaces,
+    canAdd = true,
+}) {
+    const { socket } = useSocket();
     const nbRaces = participation.Races.length;
     const nbPoints = _.sumBy(participation.Races, 'nbPoints');
     const averagePoints = nbRaces ? (nbPoints / nbRaces).toFixed(1) : 0;
@@ -13,6 +20,18 @@ function Participation({ participation, nbMaxRaces }) {
     const getPositionColor = (position) => {
         return position === 1 ? 'gold' : position === 2 ? '#CBCDCD' : '#cd7f32';
     };
+
+    socket.off('addRace').on('addRace', (race) => {
+        if (participation && race.ParticipationId === participation.id) {
+            const newParticipation = _.cloneDeep(participation);
+            newParticipation.Races.push(race);
+            refreshParticipation(newParticipation);
+        }
+    });
+
+    useEffect(() => {
+        return () => socket.off('addRace');
+    }, []);
 
     return (
         <>
@@ -46,11 +65,13 @@ function Participation({ participation, nbMaxRaces }) {
             </Row>
 
             <div className="participation">
-                <Row className="participation__title">
-                    <Col xs={3}>Position</Col>
-                    <Col xs={3}>Points</Col>
-                    <Col xs={6}>Circuit</Col>
-                </Row>
+                {participation.Races.length > 0 && (
+                    <Row className="participation__title">
+                        <Col xs={3}>Position</Col>
+                        <Col xs={3}>Points</Col>
+                        <Col xs={6}>Circuit</Col>
+                    </Row>
+                )}
 
                 {participation.Races.map((race) => (
                     <Row key={race.id}>
@@ -77,12 +98,13 @@ function Participation({ participation, nbMaxRaces }) {
                     </Row>
                 ))}
 
-                {[...Array(nbMaxRaces - nbRaces)].map((i, index) => (
-                    <AddRaceBtn
-                        key={index}
-                        participationId={participation.id}
-                    />
-                ))}
+                {canAdd &&
+                    [...Array(nbMaxRaces - nbRaces)].map((i, index) => (
+                        <AddRaceBtn
+                            key={index}
+                            participationId={participation.id}
+                        />
+                    ))}
             </div>
         </>
     );
