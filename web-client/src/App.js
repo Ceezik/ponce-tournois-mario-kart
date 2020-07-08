@@ -8,6 +8,7 @@ import AdminWrapper from './components/admin/AdminWrapper';
 import AdminRoute from './components/auth/AdminRoute';
 import { SocketProvider } from './utils/useSocket';
 import { TracksProvider } from './utils/useTracks';
+import PonceParticipations from './components/participations/PonceParticipations';
 
 function App() {
     return (
@@ -18,6 +19,12 @@ function App() {
                         <Header />
                         <Switch>
                             <Route exact path="/signup" component={Signup} />
+
+                            <Route
+                                exact
+                                path="/history"
+                                component={PonceParticipations}
+                            />
 
                             <AdminRoute
                                 path="/admin"
