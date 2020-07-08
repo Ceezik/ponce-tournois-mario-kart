@@ -8,7 +8,7 @@ import AddRaceBtn from './AddRaceBtn';
 function Participation({ participation, nbMaxRaces }) {
     const nbRaces = participation.Races.length;
     const nbPoints = _.sumBy(participation.Races, 'nbPoints');
-    const averagePoints = (nbPoints / nbRaces).toFixed(1);
+    const averagePoints = nbRaces ? (nbPoints / nbRaces).toFixed(1) : 0;
 
     const getPositionColor = (position) => {
         return position === 1 ? 'gold' : position === 2 ? '#CBCDCD' : '#cd7f32';
@@ -53,7 +53,7 @@ function Participation({ participation, nbMaxRaces }) {
                 </Row>
 
                 {participation.Races.map((race) => (
-                    <Row key={race.id} className="participation__raceWrapper">
+                    <Row key={race.id}>
                         <Col xs={12}>
                             <div className="participation__race">
                                 <Row align="center">
@@ -78,7 +78,10 @@ function Participation({ participation, nbMaxRaces }) {
                 ))}
 
                 {[...Array(nbMaxRaces - nbRaces)].map((i, index) => (
-                    <AddRaceBtn key={index} />
+                    <AddRaceBtn
+                        key={index}
+                        participationId={participation.id}
+                    />
                 ))}
             </div>
         </>
