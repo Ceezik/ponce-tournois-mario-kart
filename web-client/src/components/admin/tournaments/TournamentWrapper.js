@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-grid-system';
 import { useParams } from 'react-router-dom';
 import { useSocket } from '../../../utils/useSocket';
 import Tournament from './Tournament';
+import TournamentSkeleton from './TournamentSkeleton';
 
 function TournamentWrapper() {
     const { tournamentId } = useParams();
@@ -37,7 +38,7 @@ function TournamentWrapper() {
     return (
         <Container className="app__container">
             {loading ? (
-                <p>load</p>
+                <TournamentSkeleton />
             ) : error ? (
                 <Row justify="center">
                     <Col xs="content">

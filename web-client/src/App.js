@@ -7,19 +7,25 @@ import Header from './components/utils/Header';
 import AdminWrapper from './components/admin/AdminWrapper';
 import AdminRoute from './components/auth/AdminRoute';
 import { SocketProvider } from './utils/useSocket';
+import { TracksProvider } from './utils/useTracks';
 
 function App() {
     return (
         <Router history={history}>
             <SocketProvider>
-                <AuthProvider>
-                    <Header />
-                    <Switch>
-                        <Route exact path="/signup" component={Signup} />
+                <TracksProvider>
+                    <AuthProvider>
+                        <Header />
+                        <Switch>
+                            <Route exact path="/signup" component={Signup} />
 
-                        <AdminRoute path="/admin" component={AdminWrapper} />
-                    </Switch>
-                </AuthProvider>
+                            <AdminRoute
+                                path="/admin"
+                                component={AdminWrapper}
+                            />
+                        </Switch>
+                    </AuthProvider>
+                </TracksProvider>
             </SocketProvider>
         </Router>
     );

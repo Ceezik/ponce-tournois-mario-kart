@@ -1,7 +1,7 @@
 import request from '../utils/request';
 
-export const getByCup = (cupId) => {
-    return request.get(`/cups/${cupId}/tracks`);
+export const getAll = () => {
+    return request.get('/tracks');
 };
 
 export const create = (track, cupId) => {

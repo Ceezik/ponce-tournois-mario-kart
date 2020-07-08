@@ -1,40 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-grid-system';
-import { getByCup } from '../../../services/tracks';
 import TracksListItem from './TracksListItem';
 import AddTrackBtn from './AddTrackBtn';
-import TracksSkeleton from './TracksSkeleton';
 import AddTrackForm from './AddTrackForm';
+import { useTracks } from '../../../utils/useTracks';
 
 function TracksWrapper({ cup }) {
+    const { getByCup, addNewTrack } = useTracks();
     const [tracks, setTracks] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [creating, setCreating] = useState(false);
 
     useEffect(() => {
         setCreating(false);
-        setLoading(true);
-
-        getByCup(cup.id)
-            .then((res) => setTracks(res.data))
-            .catch(() => setError('Impossible de récupérer les circuits.'))
-            .finally(() => setLoading(false));
+        setTracks(getByCup(cup.id));
     }, [cup]);
 
     const addTrack = (track) => {
+        addNewTrack(track);
         setTracks([...tracks, track]);
     };
 
-    return loading ? (
-        <TracksSkeleton />
-    ) : error ? (
-        <Row justify="center">
-            <Col xs="content">
-                <div className="formMessage formMessage__error">{error}</div>
-            </Col>
-        </Row>
-    ) : creating ? (
+    return creating ? (
         <Row justify="center">
             <Col xs={12} md={8} lg={6}>
                 <h1>Ajouter une circuit</h1>

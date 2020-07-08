@@ -42,5 +42,24 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
+    Tournament.associate = (db) => {
+        Tournament.hasMany(db.Participation);
+    };
+
+    Tournament.afterCreate((tournament) => {
+        const { PONCE_TWITCH_ID } = process.env;
+
+        sequelize.models.User.findOne({ where: { twitchId: PONCE_TWITCH_ID } })
+            .then((user) => {
+                if (user) {
+                    sequelize.models.Participation.create({
+                        TournamentId: tournament.id,
+                        UserId: user.id,
+                    });
+                }
+            })
+            .catch(() => {});
+    });
+
     return Tournament;
 };

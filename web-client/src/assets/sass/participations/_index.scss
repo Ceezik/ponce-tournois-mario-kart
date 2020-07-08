@@ -1,0 +1,41 @@
+@import '../variables';
+
+.participation {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.participation__title {
+    color: $main-color;
+    margin-bottom: 0.5rem;
+}
+
+.participation__race {
+    padding: 0.75rem 0;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+    border: 1px solid #e6e6e6;
+}
+
+.participation__race--skeleton {
+    padding: 0.75rem 0;
+    margin: 0.5rem 0;
+}
+
+.participation__addRace {
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.participation__addRace:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.participation__addRaceBtn {
+    color: $main-color;
+    margin-right: 1rem;
+}
+
+.participation__addRaceForm {
+    text-align: start;
+}
