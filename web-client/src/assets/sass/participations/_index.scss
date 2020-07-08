@@ -22,13 +22,20 @@
     margin: 0.5rem 0;
 }
 
-.participation
-    .participation__raceWrapper:nth-child(2n + 1)
-    .participation__race {
-    background-color: #f7f7f7;
+.participation__addRace {
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.participation__addRace:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .participation__addRaceBtn {
     color: $main-color;
     margin-right: 1rem;
+}
+
+.participation__addRaceForm {
+    text-align: start;
 }
