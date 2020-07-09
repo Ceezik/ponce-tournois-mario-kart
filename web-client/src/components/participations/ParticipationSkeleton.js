@@ -3,13 +3,13 @@ import TournamentSkeleton from '../admin/tournaments/TournamentSkeleton';
 import AdminParticipationSkeleton from '../admin/participations/ParticipationSkeleton';
 import { Row, Col } from 'react-grid-system';
 
-function ParticipationSkeleton() {
+function ParticipationSkeleton({ showButton = true }) {
     return (
         <>
-            <TournamentSkeleton />
+            <TournamentSkeleton showButton={showButton} />
 
             <Row justify="center" style={{ marginTop: '1rem' }}>
-                <Col xs={12} lg={6}>
+                <Col xs={12} lg={8}>
                     <AdminParticipationSkeleton />
                 </Col>
             </Row>

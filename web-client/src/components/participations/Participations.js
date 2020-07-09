@@ -67,7 +67,7 @@ function Participations({ route, canAdd }) {
                 </Row>
             ) : (
                 <Row justify="center">
-                    <Col xs={12} lg={6}>
+                    <Col xs={12} lg={8}>
                         {participations.length === 0 ? (
                             <Error message="Vous n'avez participé à aucun tournoi." />
                         ) : (
@@ -88,6 +88,9 @@ function Participations({ route, canAdd }) {
 
                                         <Participation
                                             participation={participation}
+                                            tournamentName={
+                                                participation.Tournament.name
+                                            }
                                             refreshParticipation={
                                                 refreshParticipation
                                             }
