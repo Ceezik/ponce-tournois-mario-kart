@@ -9,6 +9,8 @@ import AdminRoute from './components/auth/AdminRoute';
 import { SocketProvider } from './utils/useSocket';
 import { TracksProvider } from './utils/useTracks';
 import PonceParticipations from './components/participations/PonceParticipations';
+import UserParticipations from './components/participations/UserParticipations';
+import PrivateRoute from './components/auth/PrivateRoute';
 
 function App() {
     return (
@@ -24,6 +26,12 @@ function App() {
                                 exact
                                 path="/history"
                                 component={PonceParticipations}
+                            />
+
+                            <PrivateRoute
+                                exact
+                                path="/my-history"
+                                component={UserParticipations}
                             />
 
                             <AdminRoute

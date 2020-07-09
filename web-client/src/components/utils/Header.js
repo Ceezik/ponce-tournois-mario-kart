@@ -98,6 +98,10 @@ function DesktopHeader() {
                                 <li>Mon compte</li>
                             </NavLink>
 
+                            <NavLink to="/my-history" onClick={close}>
+                                <li>Mon historique</li>
+                            </NavLink>
+
                             <NavLink to="/my-races" onClick={close}>
                                 <li>Mes circuits joués</li>
                             </NavLink>
@@ -187,7 +191,12 @@ function MobileHeader() {
                                     </NavLink>
                                 </Col>
                                 <Col xs={6}>
-                                    <NavLink to="/settings" onClick={close}>
+                                    <NavLink to="/my-history" onClick={close}>
+                                        Mon historique
+                                    </NavLink>
+                                </Col>
+                                <Col xs={6}>
+                                    <NavLink to="/my-races" onClick={close}>
                                         Mes circuits joués
                                     </NavLink>
                                 </Col>
