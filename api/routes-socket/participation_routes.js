@@ -5,6 +5,10 @@ module.exports = (io, socket, userId, isAdmin) => {
         participation_ctrl.getPonceParticipations(socket, onError);
     });
 
+    socket.on('getUserParticipations', (onError) => {
+        participation_ctrl.getUserParticipations(socket, onError, userId);
+    });
+
     socket.on('getPonceParticipation', (tournamentId, onError) => {
         participation_ctrl.getPonceByTournament(socket, onError, tournamentId);
     });
