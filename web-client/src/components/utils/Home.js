@@ -30,8 +30,6 @@ function Home() {
     }, []);
 
     const fetchParticipation = () => {
-        setLoading(true);
-
         socket.emit('getLastPonceParticipation', (err) => {
             setError(err);
             setLoading(false);
