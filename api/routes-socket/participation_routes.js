@@ -12,4 +12,8 @@ module.exports = (io, socket, userId, isAdmin) => {
     socket.on('getPonceParticipation', (tournamentId, onError) => {
         participation_ctrl.getPonceByTournament(socket, onError, tournamentId);
     });
+
+    socket.on('getLastPonceParticipation', (onError) => {
+        participation_ctrl.getLastPonceParticipation(socket, onError);
+    });
 };

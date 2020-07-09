@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "mysql2": "^2.1.0",
     "passport": "^0.4.1",
