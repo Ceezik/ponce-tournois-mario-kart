@@ -29,7 +29,7 @@ require('./routes-api')(app);
 
 io.on('connection', (socket) => {
     const { userId, isAdmin } = socket.handshake.query;
-    require('./routes-socket')(io, socket, userId, isAdmin);
+    require('./routes-socket')(io, socket, userId, isAdmin === 'true');
 });
 
 app.use(errorHandler);
