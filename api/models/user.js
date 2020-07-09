@@ -40,5 +40,18 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(db.Participation);
     };
 
+    User.afterCreate((user) => {
+        sequelize.models.Tournament.findAll()
+            .then((tournaments) => {
+                tournaments.forEach((tournament) => {
+                    sequelize.models.Participation.create({
+                        TournamentId: tournament.id,
+                        UserId: user.id,
+                    });
+                });
+            })
+            .catch(() => {});
+    });
+
     return User;
 };
