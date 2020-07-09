@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useSocket } from '../../utils/useSocket';
+import _ from 'lodash';
 import { Container, Col, Row } from 'react-grid-system';
+import { useSocket } from '../../utils/useSocket';
 import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
@@ -11,6 +12,14 @@ function Home() {
     const [record, setRecord] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    socket.off('addRace').on('addRace', (race) => {
+        if (participation && race.ParticipationId === participation.id) {
+            const newParticipation = _.cloneDeep(participation);
+            newParticipation.Races.push(race);
+            setParticipation(newParticipation);
+        }
+    });
 
     useEffect(() => {
         socket.on('getLastPonceParticipation', ({ participation, record }) => {
@@ -26,6 +35,7 @@ function Home() {
         return () => {
             socket.off('getLastPonceParticipation');
             socket.off('refreshTournaments');
+            socket.off('addRace');
         };
     }, []);
 
@@ -59,7 +69,6 @@ function Home() {
                             participation={participation}
                             record={record}
                             tournamentName={participation.Tournament.name}
-                            refreshParticipation={setParticipation}
                             nbMaxRaces={participation.Tournament.nbMaxRaces}
                             canAdd={false}
                         />
