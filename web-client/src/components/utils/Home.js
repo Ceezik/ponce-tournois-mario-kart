@@ -47,7 +47,7 @@ function Home() {
     };
 
     return (
-        <Container className="app__container">
+        <Container className="app__container--home">
             {loading ? (
                 <ParticipationSkeleton showButton={false} />
             ) : error ? (

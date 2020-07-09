@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'react-grid-system';
+import { Row, Col, Hidden } from 'react-grid-system';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
@@ -54,12 +54,14 @@ function Participation({
 
             <div className="participation">
                 {(participation.Races.length > 0 || record) && (
-                    <ParticipationChart
-                        record={record}
-                        races={participation.Races}
-                        tournamentName={tournamentName}
-                        nbMaxRaces={nbMaxRaces}
-                    />
+                    <Hidden xs sm>
+                        <ParticipationChart
+                            record={record}
+                            races={participation.Races}
+                            tournamentName={tournamentName}
+                            nbMaxRaces={nbMaxRaces}
+                        />
+                    </Hidden>
                 )}
 
                 {participation.Races.length > 0 && (

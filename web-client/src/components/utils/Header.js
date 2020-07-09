@@ -160,7 +160,7 @@ function MobileHeader() {
                         </li>
                         <li>
                             <NavLink
-                                to="/raes"
+                                to="/races"
                                 activeClassName="header__smNavListItem--active"
                                 onClick={close}
                             >
