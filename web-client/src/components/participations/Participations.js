@@ -37,8 +37,6 @@ function Participations({ route, canAdd }) {
     }, [participations]);
 
     const fetchParticipations = () => {
-        setLoading(true);
-
         socket.emit(route, (err) => {
             setError(err);
             setLoading(false);
