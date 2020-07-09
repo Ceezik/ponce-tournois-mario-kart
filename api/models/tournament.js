@@ -47,16 +47,14 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     Tournament.afterCreate((tournament) => {
-        const { PONCE_TWITCH_ID } = process.env;
-
-        sequelize.models.User.findOne({ where: { twitchId: PONCE_TWITCH_ID } })
-            .then((user) => {
-                if (user) {
+        sequelize.models.User.findAll()
+            .then((users) => {
+                users.forEach((user) => {
                     sequelize.models.Participation.create({
                         TournamentId: tournament.id,
                         UserId: user.id,
                     });
-                }
+                });
             })
             .catch(() => {});
     });
