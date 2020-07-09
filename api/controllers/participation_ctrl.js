@@ -1,5 +1,12 @@
+const _ = require('lodash');
 const db = require('../models');
 const { getPonce, isAuthenticated } = require('../utils');
+
+_getRecord = (participations) => {
+    const p = participations.slice(1);
+    p.forEach((el) => (el.nbPoints = _.sumBy(el.Races, 'nbPoints')));
+    return _.maxBy(p, 'nbPoints');
+};
 
 module.exports = {
     getPonceParticipations: (socket, onError) => {
@@ -7,7 +14,10 @@ module.exports = {
             ponce
                 .getParticipations({
                     include: [{ model: db.Tournament }],
-                    order: [[db.Tournament, 'startDate', 'DESC']],
+                    order: [
+                        [db.Tournament, 'startDate', 'DESC'],
+                        [db.Race, 'id', 'ASC'],
+                    ],
                 })
                 .then((participations) =>
                     socket.emit('getPonceParticipations', participations)
@@ -20,7 +30,10 @@ module.exports = {
         isAuthenticated(onError, userId, (user) => {
             user.getParticipations({
                 include: [{ model: db.Tournament }],
-                order: [[db.Tournament, 'startDate', 'DESC']],
+                order: [
+                    [db.Tournament, 'startDate', 'DESC'],
+                    [db.Race, 'id', 'ASC'],
+                ],
             })
                 .then((participations) =>
                     socket.emit('getUserParticipations', participations)
@@ -39,6 +52,30 @@ module.exports = {
                         socket.emit('getPonceParticipation', participation);
                     } else {
                         onError("Ponce n'a pas participé à ce tournoi");
+                    }
+                })
+                .catch(() => onError('Une erreur est survenue'));
+        });
+    },
+
+    getLastPonceParticipation: (socket, onError) => {
+        getPonce(onError, (ponce) => {
+            ponce
+                .getParticipations({
+                    include: [{ model: db.Tournament }],
+                    order: [
+                        [db.Tournament, 'startDate', 'DESC'],
+                        [db.Race, 'id', 'ASC'],
+                    ],
+                })
+                .then((participations) => {
+                    if (participations.length > 0) {
+                        socket.emit('getLastPonceParticipation', {
+                            participation: participations[0],
+                            record: _getRecord(participations),
+                        });
+                    } else {
+                        onError("Ponce n'a pas participé à aucun tournoi");
                     }
                 })
                 .catch(() => onError('Une erreur est survenue'));
