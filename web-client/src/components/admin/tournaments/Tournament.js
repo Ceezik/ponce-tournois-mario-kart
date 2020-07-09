@@ -7,7 +7,7 @@ import TournamentInfos from '../../tournaments/TournamentInfos';
 function Tournament({ tournament }) {
     return (
         <Row justify="center">
-            <Col xs={12} lg={6}>
+            <Col xs={12} lg={8}>
                 <Row justify="end">
                     <Col xs="content">
                         <Link

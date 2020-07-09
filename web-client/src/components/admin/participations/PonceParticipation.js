@@ -36,6 +36,7 @@ function PonceParticipation({ tournament }) {
     ) : (
         <Participation
             participation={participation}
+            tournamentName={tournament.name}
             refreshParticipation={setParticipation}
             nbMaxRaces={tournament.nbMaxRaces}
         />

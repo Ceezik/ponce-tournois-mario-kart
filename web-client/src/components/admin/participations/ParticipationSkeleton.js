@@ -8,7 +8,9 @@ function ParticipationSkeleton() {
             <Skeleton height="5rem" />
 
             <div className="participation">
-                <Row>
+                <Skeleton height="17rem" />
+
+                <Row className="participation__title">
                     <Col xs={3}>
                         <Skeleton />
                     </Col>

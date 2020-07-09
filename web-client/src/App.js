@@ -11,6 +11,7 @@ import { TracksProvider } from './utils/useTracks';
 import PonceParticipations from './components/participations/PonceParticipations';
 import UserParticipations from './components/participations/UserParticipations';
 import PrivateRoute from './components/auth/PrivateRoute';
+import Home from './components/utils/Home';
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                         <Switch>
                             <Route exact path="/signup" component={Signup} />
 
+                            <Route exact path="/" component={Home} />
                             <Route
                                 exact
                                 path="/history"

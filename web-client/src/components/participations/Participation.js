@@ -5,9 +5,12 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 import AddRaceBtn from '../admin/participations/AddRaceBtn';
 import { useSocket } from '../../utils/useSocket';
+import ParticipationChart from './ParticipationChart';
 
 function Participation({
     participation,
+    record = null,
+    tournamentName,
     refreshParticipation,
     nbMaxRaces,
     canAdd = true,
@@ -65,12 +68,23 @@ function Participation({
             </Row>
 
             <div className="participation">
+                {(participation.Races.length > 0 || record) && (
+                    <ParticipationChart
+                        record={record}
+                        races={participation.Races}
+                        tournamentName={tournamentName}
+                        nbMaxRaces={nbMaxRaces}
+                    />
+                )}
+
                 {participation.Races.length > 0 && (
-                    <Row className="participation__title">
-                        <Col xs={3}>Position</Col>
-                        <Col xs={3}>Points</Col>
-                        <Col xs={6}>Circuit</Col>
-                    </Row>
+                    <>
+                        <Row className="participation__title">
+                            <Col xs={3}>Position</Col>
+                            <Col xs={3}>Points</Col>
+                            <Col xs={6}>Circuit</Col>
+                        </Row>
+                    </>
                 )}
 
                 {participation.Races.map((race) => (

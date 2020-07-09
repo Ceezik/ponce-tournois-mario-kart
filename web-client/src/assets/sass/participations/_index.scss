@@ -5,8 +5,14 @@
     text-align: center;
 }
 
+.participation__chart {
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+}
+
 .participation__title {
     color: $main-color;
+    margin-top: 3rem;
     margin-bottom: 0.5rem;
 }
 
