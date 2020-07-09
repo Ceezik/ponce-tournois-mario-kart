@@ -1,5 +1,5 @@
 const db = require('../models');
-const { getPonce } = require('../utils');
+const { getPonce, isAuthenticated } = require('../utils');
 
 module.exports = {
     getPonceParticipations: (socket, onError) => {
@@ -13,6 +13,19 @@ module.exports = {
                     socket.emit('getPonceParticipations', participations)
                 )
                 .catch((err) => onError(err.message));
+        });
+    },
+
+    getUserParticipations: (socket, onError, userId) => {
+        isAuthenticated(onError, userId, (user) => {
+            user.getParticipations({
+                include: [{ model: db.Tournament }],
+                order: [[db.Tournament, 'startDate', 'DESC']],
+            })
+                .then((participations) =>
+                    socket.emit('getUserParticipations', participations)
+                )
+                .catch(() => onError('Une erreur est survenue'));
         });
     },
 
