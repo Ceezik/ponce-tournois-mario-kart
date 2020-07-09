@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-grid-system';
 import { useSocket } from '../../../utils/useSocket';
 import TournamentForm from './TournamentForm';
-import { removeEmptyFields } from '../../../utils/utils';
+import { nullifyEmptyFields } from '../../../utils/utils';
 import history from '../../../utils/history';
 
 function AddTournamentForm() {
@@ -15,7 +15,7 @@ function AddTournamentForm() {
 
         socket.emit(
             'createTournament',
-            removeEmptyFields(tournament),
+            nullifyEmptyFields(tournament),
             (err) => {
                 setError(err);
                 setLoading(false);

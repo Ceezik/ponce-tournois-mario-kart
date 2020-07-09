@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSocket } from '../../../utils/useSocket';
 import TournamentForm from './TournamentForm';
-import { removeEmptyFields } from '../../../utils/utils';
+import { nullifyEmptyFields } from '../../../utils/utils';
 import history from '../../../utils/history';
 
 function EditTournamentForm({ tournament }) {
@@ -14,7 +14,7 @@ function EditTournamentForm({ tournament }) {
 
         socket.emit(
             'updateTournament',
-            { ...removeEmptyFields(newTournament), id: tournament.id },
+            { ...nullifyEmptyFields(newTournament), id: tournament.id },
             (err) => {
                 setError(err);
                 setLoading(false);

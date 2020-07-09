@@ -1,7 +1,7 @@
-export const removeEmptyFields = (data) => {
+export const nullifyEmptyFields = (data) => {
     Object.keys(data).forEach((key) => {
-        if (data[key] === '' || data[key] == null) {
-            delete data[key];
+        if (data[key] === '') {
+            data[key] = null;
         }
     });
 
