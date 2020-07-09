@@ -30,7 +30,7 @@ function AddRaceForm({ closeForm, participationId }) {
             setLoading(true);
 
             socket.emit(
-                'addPonceRace',
+                'addRace',
                 {
                     position: parseInt(position),
                     nbPoints: getNbPointsFromPosition(position),
