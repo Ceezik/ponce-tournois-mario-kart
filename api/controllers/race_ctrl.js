@@ -1,7 +1,7 @@
 const db = require('../models');
 
 module.exports = {
-    addPonceRace: (
+    addRace: (
         io,
         socket,
         onError,
