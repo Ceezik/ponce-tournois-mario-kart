@@ -77,6 +77,17 @@ function DesktopHeader() {
                             Statistiques
                         </NavLink>
                     </li>
+                    {user.isAdmin && (
+                        <li>
+                            <NavLink
+                                className="header__navListItem"
+                                to="/admin"
+                                activeClassName="header__navListItem--active"
+                            >
+                                Administration
+                            </NavLink>
+                        </li>
+                    )}
                 </ul>
             </div>
 
@@ -96,6 +107,10 @@ function DesktopHeader() {
                         <ul className="header__dropdownNavList">
                             <NavLink to="/profile" onClick={close}>
                                 <li>Mon compte</li>
+                            </NavLink>
+
+                            <NavLink to="/my-history" onClick={close}>
+                                <li>Mon historique</li>
                             </NavLink>
 
                             <NavLink to="/my-races" onClick={close}>
@@ -145,7 +160,7 @@ function MobileHeader() {
                         </li>
                         <li>
                             <NavLink
-                                to="/raes"
+                                to="/races"
                                 activeClassName="header__smNavListItem--active"
                                 onClick={close}
                             >
@@ -161,6 +176,17 @@ function MobileHeader() {
                                 Statistiques
                             </NavLink>
                         </li>
+                        {user.isAdmin && (
+                            <li>
+                                <NavLink
+                                    to="/admin"
+                                    activeClassName="header__smNavListItem--active"
+                                    onClick={close}
+                                >
+                                    Administration
+                                </NavLink>
+                            </li>
+                        )}
                     </ul>
 
                     <hr />
@@ -187,7 +213,12 @@ function MobileHeader() {
                                     </NavLink>
                                 </Col>
                                 <Col xs={6}>
-                                    <NavLink to="/settings" onClick={close}>
+                                    <NavLink to="/my-history" onClick={close}>
+                                        Mon historique
+                                    </NavLink>
+                                </Col>
+                                <Col xs={6}>
+                                    <NavLink to="/my-races" onClick={close}>
                                         Mes circuits joués
                                     </NavLink>
                                 </Col>

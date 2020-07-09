@@ -1,11 +1,18 @@
 import React from 'react';
-import { Row, Col } from 'react-grid-system';
+import { Row, Col, Hidden } from 'react-grid-system';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
-import AddRaceBtn from './AddRaceBtn';
+import AddRaceBtn from '../admin/participations/AddRaceBtn';
+import ParticipationChart from './ParticipationChart';
 
-function Participation({ participation, nbMaxRaces }) {
+function Participation({
+    participation,
+    record = null,
+    tournamentName,
+    nbMaxRaces,
+    canAdd = true,
+}) {
     const nbRaces = participation.Races.length;
     const nbPoints = _.sumBy(participation.Races, 'nbPoints');
     const averagePoints = nbRaces ? (nbPoints / nbRaces).toFixed(1) : 0;
@@ -46,11 +53,26 @@ function Participation({ participation, nbMaxRaces }) {
             </Row>
 
             <div className="participation">
-                <Row className="participation__title">
-                    <Col xs={3}>Position</Col>
-                    <Col xs={3}>Points</Col>
-                    <Col xs={6}>Circuit</Col>
-                </Row>
+                {(participation.Races.length > 0 || record) && (
+                    <Hidden xs sm>
+                        <ParticipationChart
+                            record={record}
+                            races={participation.Races}
+                            tournamentName={tournamentName}
+                            nbMaxRaces={nbMaxRaces}
+                        />
+                    </Hidden>
+                )}
+
+                {participation.Races.length > 0 && (
+                    <>
+                        <Row className="participation__title">
+                            <Col xs={3}>Position</Col>
+                            <Col xs={3}>Points</Col>
+                            <Col xs={6}>Circuit</Col>
+                        </Row>
+                    </>
+                )}
 
                 {participation.Races.map((race) => (
                     <Row key={race.id}>
@@ -77,12 +99,13 @@ function Participation({ participation, nbMaxRaces }) {
                     </Row>
                 ))}
 
-                {[...Array(nbMaxRaces - nbRaces)].map((i, index) => (
-                    <AddRaceBtn
-                        key={index}
-                        participationId={participation.id}
-                    />
-                ))}
+                {canAdd &&
+                    [...Array(nbMaxRaces - nbRaces)].map((i, index) => (
+                        <AddRaceBtn
+                            key={index}
+                            participationId={participation.id}
+                        />
+                    ))}
             </div>
         </>
     );

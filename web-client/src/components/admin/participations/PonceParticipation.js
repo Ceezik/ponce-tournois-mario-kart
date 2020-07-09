@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-grid-system';
 import _ from 'lodash';
 import { useSocket } from '../../../utils/useSocket';
-import Participation from './Participation';
+import Participation from '../../participations/Participation';
 import ParticipationSkeleton from './ParticipationSkeleton';
 
 function PonceParticipation({ tournament }) {
@@ -47,6 +47,7 @@ function PonceParticipation({ tournament }) {
     ) : (
         <Participation
             participation={participation}
+            tournamentName={tournament.name}
             nbMaxRaces={tournament.nbMaxRaces}
         />
     );
