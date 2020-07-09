@@ -1,21 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Row, Col } from 'react-grid-system';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 import AddRaceBtn from '../admin/participations/AddRaceBtn';
-import { useSocket } from '../../utils/useSocket';
 import ParticipationChart from './ParticipationChart';
 
 function Participation({
     participation,
     record = null,
     tournamentName,
-    refreshParticipation,
     nbMaxRaces,
     canAdd = true,
 }) {
-    const { socket } = useSocket();
     const nbRaces = participation.Races.length;
     const nbPoints = _.sumBy(participation.Races, 'nbPoints');
     const averagePoints = nbRaces ? (nbPoints / nbRaces).toFixed(1) : 0;
@@ -23,18 +20,6 @@ function Participation({
     const getPositionColor = (position) => {
         return position === 1 ? 'gold' : position === 2 ? '#CBCDCD' : '#cd7f32';
     };
-
-    socket.off('addRace').on('addRace', (race) => {
-        if (participation && race.ParticipationId === participation.id) {
-            const newParticipation = _.cloneDeep(participation);
-            newParticipation.Races.push(race);
-            refreshParticipation(newParticipation);
-        }
-    });
-
-    useEffect(() => {
-        return () => socket.off('addRace');
-    }, []);
 
     return (
         <>

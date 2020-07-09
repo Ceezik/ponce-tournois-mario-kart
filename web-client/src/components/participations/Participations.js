@@ -15,6 +15,15 @@ function Participations({ route, canAdd }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    socket.off('addRace').on('addRace', (race) => {
+        const p = _.find(participations, { id: race.ParticipationId });
+        if (p) {
+            const newParticipation = _.cloneDeep(p);
+            newParticipation.Races.push(race);
+            refreshParticipation(newParticipation);
+        }
+    });
+
     useEffect(() => {
         socket.on(route, (participations) => {
             setParticipations(participations);
@@ -25,7 +34,11 @@ function Participations({ route, canAdd }) {
 
         fetchParticipations();
 
-        return () => socket.off(route);
+        return () => {
+            socket.off(route);
+            socket.off('refreshTournaments');
+            socket.off('addRace');
+        };
     }, []);
 
     useEffect(() => {
@@ -88,9 +101,6 @@ function Participations({ route, canAdd }) {
                                             participation={participation}
                                             tournamentName={
                                                 participation.Tournament.name
-                                            }
-                                            refreshParticipation={
-                                                refreshParticipation
                                             }
                                             nbMaxRaces={
                                                 participation.Tournament
