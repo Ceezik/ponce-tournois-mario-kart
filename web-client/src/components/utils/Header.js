@@ -77,6 +77,17 @@ function DesktopHeader() {
                             Statistiques
                         </NavLink>
                     </li>
+                    {user.isAdmin && (
+                        <li>
+                            <NavLink
+                                className="header__navListItem"
+                                to="/admin"
+                                activeClassName="header__navListItem--active"
+                            >
+                                Administration
+                            </NavLink>
+                        </li>
+                    )}
                 </ul>
             </div>
 
@@ -165,6 +176,17 @@ function MobileHeader() {
                                 Statistiques
                             </NavLink>
                         </li>
+                        {user.isAdmin && (
+                            <li>
+                                <NavLink
+                                    to="/admin"
+                                    activeClassName="header__smNavListItem--active"
+                                    onClick={close}
+                                >
+                                    Administration
+                                </NavLink>
+                            </li>
+                        )}
                     </ul>
 
                     <hr />
