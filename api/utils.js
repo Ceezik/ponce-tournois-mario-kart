@@ -1,7 +1,9 @@
 const db = require('./models');
 
 module.exports = {
-    paginate: (page = 0, pageSize = 25) => {
+    paginate: (page, pageSize) => {
+        if (isNaN(page) || isNaN(pageSize)) return {};
+
         const offset = page * pageSize;
         const limit = pageSize;
 
