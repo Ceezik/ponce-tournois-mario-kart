@@ -5,6 +5,10 @@ module.exports = (io, socket, userId, isAdmin) => {
         race_ctrl.getPonceRaces(socket, onError);
     });
 
+    socket.on('getUserRaces', (onError) => {
+        race_ctrl.getUserRaces(socket, onError, userId);
+    });
+
     socket.on('addRace', (data, onError) => {
         race_ctrl.addRace(io, socket, onError, data);
     });
