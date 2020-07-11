@@ -15,6 +15,7 @@ import Home from './components/utils/Home';
 import PonceRaces from './components/races/PonceRaces';
 import UserRaces from './components/races/UserRaces';
 import Statistics from './components/statistics/Statistics';
+import Profile from './components/user/Profile';
 
 function App() {
     return (
@@ -39,6 +40,11 @@ function App() {
                                 component={Statistics}
                             />
 
+                            <PrivateRoute
+                                exact
+                                path="/profile"
+                                component={Profile}
+                            />
                             <PrivateRoute
                                 exact
                                 path="/my-history"
