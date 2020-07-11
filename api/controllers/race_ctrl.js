@@ -1,6 +1,27 @@
 const db = require('../models');
+const { getPonce } = require('../utils');
 
 module.exports = {
+    getPonceRaces: (socket, onError) => {
+        getPonce(onError, (ponce) => {
+            db.Race.findAll({
+                include: [
+                    {
+                        model: db.Participation.scope('withoutRaces'),
+                        attributes: [],
+                        where: { UserId: ponce.id },
+                    },
+                    {
+                        model: db.Track,
+                        attributes: ['name', 'CupId'],
+                    },
+                ],
+            })
+                .then((races) => socket.emit('getPonceRaces', races))
+                .catch((err) => onError(err.message));
+        });
+    },
+
     addRace: (
         io,
         socket,
