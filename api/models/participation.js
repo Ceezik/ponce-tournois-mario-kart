@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         Participation.addScope('defaultScope', {
             include: [{ model: db.Race }],
         });
+        Participation.addScope('withoutRaces', {});
     };
 
     return Participation;

@@ -1,7 +1,40 @@
 const db = require('../models');
+const { getPonce, isAuthenticated } = require('../utils');
+
+const _getRaces = (user) => {
+    return db.Race.findAll({
+        include: [
+            {
+                model: db.Participation.scope('withoutRaces'),
+                attributes: [],
+                where: { UserId: user.id },
+            },
+            {
+                model: db.Track,
+                attributes: ['name', 'CupId'],
+            },
+        ],
+    });
+};
 
 module.exports = {
-    addPonceRace: (
+    getPonceRaces: (socket, onError) => {
+        getPonce(onError, (ponce) => {
+            _getRaces(ponce)
+                .then((races) => socket.emit('getPonceRaces', races))
+                .catch(() => onError('Une erreur est survenue'));
+        });
+    },
+
+    getUserRaces: (socket, onError, userId) => {
+        isAuthenticated(onError, userId, (user) => {
+            _getRaces(user)
+                .then((races) => socket.emit('getUserRaces', races))
+                .catch((err) => onError(err.message));
+        });
+    },
+
+    addRace: (
         io,
         socket,
         onError,
