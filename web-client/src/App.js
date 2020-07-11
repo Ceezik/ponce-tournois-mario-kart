@@ -12,6 +12,7 @@ import PonceParticipations from './components/participations/PonceParticipations
 import UserParticipations from './components/participations/UserParticipations';
 import PrivateRoute from './components/auth/PrivateRoute';
 import Home from './components/utils/Home';
+import PonceRaces from './components/races/PonceRaces';
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                                 path="/history"
                                 component={PonceParticipations}
                             />
+                            <Route exact path="/races" component={PonceRaces} />
 
                             <PrivateRoute
                                 exact
