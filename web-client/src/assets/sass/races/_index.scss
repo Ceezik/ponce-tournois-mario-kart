@@ -1,0 +1,42 @@
+.races__cup {
+    margin: 3rem 0 1rem 0;
+}
+
+.races__wrapper .races__cup:first-child,
+.races__wrapper--skeleton > div:first-child > .races__cup {
+    margin-top: 0;
+}
+
+.races__titleWrapper {
+    padding: 0 1rem;
+}
+
+.races__title {
+    color: $main-color;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.races__title > div:first-child {
+    text-align: left;
+}
+
+.races__trackWrapper {
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+.races__trackWrapper--skeleton {
+    padding: 1rem 0rem;
+    margin: 0.5rem 0;
+}
+
+.races__track {
+    text-align: center;
+}
+
+.races__track > div:first-child {
+    text-align: left;
+}
