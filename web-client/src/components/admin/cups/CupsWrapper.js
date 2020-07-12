@@ -46,13 +46,15 @@ function CupsWrapper() {
             ) : creating ? (
                 <Row justify="center">
                     <Col xs={12} md={8} lg={6}>
-                        <h1>Ajouter une coupe</h1>
+                        <h1 className="title--noMarginTop">
+                            Ajouter une coupe
+                        </h1>
                         <AddCupForm setCreating={setCreating} addCup={addCup} />
                     </Col>
                 </Row>
             ) : (
                 <>
-                    <h1>Coupes</h1>
+                    <h1 className="title--noMarginTop">Coupes</h1>
 
                     <Row>
                         {cups.map((cup) => (

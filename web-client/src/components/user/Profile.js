@@ -37,7 +37,7 @@ function Profile() {
         <Container className="app__container">
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
-                    <h1>Mon compte</h1>
+                    <h1 className="title--noMarginTop">Mon compte</h1>
 
                     <Form onSubmit={onSubmit}>
                         {message && (

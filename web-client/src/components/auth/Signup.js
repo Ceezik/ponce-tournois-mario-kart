@@ -27,7 +27,7 @@ function Signup() {
         <Container className="app__container">
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
-                    <h1>Première connexion</h1>
+                    <h1 className="title--noMarginTop">Première connexion</h1>
                     <p>
                         Veuillez choisir un nom d'utilisateur, vous pourrez le
                         modifier par la suite depuis votre profil.
