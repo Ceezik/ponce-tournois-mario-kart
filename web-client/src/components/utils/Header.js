@@ -120,6 +120,10 @@ function DesktopHeader() {
                                 <li>Mes circuits joués</li>
                             </NavLink>
 
+                            <NavLink to="/my-statistics" onClick={close}>
+                                <li>Mes statistiques</li>
+                            </NavLink>
+
                             <li onClick={signout}>Déconnexion</li>
                         </ul>
                     </div>
@@ -224,6 +228,14 @@ function MobileHeader() {
                                 <Col xs={6}>
                                     <NavLink to="/my-races" onClick={close}>
                                         Mes circuits joués
+                                    </NavLink>
+                                </Col>
+                                <Col xs={6}>
+                                    <NavLink
+                                        to="/my-statistics"
+                                        onClick={close}
+                                    >
+                                        Mes statistiques
                                     </NavLink>
                                 </Col>
                                 <Col

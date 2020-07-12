@@ -1,19 +1,17 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-grid-system';
-import ParticipantsStatistics from './ParticipantsStatistics';
 import ParticipationsStatistics from './ParticipationsStatistics';
 
-function Statistics() {
+function UserStatistics() {
     return (
         <Container className="app__container">
             <Row justify="center">
-                <Col xs={12}>
-                    <ParticipantsStatistics />
-                    <ParticipationsStatistics />
+                <Col xs={12} className="userStatistics__wrapper">
+                    <ParticipationsStatistics route="getUserParticipations" />
                 </Col>
             </Row>
         </Container>
     );
 }
 
-export default Statistics;
+export default UserStatistics;

@@ -1,3 +1,7 @@
 .app__container .statistics__title:nth-of-type(n + 2) {
     margin-top: 3rem;
 }
+
+.userStatistics__wrapper .statistics__title:first-of-type {
+    margin-top: 0;
+}
