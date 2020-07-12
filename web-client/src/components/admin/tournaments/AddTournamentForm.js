@@ -36,7 +36,7 @@ function AddTournamentForm() {
         <Container className="app__container">
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
-                    <h1>Créer un tournoi</h1>
+                    <h1 className="title--noMarginTop">Créer un tournoi</h1>
 
                     <TournamentForm
                         onSubmit={onSubmit}
