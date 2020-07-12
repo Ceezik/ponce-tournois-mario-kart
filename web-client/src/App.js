@@ -14,8 +14,9 @@ import PrivateRoute from './components/auth/PrivateRoute';
 import Home from './components/utils/Home';
 import PonceRaces from './components/races/PonceRaces';
 import UserRaces from './components/races/UserRaces';
-import Statistics from './components/statistics/Statistics';
 import Profile from './components/user/Profile';
+import UserStatistics from './components/statistics/UserStatistics';
+import PonceStatistics from './components/statistics/PonceStatistics';
 
 function App() {
     return (
@@ -37,7 +38,7 @@ function App() {
                             <Route
                                 exact
                                 path="/statistics"
-                                component={Statistics}
+                                component={PonceStatistics}
                             />
 
                             <PrivateRoute
@@ -54,6 +55,11 @@ function App() {
                                 exact
                                 path="/my-races"
                                 component={UserRaces}
+                            />
+                            <PrivateRoute
+                                exact
+                                path="/my-statistics"
+                                component={UserStatistics}
                             />
 
                             <AdminRoute

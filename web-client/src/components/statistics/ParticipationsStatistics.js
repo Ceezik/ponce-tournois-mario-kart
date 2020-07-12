@@ -5,7 +5,7 @@ import { useSocket } from '../../utils/useSocket';
 import { TotalPointsChart, AveragePointsChart } from './PointsCharts';
 import ChartSkeleton from './ChartSkeleton';
 
-function ParticipationsStatistics() {
+function ParticipationsStatistics({ route }) {
     const { socket } = useSocket();
     const [participations, setParticipations] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ function ParticipationsStatistics() {
     });
 
     useEffect(() => {
-        socket.on('getPonceParticipations', (participations) => {
+        socket.on(route, (participations) => {
             setParticipations([...participations].reverse());
             setLoading(false);
         });
@@ -31,14 +31,14 @@ function ParticipationsStatistics() {
         fetchParticipations();
 
         return () => {
-            socket.off('getPonceParticpations');
+            socket.off(route);
             socket.off('refreshTournaments');
             socket.off('addRace');
         };
     }, []);
 
     const fetchParticipations = () => {
-        socket.emit('getPonceParticipations', (err) => {
+        socket.emit(route, (err) => {
             setError(err);
             setLoading(false);
         });
