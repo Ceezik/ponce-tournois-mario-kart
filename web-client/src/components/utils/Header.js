@@ -2,10 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Hidden, Row, Col } from 'react-grid-system';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+    faBars,
+    faTimes,
+    faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../utils/useAuth';
 import ponceFleur from '../../assets/images/poncefleur.png';
-import { DEFAULT_PROFILE_PICTURE } from '../../utils/user';
 
 function Header() {
     return (
@@ -93,11 +96,11 @@ function DesktopHeader() {
 
             {user ? (
                 <div className="header__dropdownWrapper" ref={dropdownRef}>
-                    <img
-                        onClick={() => setOpen(!open)}
+                    <FontAwesomeIcon
+                        icon={faUserCircle}
+                        size="2x"
                         className="header__profilPicture"
-                        src={DEFAULT_PROFILE_PICTURE}
-                        alt="profil"
+                        onClick={() => setOpen(!open)}
                     />
                     <div
                         className={`header__dropdown header__dropdown--${
@@ -115,6 +118,10 @@ function DesktopHeader() {
 
                             <NavLink to="/my-races" onClick={close}>
                                 <li>Mes circuits joués</li>
+                            </NavLink>
+
+                            <NavLink to="/my-statistics" onClick={close}>
+                                <li>Mes statistiques</li>
                             </NavLink>
 
                             <li onClick={signout}>Déconnexion</li>
@@ -195,10 +202,11 @@ function MobileHeader() {
                         <div className="header__smProfilWrapper">
                             <Row align="center">
                                 <Col xs="content">
-                                    <img
+                                    <FontAwesomeIcon
+                                        icon={faUserCircle}
+                                        size="2x"
                                         className="header__profilPicture"
-                                        src={DEFAULT_PROFILE_PICTURE}
-                                        alt="profil"
+                                        onClick={() => setOpen(!open)}
                                     />
                                 </Col>
                                 <Col>
@@ -220,6 +228,14 @@ function MobileHeader() {
                                 <Col xs={6}>
                                     <NavLink to="/my-races" onClick={close}>
                                         Mes circuits joués
+                                    </NavLink>
+                                </Col>
+                                <Col xs={6}>
+                                    <NavLink
+                                        to="/my-statistics"
+                                        onClick={close}
+                                    >
+                                        Mes statistiques
                                     </NavLink>
                                 </Col>
                                 <Col

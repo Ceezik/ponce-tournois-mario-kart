@@ -1,47 +1,57 @@
 import React, { useState } from 'react';
-import queryString from 'query-string';
 import { Container, Row, Col } from 'react-grid-system';
+import { useAuth } from '../../utils/useAuth';
 import Form from '../form/Form';
 import Input from '../form/Input';
 import Button from '../form/Button';
-import { useAuth } from '../../utils/useAuth';
+import { update } from '../../services/user';
 
 const USERNAME_FORMAT =
     "Votre nom d'utilisateur ne doit contenir que des caractères alphanumériques";
 const USERNAME_LENGTH =
     "Votre nom d'utilisateur doit faire entre 3 et 50 caractères";
 
-function Signup() {
-    const { defaultUsername, twitchId, token } = queryString.parse(
-        window.location.search
-    );
+function Profile() {
+    const { user, updateUser } = useAuth();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const { signup } = useAuth();
+    const [message, setMessage] = useState(null);
 
-    const onSubmit = ({ username }) => {
-        signup({ username, twitchId, token }, setError, setLoading);
+    const onSubmit = (username) => {
+        setLoading(true);
+
+        update(username)
+            .then((res) => {
+                updateUser(res.data);
+                setMessage({
+                    type: 'success',
+                    text: "Votre nom d'utilisateur a bien été modifié",
+                });
+            })
+            .catch((err) =>
+                setMessage({ type: 'error', text: err.response.data })
+            )
+            .finally(() => setLoading(false));
     };
 
     return (
         <Container className="app__container">
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
-                    <h1 className="title--noMarginTop">Première connexion</h1>
-                    <p>
-                        Veuillez choisir un nom d'utilisateur, vous pourrez le
-                        modifier par la suite depuis votre profil.
-                    </p>
-                    <Form onSubmit={onSubmit} className="signup__form">
-                        {error && (
-                            <div className="formMessage formMessage__error">
-                                {error}
+                    <h1 className="title--noMarginTop">Mon compte</h1>
+
+                    <Form onSubmit={onSubmit}>
+                        {message && (
+                            <div
+                                className={`formMessage formMessage__${message.type}`}
+                            >
+                                {message.text}
                             </div>
                         )}
 
                         <Input
-                            name="username"
                             label="Nom d'utilisateur"
+                            name="username"
+                            defaultValue={user.username}
                             validationSchema={{
                                 required: 'Ce champ est obligatoire',
                                 minLength: {
@@ -57,7 +67,6 @@ function Signup() {
                                     message: USERNAME_FORMAT,
                                 },
                             }}
-                            defaultValue={defaultUsername}
                         />
 
                         <Row justify="end">
@@ -67,7 +76,7 @@ function Signup() {
                                     className="btnPrimary"
                                     loading={loading}
                                 >
-                                    Valider
+                                    Modifier
                                 </Button>
                             </Col>
                         </Row>
@@ -78,4 +87,4 @@ function Signup() {
     );
 }
 
-export default Signup;
+export default Profile;

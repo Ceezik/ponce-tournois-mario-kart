@@ -111,7 +111,9 @@ function ParticipantsChart({ tournaments }) {
 
     return (
         <>
-            <h1 className="statistics__title">Évolution du nombre de fleurs</h1>
+            <h1 className="statistics__title title--noMarginTop">
+                Évolution du nombre de fleurs
+            </h1>
             <Bar data={data} options={options} />
         </>
     );

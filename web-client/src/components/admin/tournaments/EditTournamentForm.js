@@ -33,7 +33,7 @@ function EditTournamentForm({ tournament }) {
 
     return (
         <>
-            <h1>Modifier un tournoi</h1>
+            <h1 className="title--noMarginTop">Modifier un tournoi</h1>
 
             <TournamentForm
                 tournament={tournament}

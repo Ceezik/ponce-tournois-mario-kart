@@ -7,4 +7,10 @@ module.exports = [
         method: 'get',
         func: [auth_ctrl.isAuthenticated, user_ctrl.getCurrent],
     },
+
+    {
+        url: '/user',
+        method: 'put',
+        func: [auth_ctrl.isAuthenticated, user_ctrl.update],
+    },
 ];
