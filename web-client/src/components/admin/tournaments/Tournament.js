@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import PonceParticipation from '../participations/PonceParticipation';
 import TournamentInfos from '../../tournaments/TournamentInfos';
 import Podium from '../../podiums/Podium';
+import useTitle from '../../../utils/useTitle';
 
 function Tournament({ tournament }) {
+    useTitle(tournament.name);
+
     return (
         <Row justify="center">
             <Col xs={12} lg={8}>

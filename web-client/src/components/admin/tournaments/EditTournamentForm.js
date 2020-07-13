@@ -3,8 +3,10 @@ import { useSocket } from '../../../utils/useSocket';
 import TournamentForm from './TournamentForm';
 import { nullifyEmptyFields } from '../../../utils/utils';
 import history from '../../../utils/history';
+import useTitle from '../../../utils/useTitle';
 
 function EditTournamentForm({ tournament }) {
+    useTitle('Modifier un tournoi');
     const { socket } = useSocket();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);

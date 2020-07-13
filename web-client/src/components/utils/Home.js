@@ -6,8 +6,10 @@ import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
 import Podium from '../podiums/Podium';
+import useTitle from '../../utils/useTitle';
 
 function Home() {
+    useTitle('Dernier tournoi');
     const { socket } = useSocket();
     const [participation, setParticipation] = useState(null);
     const [record, setRecord] = useState(null);
