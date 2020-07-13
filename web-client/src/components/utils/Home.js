@@ -5,6 +5,7 @@ import { useSocket } from '../../utils/useSocket';
 import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
+import Podium from '../podiums/Podium';
 
 function Home() {
     const { socket } = useSocket();
@@ -64,7 +65,10 @@ function Home() {
                         <TournamentInfos
                             tournament={participation.Tournament}
                         />
-
+                        <Podium
+                            tournamentId={participation.Tournament.id}
+                            canAdd={false}
+                        />
                         <Participation
                             participation={participation}
                             record={record}

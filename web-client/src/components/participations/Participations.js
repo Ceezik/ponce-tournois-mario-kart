@@ -7,6 +7,7 @@ import Participation from './Participation';
 import ParticipationsButtons from './ParticipationsButtons';
 import ParticipationSkeleton from './ParticipationSkeleton';
 import Error from '../utils/Error';
+import Podium from '../podiums/Podium';
 
 function Participations({ route, canAdd }) {
     const { socket } = useSocket();
@@ -96,7 +97,12 @@ function Participations({ route, canAdd }) {
                                                 participation.Tournament
                                             }
                                         />
-
+                                        <Podium
+                                            tournamentId={
+                                                participation.Tournament.id
+                                            }
+                                            canAdd={false}
+                                        />
                                         <Participation
                                             participation={participation}
                                             tournamentName={
