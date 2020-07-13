@@ -1,8 +1,11 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-grid-system';
 import ParticipationsStatistics from './ParticipationsStatistics';
+import useTitle from '../../utils/useTitle';
 
 function UserStatistics() {
+    useTitle('Mes statistiques');
+
     return (
         <Container className="app__container">
             <Row justify="center">
