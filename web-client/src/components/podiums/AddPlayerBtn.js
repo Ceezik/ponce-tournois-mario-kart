@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Row, Col } from 'react-grid-system';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import AddRaceForm from './AddRaceForm';
+import AddPlayerForm from './AddPlayerForm';
 
-function AddRaceBtn({ participationId }) {
+function AddPlayerBtn({ tournamentId }) {
     const [showForm, setShowForm] = useState(false);
 
     const openForm = () => {
@@ -16,26 +16,28 @@ function AddRaceBtn({ participationId }) {
     };
 
     return (
-        <Row className="participation__raceWrapper">
+        <Row>
             <Col xs={12} onClick={openForm}>
                 <div
-                    className={`participation__race ${
-                        !showForm ? 'participation__addRace' : ''
+                    className={`podium__player ${
+                        !showForm
+                            ? 'podium__addPlayer'
+                            : 'podium__addPlayerForm'
                     }`}
                 >
                     <Row justify="center" align="center">
                         {showForm ? (
-                            <AddRaceForm
+                            <AddPlayerForm
                                 closeForm={closeForm}
-                                participationId={participationId}
+                                tournamentId={tournamentId}
                             />
                         ) : (
-                            <Col xs={12}>
+                            <Col xs={12} className="podium__addPlayerWrapper">
                                 <FontAwesomeIcon
                                     icon={faPlus}
-                                    className="participation__addRaceBtn"
+                                    className="podium__addPlayerBtn"
                                 />
-                                Ajouter une course
+                                Ajouter au podium
                             </Col>
                         )}
                     </Row>
@@ -45,4 +47,4 @@ function AddRaceBtn({ participationId }) {
     );
 }
 
-export default AddRaceBtn;
+export default AddPlayerBtn;

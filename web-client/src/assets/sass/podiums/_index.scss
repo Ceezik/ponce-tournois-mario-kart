@@ -1,0 +1,41 @@
+@import '../variables';
+
+.podium__player {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+    border: 1px solid #e6e6e6;
+    text-align: center;
+}
+
+.podium__player--skeleton {
+    padding: 1rem 0;
+    margin: 0.5rem 0;
+}
+
+.podium__playerTrophy {
+    margin-right: 1rem;
+}
+
+.podium__addPlayer {
+    text-align: start !important;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.podium__addPlayer:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.podium__addPlayerForm {
+    text-align: start;
+}
+
+.podium__addPlayerWrapper {
+    text-align: center;
+}
+
+.podium__addPlayerBtn {
+    color: $main-color;
+    margin-right: 1rem;
+}

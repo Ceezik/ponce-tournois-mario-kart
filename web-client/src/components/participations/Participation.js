@@ -5,6 +5,7 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 import AddRaceBtn from '../admin/participations/AddRaceBtn';
 import ParticipationChart from './ParticipationChart';
+import { getPositionColor } from '../../utils/utils';
 
 function Participation({
     participation,
@@ -16,10 +17,6 @@ function Participation({
     const nbRaces = participation.Races.length;
     const nbPoints = _.sumBy(participation.Races, 'nbPoints');
     const averagePoints = nbRaces ? (nbPoints / nbRaces).toFixed(1) : 0;
-
-    const getPositionColor = (position) => {
-        return position === 1 ? 'gold' : position === 2 ? '#CBCDCD' : '#cd7f32';
-    };
 
     return (
         <>
