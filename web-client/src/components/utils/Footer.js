@@ -3,7 +3,11 @@ import React from 'react';
 function Footer() {
     return (
         <footer>
-            Fait avec le 💜 par{' '}
+            Fait avec le{' '}
+            <span role="img" aria-label="coeur">
+                💜
+            </span>{' '}
+            par{' '}
             <a
                 target="_blank"
                 rel="noopener noreferrer"
