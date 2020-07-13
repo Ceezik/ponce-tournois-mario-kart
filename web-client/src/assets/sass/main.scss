@@ -1,6 +1,21 @@
 @import 'normalize', 'variables', 'loader', 'auth', 'header', 'cups',
     'tournaments', 'participations', 'races', 'statistics', 'podiums';
 
+html,
+body,
+#root {
+    height: 100%;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1 0 auto;
+}
+
 body,
 button {
     font-family: 'Nunito', sans-serif;
@@ -159,13 +174,28 @@ table {
 }
 
 .app__container {
-    margin: 3rem 0;
+    margin: 3rem 0 5rem 0;
 }
 
 .app__container--home {
-    margin-bottom: 3rem;
+    margin-bottom: 5rem;
 }
 
 .title--noMarginTop {
     margin-top: 0;
+}
+
+footer {
+    flex-shrink: 0;
+    text-align: center;
+    border-top: 1px solid #e6e6e6;
+    padding: 2rem;
+}
+
+footer > a {
+    transition: all 0.3s ease;
+}
+
+footer > a:hover {
+    color: $main-color;
 }
