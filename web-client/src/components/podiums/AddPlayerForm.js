@@ -1,55 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-grid-system';
-import _ from 'lodash';
-import Form from '../../form/Form';
-import Input from '../../form/Input';
-import Button from '../../form/Button';
-import Typeahead from '../../form/Typeahead';
-import { useTracks } from '../../../utils/useTracks';
-import { useSocket } from '../../../utils/useSocket';
-import { getNbPointsFromPosition } from '../../../utils/utils';
+import Form from '../form/Form';
+import Input from '../form/Input';
+import Button from '../form/Button';
+import { useSocket } from '../../utils/useSocket';
 
-const POSITION_VALIDATION = 'Veuillez entrer un nombre compris entre 1 et 12';
+const POSITION_VALIDATION = 'Veuillez entrer un nombre compris entre 1 et 3';
+const NAME_LENGTH = 'Le nom doit faire entre 3 et 50 caractères';
 
-function AddRaceForm({ closeForm, participationId }) {
-    const { tracks } = useTracks();
+function AddPlayerForm({ closeForm, tournamentId }) {
     const { socket } = useSocket();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        socket.on('closeAddRaceForm', () => closeForm());
+        socket.on('closeAddPlayerForm', () => closeForm());
 
-        return () => socket.off('closeAddRaceForm');
+        return () => socket.off('closeAddPlayerForm');
     }, []);
 
-    const onSubmit = ({ position, trackName }) => {
-        const track = _.find(tracks, ['name', trackName]);
+    const onSubmit = ({ player, position }) => {
+        setLoading(true);
 
-        if (track) {
-            setLoading(true);
-
-            socket.emit(
-                'addRace',
-                {
-                    position: parseInt(position),
-                    nbPoints: getNbPointsFromPosition(position),
-                    trackId: track.id,
-                    participationId,
-                },
-                (err) => {
-                    setError(err);
-                    setLoading(false);
-                }
-            );
-        } else {
-            setError("Ce circuit n'existe pas");
-        }
+        socket.emit(
+            'addPodium',
+            { player, position: parseInt(position), tournamentId },
+            (err) => {
+                setError(err);
+                setLoading(false);
+            }
+        );
     };
 
     return (
         <Col xs={12}>
-            <Form className="participation__addRaceForm" onSubmit={onSubmit}>
+            <Form onSubmit={onSubmit}>
                 {error && (
                     <div className="formMessage formMessage__error">
                         {error}
@@ -69,18 +54,26 @@ function AddRaceForm({ closeForm, participationId }) {
                                     message: POSITION_VALIDATION,
                                 },
                                 max: {
-                                    value: 12,
+                                    value: 3,
                                     message: POSITION_VALIDATION,
                                 },
                             }}
                         />
                     </Col>
                     <Col xs={8}>
-                        <Typeahead
-                            name="trackName"
-                            label="Circuit"
+                        <Input
+                            name="player"
+                            label="Joueur"
                             validationSchema={{
                                 required: 'Ce champ est obligatoire',
+                                minLength: {
+                                    value: 3,
+                                    message: NAME_LENGTH,
+                                },
+                                maxLength: {
+                                    value: 50,
+                                    message: NAME_LENGTH,
+                                },
                             }}
                         />
                     </Col>
@@ -113,4 +106,4 @@ function AddRaceForm({ closeForm, participationId }) {
     );
 }
 
-export default AddRaceForm;
+export default AddPlayerForm;

@@ -3,6 +3,7 @@ import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import PonceParticipation from '../participations/PonceParticipation';
 import TournamentInfos from '../../tournaments/TournamentInfos';
+import Podium from '../../podiums/Podium';
 
 function Tournament({ tournament }) {
     return (
@@ -20,7 +21,7 @@ function Tournament({ tournament }) {
                 </Row>
 
                 <TournamentInfos tournament={tournament} />
-
+                <Podium tournamentId={tournament.id} canAdd={true} />
                 <PonceParticipation tournament={tournament} />
             </Col>
         </Row>
