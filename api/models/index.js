@@ -1,17 +1,20 @@
 const fs = require('fs'),
-    Sequelize = require('sequelize');
+    Sequelize = require('sequelize'),
+    env = process.env.NODE_ENV || 'development',
+    config = require(__dirname + '/../config/config')[env],
+    db = {};
+let sequelize;
 
-const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PWD,
-    {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        dialect: 'mysql',
-        logging: process.env.NODE_ENV === 'development' ? console.log : false,
-    }
-);
+if (config.use_env_variable) {
+    sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+    sequelize = new Sequelize(
+        config.database,
+        config.username,
+        config.password,
+        config
+    );
+}
 
 sequelize
     .authenticate()
@@ -21,8 +24,6 @@ sequelize
     .catch((err) => {
         console.error('Impossible de se connecter : ', err);
     });
-
-const db = {};
 
 fs.readdirSync(__dirname)
     .filter((filename) => filename !== 'index.js')
@@ -37,8 +38,7 @@ Object.keys(db).forEach((modelName) => {
     } catch (e) {}
 });
 
-if (process.env.NODE_ENV !== 'production') {
-    sequelize.sync({ alter: true });
-}
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 module.exports = db;
