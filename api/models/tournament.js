@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Tournament.associate = (db) => {
         Tournament.hasMany(db.Participation);
+        Tournament.hasMany(db.Podium);
     };
 
     Tournament.afterCreate((tournament) => {
