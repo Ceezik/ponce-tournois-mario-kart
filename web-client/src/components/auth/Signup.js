@@ -5,6 +5,7 @@ import Form from '../form/Form';
 import Input from '../form/Input';
 import Button from '../form/Button';
 import { useAuth } from '../../utils/useAuth';
+import useTitle from '../../utils/useTitle';
 
 const USERNAME_FORMAT =
     "Votre nom d'utilisateur ne doit contenir que des caractères alphanumériques";
@@ -12,6 +13,7 @@ const USERNAME_LENGTH =
     "Votre nom d'utilisateur doit faire entre 3 et 50 caractères";
 
 function Signup() {
+    useTitle('Première connexion');
     const { defaultUsername, twitchId, token } = queryString.parse(
         window.location.search
     );

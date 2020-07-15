@@ -6,8 +6,10 @@ import CupsListItem from './CupsListItem';
 import AddCupBtn from './AddCupBtn';
 import AddCupForm from './AddCupForm';
 import TracksWrapper from '../tracks/TracksWrapper';
+import useTitle from '../../../utils/useTitle';
 
 function CupsWrapper() {
+    useTitle('Coupes et circuits');
     const [cups, setCups] = useState([]);
     const [selectedCup, setSelectedCup] = useState(null);
     const [loading, setLoading] = useState(true);

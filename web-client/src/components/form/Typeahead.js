@@ -30,7 +30,7 @@ function Typeahead({ ...rest }) {
 
         setShowSuggestions(value.length > 0);
         if (value.length > 0) {
-            const regex = new RegExp(`^${value}`, `i`);
+            const regex = new RegExp(`${value}`, `i`);
             setSuggestions(
                 getSortedTracks()
                     .filter((i) => regex.test(i.name))

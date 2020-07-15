@@ -7,10 +7,12 @@ import TournamentsListItem from './TournamentsListItem';
 import TournamentsSkeleton, {
     TournamentsListSkeleton,
 } from './TournamentsSkeleton';
+import useTitle from '../../../utils/useTitle';
 
 const PAGE_SIZE = 20;
 
 function TournamentsWrapper() {
+    useTitle('Tournois');
     const { socket } = useSocket();
     const [tournaments, setTournaments] = useState([]);
     const [hasMore, setHasMore] = useState(true);

@@ -75,7 +75,7 @@ module.exports = {
                             record: _getRecord(participations),
                         });
                     } else {
-                        onError("Ponce n'a pas participé à aucun tournoi");
+                        onError("Ponce n'a participé à aucun tournoi");
                     }
                 })
                 .catch(() => onError('Une erreur est survenue'));

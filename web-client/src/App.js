@@ -17,6 +17,7 @@ import UserRaces from './components/races/UserRaces';
 import Profile from './components/user/Profile';
 import UserStatistics from './components/statistics/UserStatistics';
 import PonceStatistics from './components/statistics/PonceStatistics';
+import Footer from './components/utils/Footer';
 
 function App() {
     return (
@@ -24,49 +25,60 @@ function App() {
             <SocketProvider>
                 <TracksProvider>
                     <AuthProvider>
-                        <Header />
-                        <Switch>
-                            <Route exact path="/signup" component={Signup} />
+                        <div className="container">
+                            <Header />
+                            <Switch>
+                                <Route
+                                    exact
+                                    path="/signup"
+                                    component={Signup}
+                                />
 
-                            <Route exact path="/" component={Home} />
-                            <Route
-                                exact
-                                path="/history"
-                                component={PonceParticipations}
-                            />
-                            <Route exact path="/races" component={PonceRaces} />
-                            <Route
-                                exact
-                                path="/statistics"
-                                component={PonceStatistics}
-                            />
+                                <Route exact path="/" component={Home} />
+                                <Route
+                                    exact
+                                    path="/history"
+                                    component={PonceParticipations}
+                                />
+                                <Route
+                                    exact
+                                    path="/races"
+                                    component={PonceRaces}
+                                />
+                                <Route
+                                    exact
+                                    path="/statistics"
+                                    component={PonceStatistics}
+                                />
 
-                            <PrivateRoute
-                                exact
-                                path="/profile"
-                                component={Profile}
-                            />
-                            <PrivateRoute
-                                exact
-                                path="/my-history"
-                                component={UserParticipations}
-                            />
-                            <PrivateRoute
-                                exact
-                                path="/my-races"
-                                component={UserRaces}
-                            />
-                            <PrivateRoute
-                                exact
-                                path="/my-statistics"
-                                component={UserStatistics}
-                            />
+                                <PrivateRoute
+                                    exact
+                                    path="/profile"
+                                    component={Profile}
+                                />
+                                <PrivateRoute
+                                    exact
+                                    path="/my-history"
+                                    component={UserParticipations}
+                                />
+                                <PrivateRoute
+                                    exact
+                                    path="/my-races"
+                                    component={UserRaces}
+                                />
+                                <PrivateRoute
+                                    exact
+                                    path="/my-statistics"
+                                    component={UserStatistics}
+                                />
 
-                            <AdminRoute
-                                path="/admin"
-                                component={AdminWrapper}
-                            />
-                        </Switch>
+                                <AdminRoute
+                                    path="/admin"
+                                    component={AdminWrapper}
+                                />
+                            </Switch>
+                        </div>
+                        <Footer />
                     </AuthProvider>
                 </TracksProvider>
             </SocketProvider>
