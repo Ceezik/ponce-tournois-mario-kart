@@ -6,6 +6,7 @@ const express = require('express'),
     io = require('socket.io')(server),
     bodyParser = require('body-parser'),
     cors = require('cors'),
+    helmet = require('helmet'),
     PORT = process.env.PORT;
 
 app.use(bodyParser.json());
@@ -15,6 +16,7 @@ app.use(
         origin: [process.env.WEB_CLIENT_URL],
     })
 );
+app.use(helmet());
 
 const errorHandler = (err, req, res, next) => {
     if (err.status === null || err.status === undefined) {
