@@ -5,7 +5,7 @@ module.exports = new TwitchStrategy(
     {
         clientID: process.env.TWITCH_CLIENT_ID,
         clientSecret: process.env.TWITCH_CLIENT_SECRET,
-        callbackURL: `${process.env.URL}:${process.env.PORT}/auth/twitch/callback`,
+        callbackURL: `${process.env.PASSPORT_CALLBACK}/auth/twitch/callback`,
         scope: 'user_read',
     },
     (accessToken, refreshToken, profile, done) => {
