@@ -5,3 +5,7 @@ export const getAll = (page, pageSize, usernameFilter) => {
         `/users?page=${page}&pageSize=${pageSize}&username=${usernameFilter}`
     );
 };
+
+export const updateById = (user) => {
+    return request.put(`/users/${user.id}`, user);
+};

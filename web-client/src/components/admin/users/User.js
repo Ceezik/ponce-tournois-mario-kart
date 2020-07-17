@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { Col, Row } from 'react-grid-system';
 import Switch from '../../utils/Switch';
+import { updateById } from '../../../services/users';
 
 function User({ user }) {
     const [isAdmin, setIsAdmin] = useState(user.isAdmin);
+
+    const update = (isAdmin) => {
+        setIsAdmin(isAdmin);
+        updateById({ id: user.id, isAdmin }).catch(() => setIsAdmin(!isAdmin));
+    };
 
     return (
         <Row>
@@ -14,7 +20,7 @@ function User({ user }) {
                         <Col xs={4}>
                             <Switch
                                 on={isAdmin}
-                                setOn={() => setIsAdmin(!isAdmin)}
+                                setOn={() => update(!isAdmin)}
                             />
                         </Col>
                     </Row>
