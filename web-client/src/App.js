@@ -18,6 +18,7 @@ import Profile from './components/user/Profile';
 import UserStatistics from './components/statistics/UserStatistics';
 import PonceStatistics from './components/statistics/PonceStatistics';
 import Footer from './components/utils/Footer';
+import Analytics from './components/utils/Analytics';
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                     <AuthProvider>
                         <div className="container">
                             <Header />
+                            <Analytics />
                             <Switch>
                                 <Route
                                     exact
