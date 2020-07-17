@@ -19,6 +19,16 @@ function PonceParticipation({ tournament }) {
         }
     });
 
+    socket.off('editRace').on('editRace', (race) => {
+        if (participation && race.ParticipationId === participation.id) {
+            const index = _.findIndex(participation.Races, { id: race.id });
+            const newParticipation = _.cloneDeep(participation);
+
+            newParticipation.Races.splice(index, 1, race);
+            setParticipation(newParticipation);
+        }
+    });
+
     useEffect(() => {
         socket.on('getPonceParticipation', (participation) => {
             setParticipation(participation);
@@ -33,6 +43,7 @@ function PonceParticipation({ tournament }) {
         return () => {
             socket.off('getPonceParticipation');
             socket.off('addRace');
+            socket.off('editRace');
         };
     }, []);
 

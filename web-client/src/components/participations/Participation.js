@@ -1,11 +1,9 @@
 import React from 'react';
 import { Row, Col, Hidden } from 'react-grid-system';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 import AddRaceBtn from '../admin/participations/AddRaceBtn';
 import ParticipationChart from './ParticipationChart';
-import { getPositionColor } from '../../utils/utils';
+import ParticipationRace from './ParticipationRace';
 
 function Participation({
     participation,
@@ -72,28 +70,11 @@ function Participation({
                 )}
 
                 {participation.Races.map((race) => (
-                    <Row key={race.id}>
-                        <Col xs={12}>
-                            <div className="participation__race">
-                                <Row align="center">
-                                    <Col xs={3}>
-                                        {race.position <= 3 ? (
-                                            <FontAwesomeIcon
-                                                icon={faMedal}
-                                                color={getPositionColor(
-                                                    race.position
-                                                )}
-                                            />
-                                        ) : (
-                                            race.position
-                                        )}
-                                    </Col>
-                                    <Col xs={3}>{race.nbPoints}</Col>
-                                    <Col xs={6}>{race.Track.name}</Col>
-                                </Row>
-                            </div>
-                        </Col>
-                    </Row>
+                    <ParticipationRace
+                        key={race.id}
+                        race={race}
+                        canAdd={canAdd}
+                    />
                 ))}
 
                 {canAdd &&

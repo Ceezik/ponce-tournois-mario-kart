@@ -5,16 +5,16 @@ import { useSocket } from '../../../utils/useSocket';
 import { getNbPointsFromPosition } from '../../../utils/utils';
 import RaceForm from './RaceForm';
 
-function AddRaceForm({ closeForm, participationId }) {
+function EditRaceForm({ closeForm, race }) {
     const { tracks } = useTracks();
     const { socket } = useSocket();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        socket.on('closeAddRaceForm', () => closeForm());
+        socket.on('closeEditRaceForm', () => closeForm());
 
-        return () => socket.off('closeAddRaceForm');
+        return () => socket.off('closeEditRaceForm');
     }, []);
 
     const onSubmit = ({ position, trackName }) => {
@@ -24,12 +24,12 @@ function AddRaceForm({ closeForm, participationId }) {
             setLoading(true);
 
             socket.emit(
-                'addRace',
+                'editRace',
                 {
                     position: parseInt(position),
                     nbPoints: getNbPointsFromPosition(position),
                     trackId: track.id,
-                    participationId,
+                    raceId: race.id,
                 },
                 (err) => {
                     setError(err);
@@ -47,8 +47,9 @@ function AddRaceForm({ closeForm, participationId }) {
             error={error}
             loading={loading}
             closeForm={closeForm}
+            race={race}
         />
     );
 }
 
-export default AddRaceForm;
+export default EditRaceForm;
