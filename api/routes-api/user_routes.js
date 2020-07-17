@@ -9,6 +9,16 @@ module.exports = [
     },
 
     {
+        url: '/users/:userId',
+        method: 'put',
+        func: [
+            auth_ctrl.isAuthenticated,
+            auth_ctrl.isAdmin,
+            user_ctrl.updateById,
+        ],
+    },
+
+    {
         url: '/user',
         method: 'get',
         func: [auth_ctrl.isAuthenticated, user_ctrl.getCurrent],
