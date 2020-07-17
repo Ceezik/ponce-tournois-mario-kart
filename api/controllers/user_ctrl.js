@@ -1,6 +1,19 @@
-const db = require('../models');
+const db = require('../models'),
+    { Op } = require('sequelize'),
+    { paginate } = require('../utils');
 
 module.exports = {
+    getAll: (req, res, next) => {
+        return db.User.findAll({
+            where: {
+                username: { [Op.substring]: `${req.query.username}` },
+            },
+            ...paginate(parseInt(req.query.page), parseInt(req.query.pageSize)),
+        })
+            .then((users) => res.json(users))
+            .catch((err) => next(err));
+    },
+
     getCurrent: (req, res, next) => {
         return res.json(req.user);
     },
