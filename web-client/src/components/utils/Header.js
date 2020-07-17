@@ -143,7 +143,7 @@ function MobileHeader() {
 
     return (
         <>
-            <Link to="/" className="header__logo">
+            <Link to="/" className="header__logo" onClick={close}>
                 <img src={ponceFleur} alt="Ponce fleur" />
             </Link>
 
