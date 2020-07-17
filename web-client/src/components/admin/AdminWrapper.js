@@ -7,6 +7,7 @@ import AddTournamentForm from './tournaments/AddTournamentForm';
 import TournamentsWrapper from './tournaments/TournamentsWrapper';
 import TournamentWrapper from './tournaments/TournamentWrapper';
 import EditTournamentWrapper from './tournaments/EditTournamentWrapper';
+import UsersWrapper from './users/UsersWrapper';
 
 function AdminWrapper() {
     return (
@@ -35,6 +36,11 @@ function AdminWrapper() {
                     path="/admin/tournaments/:tournamentId/edit"
                     component={EditTournamentWrapper}
                 />
+                <AdminRoute
+                    exact
+                    path="/admin/users"
+                    component={UsersWrapper}
+                />
             </Switch>
         </>
     );
@@ -44,6 +50,7 @@ function AdminHeader() {
     const LINKS = [
         { url: '/cups', name: 'Coupes/Circuits' },
         { url: '/tournaments', name: 'Tournois' },
+        { url: '/users', name: 'Utilisateurs' },
     ];
 
     return (
