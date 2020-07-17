@@ -8,6 +8,10 @@ module.exports = {
             where: {
                 username: { [Op.substring]: `${req.query.username}` },
             },
+            order: [
+                ['isAdmin', 'DESC'],
+                ['username', 'ASC'],
+            ],
             ...paginate(parseInt(req.query.page), parseInt(req.query.pageSize)),
         })
             .then((users) => res.json(users))
