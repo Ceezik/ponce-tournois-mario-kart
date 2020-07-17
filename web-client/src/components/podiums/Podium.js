@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-grid-system';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 import AddPlayerBtn from './AddPlayerBtn';
-import { getPositionColor } from '../../utils/utils';
 import { useSocket } from '../../utils/useSocket';
 import PodiumSkeleton from './PodiumSkeleton';
+import PodiumListItem from './PodiumListItem';
 
 function Podium({ tournamentId, canAdd = false }) {
     const { socket } = useSocket();
@@ -16,6 +14,14 @@ function Podium({ tournamentId, canAdd = false }) {
 
     socket.off('addPodium').on('addPodium', (podium) => {
         setPodia(_.sortBy([...podia, podium], ['position', 'player']));
+    });
+
+    socket.off('editPodium').on('editPodium', (podium) => {
+        const index = _.findIndex(podia, { id: podium.id });
+        const newPodia = _.cloneDeep(podia);
+
+        newPodia.splice(index, 1, podium);
+        setPodia(_.sortBy(newPodia, ['position', 'player']));
     });
 
     useEffect(() => {
@@ -32,6 +38,7 @@ function Podium({ tournamentId, canAdd = false }) {
         return () => {
             socket.off('getPodium');
             socket.off('addPodium');
+            socket.off('editPodium');
         };
     }, []);
 
@@ -47,16 +54,11 @@ function Podium({ tournamentId, canAdd = false }) {
         <>
             <Row>
                 {podia.map((podium) => (
-                    <Col key={podium.id} xs={12} lg={4}>
-                        <div className="podium__player">
-                            <FontAwesomeIcon
-                                icon={faTrophy}
-                                className="podium__playerTrophy"
-                                color={getPositionColor(podium.position)}
-                            />
-                            {podium.player}
-                        </div>
-                    </Col>
+                    <PodiumListItem
+                        key={podium.id}
+                        podium={podium}
+                        canAdd={canAdd}
+                    />
                 ))}
             </Row>
             {canAdd && <AddPlayerBtn tournamentId={tournamentId} />}

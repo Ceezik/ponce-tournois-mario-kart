@@ -20,9 +20,7 @@ function AddPlayerBtn({ tournamentId }) {
             <Col xs={12} onClick={openForm}>
                 <div
                     className={`podium__player ${
-                        !showForm
-                            ? 'podium__addPlayer'
-                            : 'podium__addPlayerForm'
+                        !showForm ? 'podium__addPlayer' : ''
                     }`}
                 >
                     <Row justify="center" align="center">
