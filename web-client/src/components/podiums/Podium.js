@@ -13,18 +13,24 @@ function Podium({ tournamentId, canAdd = false }) {
     const [error, setError] = useState(null);
 
     socket.off('addPodium').on('addPodium', (podium) => {
-        setPodia(_.sortBy([...podia, podium], ['position', 'player']));
+        if (podium.TournamentId === tournamentId) {
+            setPodia(_.sortBy([...podia, podium], ['position', 'player']));
+        }
     });
 
     socket.off('editPodium').on('editPodium', (podium) => {
-        const index = _.findIndex(podia, { id: podium.id });
-        const newPodia = _.cloneDeep(podia);
+        if (podium.TournamentId === tournamentId) {
+            const index = _.findIndex(podia, { id: podium.id });
+            const newPodia = _.cloneDeep(podia);
 
-        newPodia.splice(index, 1, podium);
-        setPodia(_.sortBy(newPodia, ['position', 'player']));
+            newPodia.splice(index, 1, podium);
+            setPodia(_.sortBy(newPodia, ['position', 'player']));
+        }
     });
 
     useEffect(() => {
+        setLoading(true);
+
         socket.on('getPodium', (podia) => {
             setPodia(podia);
             setLoading(false);
@@ -40,7 +46,7 @@ function Podium({ tournamentId, canAdd = false }) {
             socket.off('addPodium');
             socket.off('editPodium');
         };
-    }, []);
+    }, [tournamentId]);
 
     return loading ? (
         <PodiumSkeleton />
