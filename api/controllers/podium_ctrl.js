@@ -25,4 +25,22 @@ module.exports = {
             })
             .catch(() => onError('Une erreur est survenue'));
     },
+
+    update: (io, socket, onError, { position, player, id }) => {
+        db.Podium.findByPk(id)
+            .then((podium) => {
+                if (podium) {
+                    podium
+                        .update({ position, player })
+                        .then((newPodium) => {
+                            socket.emit('closeEditPlayerForm');
+                            io.emit('editPodium', newPodium);
+                        })
+                        .catch(() => onError('Une erreur est survenue'));
+                } else {
+                    onError('Une erreur est survenue');
+                }
+            })
+            .catch(() => onError('Une erreur est survenue'));
+    },
 };
