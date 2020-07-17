@@ -2,23 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useSocket } from '../../utils/useSocket';
 import PlayerForm from './PlayerForm';
 
-function AddPlayerForm({ closeForm, tournamentId }) {
+function EditPlayerForm({ closeForm, podium }) {
     const { socket } = useSocket();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        socket.on('closeAddPlayerForm', () => closeForm());
+        socket.on('closeEditPlayerForm', () => closeForm());
 
-        return () => socket.off('closeAddPlayerForm');
+        return () => socket.off('closeEditPlayerForm');
     }, []);
 
     const onSubmit = ({ player, position }) => {
         setLoading(true);
 
         socket.emit(
-            'addPodium',
-            { player, position: parseInt(position), tournamentId },
+            'editPodium',
+            { player, position: parseInt(position), id: podium.id },
             (err) => {
                 setError(err);
                 setLoading(false);
@@ -32,8 +32,9 @@ function AddPlayerForm({ closeForm, tournamentId }) {
             closeForm={closeForm}
             error={error}
             loading={loading}
+            podium={podium}
         />
     );
 }
 
-export default AddPlayerForm;
+export default EditPlayerForm;
