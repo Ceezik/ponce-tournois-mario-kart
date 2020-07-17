@@ -12,4 +12,8 @@ module.exports = (io, socket, userId, isAdmin) => {
     socket.on('addRace', (data, onError) => {
         race_ctrl.addRace(io, socket, onError, data);
     });
+
+    socket.on('editRace', (data, onError) => {
+        race_ctrl.editRace(io, socket, onError, data);
+    });
 };
