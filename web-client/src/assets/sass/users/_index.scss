@@ -1,0 +1,39 @@
+@import '../variables';
+
+.users__filter {
+    margin-bottom: 1.5rem;
+}
+
+.users__titleWrapper {
+    padding: 0 1rem;
+}
+
+.users__title {
+    color: $main-color;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.users__title > div:first-child {
+    text-align: left;
+}
+
+.users__userWrapper {
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+.users__user--skeleton {
+    padding: 1rem 0;
+    margin: 0.5rem 0;
+}
+
+.users__user {
+    text-align: center;
+}
+
+.users__user > div:first-child {
+    text-align: left;
+}
