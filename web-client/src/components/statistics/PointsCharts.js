@@ -45,7 +45,7 @@ export function TotalPointsChart({ participations }) {
                 {
                     ticks: {
                         fontFamily: 'Nunito',
-                        suggestedMin: 0,
+                        suggestedMin: 100,
                         stepSize: 50,
                     },
                 },
