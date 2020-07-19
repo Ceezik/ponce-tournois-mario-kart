@@ -1,5 +1,5 @@
 @import 'normalize', 'variables', 'loader', 'auth', 'header', 'cups',
-    'tournaments', 'participations', 'races', 'statistics', 'podiums';
+    'tournaments', 'participations', 'races', 'statistics', 'podiums', 'users';
 
 html,
 body,
@@ -198,4 +198,56 @@ footer > a {
 
 footer > a:hover {
     color: $main-color;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 2.7rem;
+    height: 1.5rem;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: #ccc;
+    transition: 0.2s ease;
+}
+
+.slider:before {
+    position: absolute;
+    content: '';
+    height: 1.25rem;
+    width: 1.25rem;
+    left: 0.15rem;
+    bottom: 0.15rem;
+    background-color: white;
+    transition: 0.2s ease;
+}
+
+input:checked + .slider {
+    background-color: $main-color;
+}
+
+input:checked + .slider:before {
+    transform: translateX(1.15rem);
+}
+
+.slider.round {
+    border-radius: 2rem;
+}
+
+.slider.round:before {
+    border-radius: 100%;
 }

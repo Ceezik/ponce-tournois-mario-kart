@@ -24,6 +24,16 @@ function Home() {
         }
     });
 
+    socket.off('editRace').on('editRace', (race) => {
+        if (participation && race.ParticipationId === participation.id) {
+            const index = _.findIndex(participation.Races, { id: race.id });
+            const newParticipation = _.cloneDeep(participation);
+
+            newParticipation.Races.splice(index, 1, race);
+            setParticipation(newParticipation);
+        }
+    });
+
     useEffect(() => {
         socket.on('getLastPonceParticipation', ({ participation, record }) => {
             setRecord(record);
@@ -39,6 +49,7 @@ function Home() {
             socket.off('getLastPonceParticipation');
             socket.off('refreshTournaments');
             socket.off('addRace');
+            socket.off('editRace');
         };
     }, []);
 

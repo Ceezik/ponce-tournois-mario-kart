@@ -57,4 +57,38 @@ module.exports = {
             })
             .catch(() => onError('Une erreur est survenue'));
     },
+
+    editRace: (
+        io,
+        socket,
+        onError,
+        { position, nbPoints, trackId, raceId }
+    ) => {
+        db.Race.findByPk(raceId)
+            .then((race) => {
+                if (race) {
+                    race.update({
+                        position,
+                        nbPoints,
+                        TrackId: trackId,
+                    })
+                        .then((newRace) => {
+                            newRace
+                                .getTrack({ attributes: ['name'] })
+                                .then((track) => {
+                                    newRace.setDataValue('Track', track);
+                                    socket.emit('closeEditRaceForm');
+                                    io.emit('editRace', newRace);
+                                })
+                                .catch(() =>
+                                    onError('Veuillez rafraichir la page')
+                                );
+                        })
+                        .catch(() => onError('Une erreur est survenue'));
+                } else {
+                    onError('Une erreur est survenue');
+                }
+            })
+            .catch(() => onError('Une erreur est survenue'));
+    },
 };

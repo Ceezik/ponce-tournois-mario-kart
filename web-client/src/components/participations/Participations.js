@@ -25,6 +25,17 @@ function Participations({ route, canAdd }) {
         }
     });
 
+    socket.off('editRace').on('editRace', (race) => {
+        const p = _.find(participations, { id: race.ParticipationId });
+        if (p) {
+            const index = _.findIndex(p.Races, { id: race.id });
+            const newParticipation = _.cloneDeep(p);
+
+            newParticipation.Races.splice(index, 1, race);
+            refreshParticipation(newParticipation);
+        }
+    });
+
     useEffect(() => {
         socket.on(route, (participations) => {
             setParticipations(participations);
@@ -39,6 +50,7 @@ function Participations({ route, canAdd }) {
             socket.off(route);
             socket.off('refreshTournaments');
             socket.off('addRace');
+            socket.off('editRace');
         };
     }, []);
 

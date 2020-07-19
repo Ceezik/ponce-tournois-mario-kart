@@ -1,6 +1,40 @@
-const db = require('../models');
+const db = require('../models'),
+    { Op } = require('sequelize'),
+    { paginate } = require('../utils');
 
 module.exports = {
+    getAll: (req, res, next) => {
+        return db.User.findAll({
+            where: {
+                username: { [Op.substring]: `${req.query.username}` },
+            },
+            order: [
+                ['isAdmin', 'DESC'],
+                ['username', 'ASC'],
+            ],
+            ...paginate(parseInt(req.query.page), parseInt(req.query.pageSize)),
+        })
+            .then((users) => res.json(users))
+            .catch((err) => next(err));
+    },
+
+    updateById: (req, res, next) => {
+        return db.User.findByPk(req.params.userId)
+            .then((user) => {
+                if (user) {
+                    return user
+                        .update(req.body)
+                        .then(() => res.sendStatus(200))
+                        .catch((err) => next(err));
+                }
+                throw {
+                    status: 404,
+                    message: "Cet utilisateur n'existe pas",
+                };
+            })
+            .catch((err) => next(err));
+    },
+
     getCurrent: (req, res, next) => {
         return res.json(req.user);
     },
