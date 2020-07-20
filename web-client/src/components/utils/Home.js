@@ -61,7 +61,16 @@ function Home() {
     };
 
     return (
-        <Container className="app__container--home">
+        <Container className="app__container">
+            <Row justify="center">
+                <Col xs={12} lg={8}>
+                    <div className="formMessage formMessage--center formMessage__info">
+                        Rejoignez le tournoi avec le code{' '}
+                        {process.env.REACT_APP_TOURNAMENT_CODE} !
+                    </div>
+                </Col>
+            </Row>
+
             {loading ? (
                 <ParticipationSkeleton showButton={false} />
             ) : error ? (
