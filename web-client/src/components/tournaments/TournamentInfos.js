@@ -4,7 +4,7 @@ import { Row, Col } from 'react-grid-system';
 
 function TournamentInfos({ tournament }) {
     const formatDate = (date) => {
-        return moment(date).format('DD/MM/YYYY à HH:mm');
+        return moment(date).format('DD MMM YYYY à HH:mm');
     };
 
     return (

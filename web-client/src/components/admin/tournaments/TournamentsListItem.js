@@ -12,7 +12,7 @@ function TournamentsListItem({ tournament }) {
                         {tournament.name}
                     </h3>
                     <label className="tournamentsList__tournamentDates">
-                        {moment(tournament.startDate).format('DD/MM/YYYY')}
+                        {moment(tournament.startDate).format('DD MMM YYYY')}
                     </label>
                 </div>
             </Link>
