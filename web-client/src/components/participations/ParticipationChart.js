@@ -7,7 +7,7 @@ function ParticipationChart({ record, races, tournamentName, nbMaxRaces }) {
     let sum2;
 
     const data = {
-        labels: [...Array(nbMaxRaces).keys()],
+        labels: Array.from(Array(nbMaxRaces), (_, i) => i + 1),
         datasets: [
             {
                 label: tournamentName,
@@ -34,7 +34,13 @@ function ParticipationChart({ record, races, tournamentName, nbMaxRaces }) {
         scales: {
             xAxes: [
                 {
-                    display: false,
+                    gridLines: {
+                        display: false,
+                    },
+                    ticks: {
+                        fontFamily: 'Nunito',
+                        padding: 20,
+                    },
                 },
             ],
             yAxes: [
@@ -57,7 +63,7 @@ function ParticipationChart({ record, races, tournamentName, nbMaxRaces }) {
                 left: 20,
                 right: 20,
                 top: 20,
-                bottom: 20,
+                bottom: 10,
             },
         },
     };
