@@ -153,12 +153,20 @@ input:focus {
     padding: 1rem 1.5rem;
     border-radius: 4px;
 
+    &--center {
+        text-align: center;
+    }
+
     &__error {
         background-color: $error-color;
     }
 
     &__success {
         background-color: $success-color;
+    }
+
+    &__info {
+        background-color: $main-color;
     }
 }
 
@@ -175,10 +183,6 @@ table {
 
 .app__container {
     margin: 3rem 0 5rem 0;
-}
-
-.app__container--home {
-    margin-bottom: 5rem;
 }
 
 .title--noMarginTop {
