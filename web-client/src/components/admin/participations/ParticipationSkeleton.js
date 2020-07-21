@@ -5,10 +5,20 @@ import Skeleton from 'react-loading-skeleton';
 function ParticipationSkeleton() {
     return (
         <>
-            <Skeleton height="5rem" />
+            <Skeleton
+                height="5rem"
+                className="participation__infos--skeleton"
+            />
+            <Skeleton
+                height="5rem"
+                className="participation__infos--skeleton"
+            />
 
             <div className="participation">
-                <Skeleton height="17rem" />
+                <Skeleton
+                    height="17rem"
+                    className="participation__chart--skeleton"
+                />
 
                 <Row className="participation__title">
                     <Col xs={3}>

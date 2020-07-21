@@ -14,22 +14,22 @@ function TournamentInfos({ tournament }) {
             <Row>
                 <Col xs={12}>
                     <div className="tournament__infos">
-                        <Row justify="between">
-                            <Col xs="content">
+                        <Row>
+                            <Col xs={12} sm={6} md={4}>
                                 <div className="tournament__info">
                                     <label>Date de début</label>
                                     <h4>{formatDate(tournament.startDate)}</h4>
                                 </div>
                             </Col>
 
-                            <Col xs="content">
+                            <Col xs={12} sm={6} md={4}>
                                 <div className="tournament__info">
                                     <label>Date de fin</label>
                                     <h4>{formatDate(tournament.endDate)}</h4>
                                 </div>
                             </Col>
 
-                            <Col xs="content">
+                            <Col xs={12} sm={6} md={4}>
                                 <div className="tournament__info">
                                     <label>Nombre de fleurs</label>
                                     <h4>{tournament.nbParticipants || '-'}</h4>

@@ -11,6 +11,14 @@ function PonceParticipation({ tournament }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    socket.off('editParticipation').on('editParticipation', (p) => {
+        if (participation && p.id === participation.id) {
+            const newParticipation = _.cloneDeep(participation);
+            newParticipation.goal = p.goal;
+            setParticipation(newParticipation);
+        }
+    });
+
     socket.off('addRace').on('addRace', (race) => {
         if (participation && race.ParticipationId === participation.id) {
             const newParticipation = _.cloneDeep(participation);
@@ -42,6 +50,7 @@ function PonceParticipation({ tournament }) {
 
         return () => {
             socket.off('getPonceParticipation');
+            socket.off('editParticipation');
             socket.off('addRace');
             socket.off('editRace');
         };
