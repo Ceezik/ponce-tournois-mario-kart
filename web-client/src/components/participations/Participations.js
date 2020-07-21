@@ -16,6 +16,15 @@ function Participations({ route, canAdd }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    socket.off('editParticipation').on('editParticipation', (participation) => {
+        const p = _.find(participations, { id: participation.id });
+        if (p) {
+            const newParticipation = _.cloneDeep(p);
+            newParticipation.goal = participation.goal;
+            refreshParticipation(newParticipation);
+        }
+    });
+
     socket.off('addRace').on('addRace', (race) => {
         const p = _.find(participations, { id: race.ParticipationId });
         if (p) {
@@ -49,6 +58,7 @@ function Participations({ route, canAdd }) {
         return () => {
             socket.off(route);
             socket.off('refreshTournaments');
+            socket.off('editParticipation');
             socket.off('addRace');
             socket.off('editRace');
         };

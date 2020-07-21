@@ -26,6 +26,10 @@ img {
     max-width: 100%;
 }
 
+label {
+    cursor: inherit;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -145,6 +149,16 @@ input:focus {
 .typeahead__suggestionsWrapper li:hover {
     cursor: pointer;
     background-color: #f3f3f4;
+}
+
+.text-- {
+    &error {
+        color: $error-color;
+    }
+
+    &success {
+        color: $success-color;
+    }
 }
 
 .formMessage {
