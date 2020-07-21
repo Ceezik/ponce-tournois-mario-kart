@@ -81,4 +81,34 @@ module.exports = {
                 .catch(() => onError('Une erreur est survenue'));
         });
     },
+
+    update: (
+        io,
+        socket,
+        onError,
+        { goal, participationId },
+        userId,
+        isAdmin
+    ) => {
+        db.Participation.findByPk(participationId)
+            .then((participation) => {
+                if (
+                    participation &&
+                    (participation.UserId === userId || isAdmin)
+                ) {
+                    participation
+                        .update({ goal })
+                        .then((newParticipation) => {
+                            socket.emit('closeGoalForm');
+                            io.emit('editParticipation', newParticipation);
+                        })
+                        .catch(() => onError('Une erreur est survenue'));
+                } else {
+                    onError(
+                        "Vous n'êtes pas autorisé à effectuer cette action"
+                    );
+                }
+            })
+            .catch(() => onError('Une erreur est survenue'));
+    },
 };
