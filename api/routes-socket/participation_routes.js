@@ -17,6 +17,10 @@ module.exports = (io, socket, userId, isAdmin) => {
         participation_ctrl.getLastPonceParticipation(socket, onError);
     });
 
+    socket.on('getLastUserParticipation', (onError) => {
+        participation_ctrl.getLastUserParticipation(socket, onError, userId);
+    });
+
     socket.on('editParticipation', (participation, onError) => {
         participation_ctrl.update(
             io,
