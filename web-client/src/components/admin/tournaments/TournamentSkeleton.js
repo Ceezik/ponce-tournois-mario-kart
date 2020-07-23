@@ -18,7 +18,10 @@ function TournamentSkeleton({ showButton = true }) {
                     <Skeleton width="10rem" />
                 </h1>
 
-                <Skeleton height="5rem" />
+                <Skeleton
+                    height="5rem"
+                    className="tournament__infos--skeleton"
+                />
             </Col>
         </Row>
     );
