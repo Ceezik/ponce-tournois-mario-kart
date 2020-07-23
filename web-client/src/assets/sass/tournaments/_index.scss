@@ -1,5 +1,9 @@
 @import '../variables';
 
+.home__buttons {
+    margin-top: 3rem;
+}
+
 .tournament__title,
 .tournamentsList__title {
     margin-top: 3rem;
@@ -41,6 +45,10 @@
     border: 1px solid #e6e6e6;
     border-radius: 6px;
     padding: 0 1rem;
+    margin: 0.5rem 0;
+}
+
+.tournament__infos--skeleton {
     margin: 0.5rem 0;
 }
 

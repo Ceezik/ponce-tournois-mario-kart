@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSocket } from '../../../utils/useSocket';
 import TournamentForm from './TournamentForm';
-import { nullifyEmptyFields } from '../../../utils/utils';
+import { nullifyEmptyFields, serializeTournament } from '../../../utils/utils';
 import history from '../../../utils/history';
 import useTitle from '../../../utils/useTitle';
 
@@ -16,7 +16,10 @@ function EditTournamentForm({ tournament }) {
 
         socket.emit(
             'updateTournament',
-            { ...nullifyEmptyFields(newTournament), id: tournament.id },
+            {
+                ...nullifyEmptyFields(serializeTournament(newTournament)),
+                id: tournament.id,
+            },
             (err) => {
                 setError(err);
                 setLoading(false);

@@ -4,7 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     class Participation extends Model {}
 
     Participation.init(
-        {},
+        {
+            goal: {
+                type: DataTypes.NUMBER,
+            },
+        },
         {
             sequelize,
             modelName: 'Participation',

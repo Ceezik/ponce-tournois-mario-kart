@@ -5,14 +5,22 @@
     text-align: center;
 }
 
+.participation__infos--skeleton {
+    margin: 0.5rem 0;
+}
+
 .participation__chart {
     border: 1px solid #e6e6e6;
     border-radius: 6px;
+    margin-bottom: 3rem;
+}
+
+.participation__chart--skeleton {
+    margin-bottom: 3rem;
 }
 
 .participation__title {
     color: $main-color;
-    margin-top: 3rem;
     margin-bottom: 0.5rem;
     padding: 0 1rem;
 }
@@ -29,12 +37,14 @@
     margin: 0.5rem 0;
 }
 
-.participation__addRace {
+.participation__addRace,
+.participation__addGoal {
     cursor: pointer;
     transition: box-shadow 0.3s ease;
 }
 
-.participation__addRace:hover {
+.participation__addRace:hover,
+.participation__addGoal:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -45,4 +55,15 @@
 
 .participation__addRaceForm {
     text-align: start;
+}
+
+.participation__goal {
+    padding: 0 1rem;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+    border: 1px solid #e6e6e6;
+}
+
+.participation__addGoalForm {
+    padding: 1rem 0;
 }

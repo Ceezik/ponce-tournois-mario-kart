@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const nullifyEmptyFields = (data) => {
     Object.keys(data).forEach((key) => {
         if (data[key] === '') {
@@ -6,6 +8,15 @@ export const nullifyEmptyFields = (data) => {
     });
 
     return data;
+};
+
+export const serializeTournament = (tournament) => {
+    if (tournament.startDate)
+        tournament.startDate = moment(tournament.startDate).utc().format();
+    if (tournament.endDate)
+        tournament.endDate = moment(tournament.endDate).utc().format();
+
+    return tournament;
 };
 
 export const getNbPointsFromPosition = (position) => {

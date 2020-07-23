@@ -26,6 +26,10 @@ img {
     max-width: 100%;
 }
 
+label {
+    cursor: inherit;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -147,11 +151,25 @@ input:focus {
     background-color: #f3f3f4;
 }
 
+.text-- {
+    &error {
+        color: $error-color;
+    }
+
+    &success {
+        color: $success-color;
+    }
+}
+
 .formMessage {
     color: white;
     margin-bottom: 1rem;
     padding: 1rem 1.5rem;
     border-radius: 4px;
+
+    &--center {
+        text-align: center;
+    }
 
     &__error {
         background-color: $error-color;
@@ -159,6 +177,10 @@ input:focus {
 
     &__success {
         background-color: $success-color;
+    }
+
+    &__info {
+        background-color: $main-color;
     }
 }
 
@@ -175,10 +197,6 @@ table {
 
 .app__container {
     margin: 3rem 0 5rem 0;
-}
-
-.app__container--home {
-    margin-bottom: 5rem;
 }
 
 .title--noMarginTop {

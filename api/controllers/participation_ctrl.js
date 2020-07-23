@@ -2,6 +2,27 @@ const _ = require('lodash');
 const db = require('../models');
 const { getPonce, isAuthenticated } = require('../utils');
 
+_getLastParticipation = (socket, onError, user, route, errorMessage) => {
+    user.getParticipations({
+        include: [{ model: db.Tournament }],
+        order: [
+            [db.Tournament, 'startDate', 'DESC'],
+            [db.Race, 'id', 'ASC'],
+        ],
+    })
+        .then((participations) => {
+            if (participations.length > 0) {
+                socket.emit(route, {
+                    participation: participations[0],
+                    record: _getRecord(participations),
+                });
+            } else {
+                onError(errorMessage);
+            }
+        })
+        .catch(() => onError('Une erreur est survenue'));
+};
+
 _getRecord = (participations) => {
     const p = participations.slice(1);
     p.forEach((el) => (el.nbPoints = _.sumBy(el.Races, 'nbPoints')));
@@ -60,25 +81,55 @@ module.exports = {
 
     getLastPonceParticipation: (socket, onError) => {
         getPonce(onError, (ponce) => {
-            ponce
-                .getParticipations({
-                    include: [{ model: db.Tournament }],
-                    order: [
-                        [db.Tournament, 'startDate', 'DESC'],
-                        [db.Race, 'id', 'ASC'],
-                    ],
-                })
-                .then((participations) => {
-                    if (participations.length > 0) {
-                        socket.emit('getLastPonceParticipation', {
-                            participation: participations[0],
-                            record: _getRecord(participations),
-                        });
-                    } else {
-                        onError("Ponce n'a participé à aucun tournoi");
-                    }
-                })
-                .catch(() => onError('Une erreur est survenue'));
+            _getLastParticipation(
+                socket,
+                onError,
+                ponce,
+                'getLastPonceParticipation',
+                "Ponce n'a participé à aucun tournoi"
+            );
         });
+    },
+
+    getLastUserParticipation: (socket, onError, userId) => {
+        isAuthenticated(onError, userId, (user) => {
+            _getLastParticipation(
+                socket,
+                onError,
+                user,
+                'getLastUserParticipation',
+                "Vous n'avez participé à aucun tournoi"
+            );
+        });
+    },
+
+    update: (
+        io,
+        socket,
+        onError,
+        { goal, participationId },
+        userId,
+        isAdmin
+    ) => {
+        db.Participation.findByPk(participationId)
+            .then((participation) => {
+                if (
+                    participation &&
+                    (participation.UserId === userId || isAdmin)
+                ) {
+                    participation
+                        .update({ goal })
+                        .then((newParticipation) => {
+                            socket.emit('closeGoalForm');
+                            io.emit('editParticipation', newParticipation);
+                        })
+                        .catch(() => onError('Une erreur est survenue'));
+                } else {
+                    onError(
+                        "Vous n'êtes pas autorisé à effectuer cette action"
+                    );
+                }
+            })
+            .catch(() => onError('Une erreur est survenue'));
     },
 };

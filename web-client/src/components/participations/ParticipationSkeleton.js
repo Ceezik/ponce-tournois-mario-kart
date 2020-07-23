@@ -8,7 +8,7 @@ function ParticipationSkeleton({ showButton = true }) {
         <>
             <TournamentSkeleton showButton={showButton} />
 
-            <Row justify="center" style={{ marginTop: '1rem' }}>
+            <Row justify="center">
                 <Col xs={12} lg={8}>
                     <AdminParticipationSkeleton />
                 </Col>

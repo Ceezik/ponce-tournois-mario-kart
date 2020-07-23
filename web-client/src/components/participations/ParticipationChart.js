@@ -2,12 +2,18 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 
-function ParticipationChart({ record, races, tournamentName, nbMaxRaces }) {
+function ParticipationChart({
+    record,
+    goal,
+    races,
+    tournamentName,
+    nbMaxRaces,
+}) {
     let sum;
     let sum2;
 
     const data = {
-        labels: [...Array(nbMaxRaces).keys()],
+        labels: Array.from(Array(nbMaxRaces), (_, i) => i + 1),
         datasets: [
             {
                 label: tournamentName,
@@ -34,7 +40,13 @@ function ParticipationChart({ record, races, tournamentName, nbMaxRaces }) {
         scales: {
             xAxes: [
                 {
-                    display: false,
+                    gridLines: {
+                        display: false,
+                    },
+                    ticks: {
+                        fontFamily: 'Nunito',
+                        padding: 20,
+                    },
                 },
             ],
             yAxes: [
@@ -57,7 +69,7 @@ function ParticipationChart({ record, races, tournamentName, nbMaxRaces }) {
                 left: 20,
                 right: 20,
                 top: 20,
-                bottom: 20,
+                bottom: 10,
             },
         },
     };
@@ -77,6 +89,17 @@ function ParticipationChart({ record, races, tournamentName, nbMaxRaces }) {
             data: record.Races.map(
                 (race) => (sum2 = (sum2 || 0) + race.nbPoints)
             ),
+        });
+    }
+
+    if (goal) {
+        data.datasets.push({
+            label: 'Objectif',
+            fill: false,
+            borderColor: sum > goal ? '#68b684' : '#f3453f',
+            borderWidth: 2,
+            datalabels: { display: false },
+            data: Array(nbMaxRaces).fill(goal),
         });
     }
 
