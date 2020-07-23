@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import { Container, Col, Row } from 'react-grid-system';
 import { useSocket } from '../../utils/useSocket';
+import { useAuth } from '../../utils/useAuth';
 import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
@@ -11,6 +12,8 @@ import useTitle from '../../utils/useTitle';
 function Home() {
     useTitle('Dernier tournoi');
     const { socket } = useSocket();
+    const { user } = useAuth();
+    const [showPonce, setShowPonce] = useState(true);
     const [participation, setParticipation] = useState(null);
     const [record, setRecord] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -43,18 +46,13 @@ function Home() {
     });
 
     useEffect(() => {
-        socket.on('getLastPonceParticipation', ({ participation, record }) => {
-            setRecord(record);
-            setParticipation(participation);
-            setLoading(false);
-        });
-
         socket.on('refreshTournaments', () => fetchParticipation());
 
         fetchParticipation();
 
         return () => {
             socket.off('getLastPonceParticipation');
+            socket.off('getLastUserParticipation');
             socket.off('refreshTournaments');
             socket.off('editParticipation');
             socket.off('addRace');
@@ -62,11 +60,32 @@ function Home() {
         };
     }, []);
 
+    useEffect(() => {
+        socket.on(
+            showPonce
+                ? 'getLastPonceParticipation'
+                : 'getLastUserParticipation',
+            ({ participation, record }) => {
+                setRecord(record);
+                setParticipation(participation);
+                setLoading(false);
+            }
+        );
+
+        setLoading(true);
+        fetchParticipation();
+    }, [showPonce]);
+
     const fetchParticipation = () => {
-        socket.emit('getLastPonceParticipation', (err) => {
-            setError(err);
-            setLoading(false);
-        });
+        socket.emit(
+            showPonce
+                ? 'getLastPonceParticipation'
+                : 'getLastUserParticipation',
+            (err) => {
+                setError(err);
+                setLoading(false);
+            }
+        );
     };
 
     return (
@@ -77,6 +96,13 @@ function Home() {
                         Rejoignez le tournoi avec le code{' '}
                         {process.env.REACT_APP_TOURNAMENT_CODE} !
                     </div>
+
+                    {user && (
+                        <HomeButtons
+                            showPonce={showPonce}
+                            setShowPonce={setShowPonce}
+                        />
+                    )}
                 </Col>
             </Row>
 
@@ -105,12 +131,36 @@ function Home() {
                             record={record}
                             tournamentName={participation.Tournament.name}
                             nbMaxRaces={participation.Tournament.nbMaxRaces}
-                            canAdd={false}
+                            canAdd={!showPonce}
                         />
                     </Col>
                 </Row>
             )}
         </Container>
+    );
+}
+
+function HomeButtons({ showPonce, setShowPonce }) {
+    return (
+        <Row justify="end" className="home__buttons">
+            <Col xs="content">
+                <button
+                    className={!showPonce ? 'btnPrimary' : 'btnSecondary'}
+                    onClick={() => setShowPonce(false)}
+                >
+                    Moi
+                </button>
+            </Col>
+
+            <Col xs="content">
+                <button
+                    className={showPonce ? 'btnPrimary' : 'btnSecondary'}
+                    onClick={() => setShowPonce(true)}
+                >
+                    Ponce
+                </button>
+            </Col>
+        </Row>
     );
 }
 
