@@ -43,7 +43,7 @@ module.exports = {
                 .then((participations) =>
                     socket.emit('getPonceParticipations', participations)
                 )
-                .catch((err) => onError(err.message));
+                .catch(() => onError('Une erreur est survenue'));
         });
     },
 
