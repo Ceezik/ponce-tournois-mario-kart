@@ -3,10 +3,10 @@ import { Row, Col } from 'react-grid-system';
 import Skeleton from 'react-loading-skeleton';
 import PodiumSkeleton from '../../podiums/PodiumSkeleton';
 
-function ParticipationSkeleton() {
+function ParticipationSkeleton({ showPodium = true }) {
     return (
         <>
-            <PodiumSkeleton />
+            {showPodium && <PodiumSkeleton />}
 
             <Skeleton
                 height="5rem"
