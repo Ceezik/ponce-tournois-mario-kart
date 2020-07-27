@@ -38,22 +38,39 @@ module.exports = {
         io,
         socket,
         onError,
+        userId,
+        isAdmin,
         { position, nbPoints, trackId, participationId }
     ) => {
-        db.Race.create({
-            position,
-            nbPoints,
-            TrackId: trackId,
-            ParticipationId: participationId,
-        })
-            .then((race) => {
-                race.getTrack({ attributes: ['name'] })
-                    .then((track) => {
-                        race.setDataValue('Track', track);
-                        socket.emit('closeAddRaceForm');
-                        io.emit('addRace', race);
+        db.Participation.findByPk(participationId)
+            .then((participation) => {
+                if (
+                    participation &&
+                    (participation.UserId == userId || isAdmin)
+                ) {
+                    db.Race.create({
+                        position,
+                        nbPoints,
+                        TrackId: trackId,
+                        ParticipationId: participationId,
                     })
-                    .catch(() => onError('Veuillez rafraichir la page'));
+                        .then((race) => {
+                            race.getTrack({ attributes: ['name'] })
+                                .then((track) => {
+                                    race.setDataValue('Track', track);
+                                    socket.emit('closeAddRaceForm');
+                                    io.emit('addRace', race);
+                                })
+                                .catch(() =>
+                                    onError('Veuillez rafraichir la page')
+                                );
+                        })
+                        .catch(() => onError('Une erreur est survenue'));
+                } else {
+                    onError(
+                        "Vous n'êtes pas autorisé à effectuer cette action"
+                    );
+                }
             })
             .catch(() => onError('Une erreur est survenue'));
     },
