@@ -57,7 +57,7 @@ function PonceParticipation({ tournament }) {
     }, []);
 
     return loading ? (
-        <ParticipationSkeleton />
+        <ParticipationSkeleton showPodium={false} />
     ) : error ? (
         <Row justify="center">
             <Col xs="content">

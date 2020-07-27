@@ -19,6 +19,10 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    socket
+        .off('refreshTournaments')
+        .on('refreshTournaments', () => fetchParticipation());
+
     socket.off('editParticipation').on('editParticipation', (p) => {
         if (participation && p.id === participation.id) {
             const newParticipation = _.cloneDeep(participation);
@@ -46,8 +50,6 @@ function Home() {
     });
 
     useEffect(() => {
-        socket.on('refreshTournaments', () => fetchParticipation());
-
         fetchParticipation();
 
         return () => {
