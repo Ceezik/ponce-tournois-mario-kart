@@ -1,5 +1,6 @@
 import React from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import Signup from './components/auth/Signup';
 import history from './utils/history';
 import { AuthProvider } from './utils/useAuth';
@@ -26,6 +27,10 @@ function App() {
             <SocketProvider>
                 <TracksProvider>
                     <AuthProvider>
+                        <Helmet
+                            titleTemplate="%s - Tournoi des fleurs"
+                            defaultTitle="Tournoi des fleurs"
+                        />
                         <div className="container">
                             <Header />
                             <Analytics />

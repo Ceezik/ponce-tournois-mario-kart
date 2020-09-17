@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -7,12 +8,10 @@ import TournamentsListItem from './TournamentsListItem';
 import TournamentsSkeleton, {
     TournamentsListSkeleton,
 } from './TournamentsSkeleton';
-import useTitle from '../../../utils/useTitle';
 
 const PAGE_SIZE = 20;
 
 function TournamentsWrapper() {
-    useTitle('Tournois');
     const { socket } = useSocket();
     const [tournaments, setTournaments] = useState([]);
     const [hasMore, setHasMore] = useState(true);
@@ -55,6 +54,10 @@ function TournamentsWrapper() {
 
     return (
         <Container className="app__container">
+            <Helmet>
+                <title>Tournois</title>
+            </Helmet>
+
             {loading ? (
                 <TournamentsSkeleton />
             ) : error ? (

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { useSocket } from '../../../utils/useSocket';
 import TournamentForm from './TournamentForm';
 import { nullifyEmptyFields, serializeTournament } from '../../../utils/utils';
 import history from '../../../utils/history';
-import useTitle from '../../../utils/useTitle';
 
 function EditTournamentForm({ tournament }) {
-    useTitle('Modifier un tournoi');
     const { socket } = useSocket();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -38,6 +37,10 @@ function EditTournamentForm({ tournament }) {
 
     return (
         <>
+            <Helmet>
+                <title>Modifier un tournoi</title>
+            </Helmet>
+
             <h1 className="title--noMarginTop">Modifier un tournoi</h1>
 
             <TournamentForm

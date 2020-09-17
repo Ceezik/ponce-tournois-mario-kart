@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-grid-system';
 import { useSocket } from '../../../utils/useSocket';
 import TournamentForm from './TournamentForm';
 import { nullifyEmptyFields, serializeTournament } from '../../../utils/utils';
 import history from '../../../utils/history';
-import useTitle from '../../../utils/useTitle';
 
 function AddTournamentForm() {
-    useTitle('Créer un tournoi');
     const { socket } = useSocket();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -36,6 +35,10 @@ function AddTournamentForm() {
 
     return (
         <Container className="app__container">
+            <Helmet>
+                <title>Créer un tournoi</title>
+            </Helmet>
+
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
                     <h1 className="title--noMarginTop">Créer un tournoi</h1>

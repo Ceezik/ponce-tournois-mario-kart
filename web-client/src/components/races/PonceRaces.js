@@ -1,11 +1,17 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import Races from './Races';
-import useTitle from '../../utils/useTitle';
 
 function PonceRaces() {
-    useTitle('Circuits joués');
+    return (
+        <>
+            <Helmet>
+                <title>Circuits joués</title>
+            </Helmet>
 
-    return <Races route="getPonceRaces" />;
+            <Races route="getPonceRaces" />
+        </>
+    );
 }
 
 export default PonceRaces;

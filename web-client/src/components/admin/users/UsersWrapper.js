@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { getAll } from '../../../services/users';
 import { Container, Row, Col } from 'react-grid-system';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from './User';
-import useTitle from '../../../utils/useTitle';
 import UsersFilter from './UsersFilter';
 import UsersSkeleton from './UsersSkeleton';
 import UserSkeleton from './UserSkeleton';
@@ -12,7 +12,6 @@ import Error from '../../utils/Error';
 const PAGE_SIZE = 20;
 
 function UsersWrapper() {
-    useTitle('Utilisateurs');
     const [users, setUsers] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(true);
@@ -43,6 +42,10 @@ function UsersWrapper() {
 
     return (
         <Container className="app__container">
+            <Helmet>
+                <title>Utilisateurs</title>
+            </Helmet>
+
             <Row justify="center">
                 <Col xs={12} lg={8}>
                     <h1 className="title--noMarginTop">Utilisateurs</h1>

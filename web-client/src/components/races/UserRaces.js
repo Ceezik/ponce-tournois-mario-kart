@@ -1,11 +1,17 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import Races from './Races';
-import useTitle from '../../utils/useTitle';
 
 function UserRaces() {
-    useTitle('Mes circuits joués');
+    return (
+        <>
+            <Helmet>
+                <title>Mes circuits joués</title>
+            </Helmet>
 
-    return <Races route="getUserRaces" />;
+            <Races route="getUserRaces" />
+        </>
+    );
 }
 
 export default UserRaces;
