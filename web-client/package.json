@@ -21,11 +21,12 @@
         "react-dom": "^16.13.1",
         "react-ga": "^3.1.2",
         "react-grid-system": "^7.0.3",
+        "react-helmet": "^6.1.0",
         "react-hook-form": "^6.0.0",
         "react-infinite-scroll-component": "^5.0.5",
         "react-loading-skeleton": "^2.1.1",
         "react-router-dom": "^5.2.0",
-        "react-scripts": "3.4.1",
+        "react-scripts": "^3.4.3",
         "socket.io-client": "^2.3.0"
     },
     "scripts": {

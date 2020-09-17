@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
+import { Helmet } from 'react-helmet';
 import { Container, Col, Row } from 'react-grid-system';
 import { useSocket } from '../../utils/useSocket';
 import { useAuth } from '../../utils/useAuth';
@@ -7,10 +8,8 @@ import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
 import Podium from '../podiums/Podium';
-import useTitle from '../../utils/useTitle';
 
 function Home() {
-    useTitle('Dernier tournoi');
     const { socket } = useSocket();
     const { user } = useAuth();
     const [showPonce, setShowPonce] = useState(true);
@@ -92,6 +91,10 @@ function Home() {
 
     return (
         <Container className="app__container">
+            <Helmet>
+                <title>Dernier tournoi</title>
+            </Helmet>
+
             <Row justify="center">
                 <Col xs={12} lg={8}>
                     <div className="formMessage formMessage--center formMessage__info">

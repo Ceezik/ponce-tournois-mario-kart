@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { NavLink, Switch } from 'react-router-dom';
 import { Row, Col, Container } from 'react-grid-system';
 import AdminRoute from '../auth/AdminRoute';
@@ -12,6 +13,9 @@ import UsersWrapper from './users/UsersWrapper';
 function AdminWrapper() {
     return (
         <>
+            <Helmet>
+                <title>Administration</title>
+            </Helmet>
             <AdminHeader />
 
             <Switch>

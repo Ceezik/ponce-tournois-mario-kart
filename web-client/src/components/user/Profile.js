@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-grid-system';
 import { useAuth } from '../../utils/useAuth';
 import Form from '../form/Form';
 import Input from '../form/Input';
 import Button from '../form/Button';
 import { update } from '../../services/user';
-import useTitle from '../../utils/useTitle';
 
 const USERNAME_FORMAT =
     "Votre nom d'utilisateur ne doit contenir que des caractères alphanumériques";
@@ -13,7 +13,6 @@ const USERNAME_LENGTH =
     "Votre nom d'utilisateur doit faire entre 3 et 50 caractères";
 
 function Profile() {
-    useTitle('Mon compte');
     const { user, updateUser } = useAuth();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
@@ -37,6 +36,10 @@ function Profile() {
 
     return (
         <Container className="app__container">
+            <Helmet>
+                <title>Mon compte</title>
+            </Helmet>
+
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
                     <h1 className="title--noMarginTop">Mon compte</h1>
