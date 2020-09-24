@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-grid-system';
+import { useDispatch, useSelector } from 'react-redux';
 import TracksListItem from './TracksListItem';
 import AddTrackBtn from './AddTrackBtn';
 import AddTrackForm from './AddTrackForm';
-import { useTracks } from '../../../utils/useTracks';
+import { addTrack as addNewTrack } from '../../../redux/actions/tracks';
 
 function TracksWrapper({ cup }) {
-    const { getByCup, addNewTrack } = useTracks();
+    const dispatch = useDispatch();
+    const { tracks: allTracks } = useSelector((state) => state.tracks);
     const [tracks, setTracks] = useState([]);
     const [creating, setCreating] = useState(false);
 
     useEffect(() => {
         setCreating(false);
-        setTracks(getByCup(cup.id));
+        setTracks(allTracks.filter((track) => track.CupId === cup.id));
     }, [cup]);
 
     const addTrack = (track) => {
-        addNewTrack(track);
+        dispatch(addNewTrack(track));
         setTracks([...tracks, track]);
     };
 
