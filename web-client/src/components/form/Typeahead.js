@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import Input from './Input';
 import { useFormContext } from './Form';
-import { useTracks } from '../../utils/useTracks';
+import { getSortedTracks } from '../../redux/selectors/tracks';
 
 function Typeahead({ ...rest }) {
     const { setValue } = useFormContext();
-    const { getSortedTracks, loading, error } = useTracks();
+    const { loading, error } = useSelector((state) => state.tracks);
+    const sortedTracks = useSelector(getSortedTracks);
     const suggestionsRef = useRef(null);
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -32,9 +34,7 @@ function Typeahead({ ...rest }) {
         if (value.length > 0) {
             const regex = new RegExp(`${value}`, `i`);
             setSuggestions(
-                getSortedTracks()
-                    .filter((i) => regex.test(i.name))
-                    .slice(0, 5)
+                sortedTracks.filter((i) => regex.test(i.name)).slice(0, 5)
             );
         } else {
             setSuggestions([]);

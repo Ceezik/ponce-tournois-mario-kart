@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-grid-system';
 import _ from 'lodash';
 import { useSocket } from '../../utils/useSocket';
-import { useTracks } from '../../utils/useTracks';
 import { getAll } from '../../services/cups';
 import RacesListItem from './RacesListItem';
 import RacesSkeleton from './RacesSkeleton';
 
 function Races({ route }) {
+    const { tracks } = useSelector((state) => state.tracks);
     const { socket } = useSocket();
-    const { tracks } = useTracks();
     const [races, setRaces] = useState([]);
     const [cups, setCups] = useState([]);
     const [loadingRaces, setLoadingRaces] = useState(true);
