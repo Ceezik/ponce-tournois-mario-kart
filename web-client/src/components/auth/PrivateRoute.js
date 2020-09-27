@@ -1,9 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { useAuth } from '../../utils/useAuth';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { user } = useAuth();
+    const { user } = useSelector((state) => state.auth);
 
     return (
         <Route

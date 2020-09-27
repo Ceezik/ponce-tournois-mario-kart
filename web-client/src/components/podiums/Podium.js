@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-grid-system';
 import _ from 'lodash';
+import { useSelector } from 'react-redux';
 import AddPlayerBtn from './AddPlayerBtn';
-import { useSocket } from '../../utils/useSocket';
 import PodiumSkeleton from './PodiumSkeleton';
 import PodiumListItem from './PodiumListItem';
 
 function Podium({ tournamentId, canAdd = false }) {
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [podia, setPodia] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

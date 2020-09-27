@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Form from '../form/Form';
 import Input from '../form/Input';
 import { Row, Col } from 'react-grid-system';
 import Button from '../form/Button';
-import { useSocket } from '../../utils/useSocket';
 import { nullifyEmptyFields } from '../../utils/utils';
 
 function ParticipationGoalForm({ closeForm, nbMaxRaces, participation }) {
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const maxPoints = nbMaxRaces * 15;

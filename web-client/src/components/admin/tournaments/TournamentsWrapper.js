@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useSocket } from '../../../utils/useSocket';
+import { useSelector } from 'react-redux';
 import TournamentsListItem from './TournamentsListItem';
 import TournamentsSkeleton, {
     TournamentsListSkeleton,
@@ -12,7 +12,7 @@ import TournamentsSkeleton, {
 const PAGE_SIZE = 20;
 
 function TournamentsWrapper() {
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [tournaments, setTournaments] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(true);

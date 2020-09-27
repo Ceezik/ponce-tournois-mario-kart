@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-grid-system';
 import _ from 'lodash';
-import { useSocket } from '../../utils/useSocket';
+import { useSelector } from 'react-redux';
 import { TotalPointsChart, AveragePointsChart } from './PointsCharts';
 import ChartSkeleton from './ChartSkeleton';
 
 function ParticipationsStatistics({ route }) {
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [participations, setParticipations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

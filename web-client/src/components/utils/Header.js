@@ -7,8 +7,9 @@ import {
     faTimes,
     faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { useAuth } from '../../utils/useAuth';
 import ponceFleur from '../../assets/images/poncefleur.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { signout } from '../../redux/actions/auth';
 
 function Header() {
     return (
@@ -24,7 +25,8 @@ function Header() {
 }
 
 function DesktopHeader() {
-    const { user, signout } = useAuth();
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -124,7 +126,9 @@ function DesktopHeader() {
                                 <li>Mes statistiques</li>
                             </NavLink>
 
-                            <li onClick={signout}>Déconnexion</li>
+                            <li onClick={() => dispatch(signout())}>
+                                Déconnexion
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -136,8 +140,9 @@ function DesktopHeader() {
 }
 
 function MobileHeader() {
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
-    const { user, signout } = useAuth();
 
     const close = () => setOpen(false);
 
@@ -242,7 +247,7 @@ function MobileHeader() {
                                     xs={6}
                                     onClick={() => {
                                         close();
-                                        signout();
+                                        dispatch(signout());
                                     }}
                                 >
                                     <span>Déconnexion</span>

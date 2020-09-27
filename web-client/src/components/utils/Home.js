@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import { Helmet } from 'react-helmet';
+import { useSelector } from 'react-redux';
 import { Container, Col, Row } from 'react-grid-system';
-import { useSocket } from '../../utils/useSocket';
-import { useAuth } from '../../utils/useAuth';
 import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
 import Podium from '../podiums/Podium';
 
 function Home() {
-    const { socket } = useSocket();
-    const { user } = useAuth();
+    const { socket } = useSelector((state) => state.socket);
+    const { user } = useSelector((state) => state.auth);
     const [showPonce, setShowPonce] = useState(true);
     const [participation, setParticipation] = useState(null);
     const [record, setRecord] = useState(null);

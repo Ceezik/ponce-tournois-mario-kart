@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-grid-system';
 import _ from 'lodash';
-import { useSocket } from '../../utils/useSocket';
+import { useSelector } from 'react-redux';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from './Participation';
 import ParticipationsButtons from './ParticipationsButtons';
@@ -10,7 +10,7 @@ import Error from '../utils/Error';
 import Podium from '../podiums/Podium';
 
 function Participations({ route, canAdd }) {
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [participations, setParticipations] = useState([]);
     const [participation, setParticipation] = useState(null);
     const [loading, setLoading] = useState(true);
