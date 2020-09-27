@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-grid-system';
 import { useParams } from 'react-router-dom';
-import { useSocket } from '../../../utils/useSocket';
+import { useSelector } from 'react-redux';
 import Tournament from './Tournament';
 import TournamentSkeleton from './TournamentSkeleton';
 
 function TournamentWrapper() {
     const { tournamentId } = useParams();
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [tournament, setTournament] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

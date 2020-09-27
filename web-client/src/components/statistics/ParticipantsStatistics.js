@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-grid-system';
 import { Bar } from 'react-chartjs-2';
 import { useScreenClass } from 'react-grid-system';
-import { useSocket } from '../../utils/useSocket';
+import { useSelector } from 'react-redux';
 import 'chartjs-plugin-datalabels';
 import ChartSkeleton from './ChartSkeleton';
 
 function ParticipantsStatistics() {
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [tournaments, setTournaments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

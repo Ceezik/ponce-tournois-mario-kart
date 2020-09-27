@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
-import { useSocket } from '../../../utils/useSocket';
 import { getNbPointsFromPosition } from '../../../utils/utils';
 import RaceForm from './RaceForm';
 
 function EditRaceForm({ closeForm, race }) {
     const { tracks } = useSelector((state) => state.tracks);
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
