@@ -21,6 +21,7 @@ import Analytics from './components/utils/Analytics';
 import { fetchTracks } from './redux/actions/tracks';
 import { fetchUser } from './redux/actions/auth';
 import { setSocket } from './redux/actions/socket';
+import ParticipationsManager from './components/participations/ParticipationsManager';
 
 function App() {
     const dispatch = useDispatch();
@@ -43,6 +44,9 @@ function App() {
                 titleTemplate="%s - Tournoi des fleurs"
                 defaultTitle="Tournoi des fleurs"
             />
+
+            <ParticipationsManager />
+
             <div className="container">
                 <Header />
                 <Analytics />
