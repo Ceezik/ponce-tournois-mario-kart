@@ -31,7 +31,12 @@ require('./routes-api')(app);
 
 io.on('connection', (socket) => {
     const { userId, isAdmin } = socket.handshake.query;
-    require('./routes-socket')(io, socket, userId, isAdmin === 'true');
+    require('./routes-socket')(
+        io,
+        socket,
+        userId ? parseInt(userId) : null,
+        isAdmin === 'true'
+    );
 });
 
 app.use(errorHandler);
