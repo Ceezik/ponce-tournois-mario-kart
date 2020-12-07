@@ -9,6 +9,8 @@ import ParticipationGoal from './ParticipationGoal';
 function Participation({
     participation,
     record = null,
+    worst = null,
+    average = null,
     tournamentName,
     nbMaxRaces,
     canAdd = true,
@@ -59,6 +61,8 @@ function Participation({
                 <Hidden xs sm>
                     <ParticipationChart
                         record={record}
+                        worst={worst}
+                        average={average}
                         races={participation.Races}
                         tournamentName={tournamentName}
                         nbMaxRaces={nbMaxRaces}

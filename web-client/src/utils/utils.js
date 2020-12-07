@@ -1,4 +1,5 @@
 import moment from 'moment';
+import _ from 'lodash';
 
 export const nullifyEmptyFields = (data) => {
     Object.keys(data).forEach((key) => {
@@ -28,4 +29,42 @@ export const getNbPointsFromPosition = (position) => {
 
 export const getPositionColor = (position) => {
     return position === 1 ? 'gold' : position === 2 ? '#CBCDCD' : '#cd7f32';
+};
+
+export const getParticipationsWithNbPoints = (participations) => {
+    participations.forEach((p) => (p.nbPoints = _.sumBy(p.Races, 'nbPoints')));
+    return participations.filter((p) => p.nbPoints > 0);
+};
+
+export const getRecord = (participations) => {
+    return _.maxBy(participations, 'nbPoints');
+};
+
+export const getWorst = (participations) => {
+    return _.minBy(participations, 'nbPoints');
+};
+
+export const getAverage = (participations) => {
+    const p = participations.map((p) => p.Races.map((r) => r.nbPoints));
+    if (!p.length) return null;
+
+    const maxLength = _.maxBy(p, (el) => el.length).length;
+    const average = [];
+
+    for (let i = 0; i < maxLength; i++) {
+        let nb = 0;
+        let sum = 0;
+
+        p.forEach((participation) => {
+            const val = participation[i];
+            if (val) {
+                sum += val;
+                nb++;
+            }
+        });
+
+        average.push(sum / nb);
+    }
+
+    return average;
 };
