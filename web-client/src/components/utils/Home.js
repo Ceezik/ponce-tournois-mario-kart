@@ -7,6 +7,12 @@ import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
 import Podium from '../podiums/Podium';
+import {
+    getRecord,
+    getWorst,
+    getParticipationsWithNbPoints,
+    getAverage,
+} from '../../utils/utils';
 
 function Home() {
     const { socket } = useSelector((state) => state.socket);
@@ -14,6 +20,8 @@ function Home() {
     const [showPonce, setShowPonce] = useState(true);
     const [participation, setParticipation] = useState(null);
     const [record, setRecord] = useState(null);
+    const [worst, setWorst] = useState(null);
+    const [average, setAverage] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -65,8 +73,20 @@ function Home() {
             showPonce
                 ? 'getLastPonceParticipation'
                 : 'getLastUserParticipation',
-            ({ participation, record }) => {
-                setRecord(record);
+            (participations) => {
+                const participation = participations.shift();
+                const participationsWithNbPoints = getParticipationsWithNbPoints(
+                    participations
+                );
+
+                setRecord(getRecord(participationsWithNbPoints));
+                setWorst(getWorst(participationsWithNbPoints));
+                setAverage(
+                    getAverage(
+                        participationsWithNbPoints,
+                        participation.Tournament.nbMaxRaces
+                    )
+                );
                 setParticipation(participation);
                 setLoading(false);
             }
@@ -133,6 +153,8 @@ function Home() {
                         <Participation
                             participation={participation}
                             record={record}
+                            worst={worst}
+                            average={average}
                             tournamentName={participation.Tournament.name}
                             nbMaxRaces={participation.Tournament.nbMaxRaces}
                             canAdd={!showPonce}
