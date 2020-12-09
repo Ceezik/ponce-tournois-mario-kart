@@ -18,7 +18,7 @@ export const signup = (user, setError, setLoading) => (dispatch) => {
     setLoading(true);
     _signup(user)
         .then((res) => {
-            dispatch({ type: SET_USER, payload: res.data });
+            dispatch({ type: SET_USER, payload: res.data.user });
             Cookies.set('token', res.data.token, { expires: 365 });
             history.push('/');
         })
