@@ -21,10 +21,15 @@ import Analytics from './components/utils/Analytics';
 import { fetchTracks } from './redux/actions/tracks';
 import { fetchUser } from './redux/actions/auth';
 import { setSocket } from './redux/actions/socket';
+import {
+    setTournaments,
+    setTournamentsError,
+} from './redux/actions/tournaments';
 
 function App() {
     const dispatch = useDispatch();
     const { loading, user } = useSelector((state) => state.auth);
+    const { socket } = useSelector((state) => state.socket);
 
     useEffect(() => {
         dispatch(fetchUser());
@@ -34,6 +39,30 @@ function App() {
     useEffect(() => {
         dispatch(setSocket(user));
     }, [user]);
+
+    useEffect(() => {
+        if (socket) {
+            socket.on('getTournaments', (tournaments) =>
+                dispatch(setTournaments(tournaments))
+            );
+
+            socket.on('refreshTournaments', fetchTournaments);
+            fetchTournaments();
+        }
+
+        return () => {
+            if (socket) {
+                socket.off('getTournaments');
+                socket.off('refreshTournaments');
+            }
+        };
+    }, [socket]);
+
+    const fetchTournaments = () => {
+        socket.emit('getTournaments', {}, (err) =>
+            dispatch(setTournamentsError(err))
+        );
+    };
 
     return loading ? (
         <></>

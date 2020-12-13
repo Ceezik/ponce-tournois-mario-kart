@@ -1,55 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 import TournamentsListItem from './TournamentsListItem';
-import TournamentsSkeleton, {
-    TournamentsListSkeleton,
-} from './TournamentsSkeleton';
-
-const PAGE_SIZE = 20;
+import TournamentsSkeleton from './TournamentsSkeleton';
 
 function TournamentsWrapper() {
-    const { socket } = useSelector((state) => state.socket);
-    const [tournaments, setTournaments] = useState([]);
-    const [hasMore, setHasMore] = useState(true);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    socket.off('getTournaments').on('getTournaments', (newTournaments) => {
-        if (newTournaments.length < PAGE_SIZE) {
-            setHasMore(false);
-        }
-        setTournaments([...tournaments, ...newTournaments]);
-        setLoading(false);
-    });
-
-    socket.off('refreshTournaments').on('refreshTournaments', () => {
-        const pageSize = tournaments.length;
-        setTournaments([]);
-        fetchTournaments(0, pageSize);
-    });
-
-    useEffect(() => {
-        fetchTournaments(tournaments.length / PAGE_SIZE, PAGE_SIZE);
-
-        return () => {
-            socket.off('getTournaments');
-            socket.off('refreshTournaments');
-        };
-    }, []);
-
-    const loadMoreTournaments = () => {
-        fetchTournaments(tournaments.length / PAGE_SIZE, PAGE_SIZE);
-    };
-
-    const fetchTournaments = (page, pageSize) => {
-        socket.emit('getTournaments', { page, pageSize }, (err) =>
-            setError(err)
-        );
-    };
+    const { tournaments, loading, error } = useSelector(
+        (state) => state.tournaments
+    );
 
     return (
         <Container className="app__container">
@@ -82,22 +42,14 @@ function TournamentsWrapper() {
 
                     <h1 className="tournamentsList__title">Tournois</h1>
 
-                    <InfiniteScroll
-                        style={{ overflow: 'initial' }}
-                        dataLength={tournaments.length}
-                        next={loadMoreTournaments}
-                        hasMore={hasMore}
-                        loader={<TournamentsListSkeleton />}
-                    >
-                        <Row>
-                            {tournaments.map((tournament) => (
-                                <TournamentsListItem
-                                    key={tournament.id}
-                                    tournament={tournament}
-                                />
-                            ))}
-                        </Row>
-                    </InfiniteScroll>
+                    <Row>
+                        {tournaments.map((tournament) => (
+                            <TournamentsListItem
+                                key={tournament.id}
+                                tournament={tournament}
+                            />
+                        ))}
+                    </Row>
                 </>
             )}
         </Container>
