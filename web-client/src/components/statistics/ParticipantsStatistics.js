@@ -1,39 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Row, Col } from 'react-grid-system';
 import { Bar } from 'react-chartjs-2';
 import { useScreenClass } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import 'chartjs-plugin-datalabels';
 import ChartSkeleton from './ChartSkeleton';
+import { getReversedTournaments } from '../../redux/selectors/tournaments';
 
 function ParticipantsStatistics() {
-    const { socket } = useSelector((state) => state.socket);
-    const [tournaments, setTournaments] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        socket.on('getTournaments', (tournaments) => {
-            setTournaments([...tournaments].reverse());
-            setLoading(false);
-        });
-
-        socket.on('refreshTournaments', () => fetchTournaments());
-
-        fetchTournaments();
-
-        return () => {
-            socket.off('getTournaments');
-            socket.off('refreshTournaments');
-        };
-    }, []);
-
-    const fetchTournaments = () => {
-        socket.emit('getTournaments', {}, (err) => {
-            setError(err);
-            setLoading(false);
-        });
-    };
+    const tournaments = useSelector(getReversedTournaments);
+    const { loading, error } = useSelector((state) => state.tournaments);
 
     return loading ? (
         <ChartSkeleton />
