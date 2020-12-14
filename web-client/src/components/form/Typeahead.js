@@ -27,6 +27,10 @@ function Typeahead({ ...rest }) {
         return () => document.removeEventListener('mousedown', hideSuggestions);
     }, [showSuggestions]);
 
+    const handleClick = (e) => {
+        if (e.target.value) setShowSuggestions(true);
+    };
+
     const handleChange = (e) => {
         const value = e.target.value;
 
@@ -49,7 +53,12 @@ function Typeahead({ ...rest }) {
 
     return (
         <div className="typeahead">
-            <Input onChange={handleChange} autoComplete="off" {...rest}>
+            <Input
+                onChange={handleChange}
+                onClick={handleClick}
+                autoComplete="off"
+                {...rest}
+            >
                 {showSuggestions && (
                     <div
                         className="typeahead__suggestionsWrapper"
