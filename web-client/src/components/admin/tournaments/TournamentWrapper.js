@@ -1,49 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Container, Row, Col } from 'react-grid-system';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Tournament from './Tournament';
 import TournamentSkeleton from './TournamentSkeleton';
+import { getTournamentById } from '../../../redux/selectors/tournaments';
 
 function TournamentWrapper() {
     const { tournamentId } = useParams();
-    const { socket } = useSelector((state) => state.socket);
-    const [tournament, setTournament] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    socket.off('refreshTournament').on('refreshTournament', (newTournament) => {
-        if (tournament && tournament.id === newTournament.id) {
-            setTournament(newTournament);
-        }
-    });
-
-    useEffect(() => {
-        socket.on('getTournament', (tournament) => {
-            setTournament(tournament);
-            setLoading(false);
-        });
-
-        socket.emit('getTournament', tournamentId, (err) => {
-            setError(err);
-            setLoading(false);
-        });
-
-        return () => {
-            socket.off('getTournament');
-            socket.off('refreshTournament');
-        };
-    }, [tournamentId]);
+    const { loading } = useSelector((state) => state.tournaments);
+    const tournament = useSelector((state) =>
+        getTournamentById(state, tournamentId)
+    );
 
     return (
         <Container className="app__container">
             {loading ? (
                 <TournamentSkeleton />
-            ) : error ? (
+            ) : !tournament ? (
                 <Row justify="center">
                     <Col xs="content">
                         <div className="formMessage formMessage__error">
-                            {error}
+                            Ce tournoi n'existe pas
                         </div>
                     </Col>
                 </Row>
