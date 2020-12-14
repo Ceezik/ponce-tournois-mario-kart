@@ -13,10 +13,6 @@ module.exports = (io, socket, userId, isAdmin) => {
         }
     });
 
-    socket.on('getTournament', (id, onError) => {
-        tournament_ctrl.getById(socket, onError, id);
-    });
-
     socket.on('updateTournament', (tournament, onError) => {
         if (isAdmin) {
             tournament_ctrl.updateById(io, socket, onError, tournament);

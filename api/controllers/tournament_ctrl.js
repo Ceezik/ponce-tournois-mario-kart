@@ -61,12 +61,6 @@ module.exports = {
         });
     },
 
-    getById: (socket, onError, id) => {
-        _getById(id, onError, (tournament) => {
-            socket.emit('getTournament', tournament);
-        });
-    },
-
     updateById: (io, socket, onError, newTournament) => {
         _validate(newTournament, onError, () => {
             _getById(newTournament.id, onError, (tournament) => {
