@@ -108,7 +108,6 @@ function Participations({ route, canAdd }) {
                             <>
                                 <ParticipationsButtons
                                     participations={participations}
-                                    participation={participation}
                                     setParticipation={setParticipation}
                                 />
 

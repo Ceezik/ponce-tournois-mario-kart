@@ -63,7 +63,7 @@ input:focus {
     padding: 0.75rem 2rem;
     border-radius: 6px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, visibility 0s;
 }
 
 .btnPrimary:hover {
