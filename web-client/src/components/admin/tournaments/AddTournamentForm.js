@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-grid-system';
 import TournamentForm from './TournamentForm';
 import { nullifyEmptyFields, serializeTournament } from '../../../utils/utils';
 import history from '../../../utils/history';
+import { addTournament } from '../../../redux/actions/tournaments';
 
 function AddTournamentForm() {
+    const dispatch = useDispatch();
     const { socket } = useSelector((state) => state.socket);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -26,6 +28,7 @@ function AddTournamentForm() {
 
     useEffect(() => {
         socket.on('createTournament', (tournament) => {
+            dispatch(addTournament(tournament));
             setLoading(false);
             history.push(`/admin/tournaments/${tournament.id}`);
         });
