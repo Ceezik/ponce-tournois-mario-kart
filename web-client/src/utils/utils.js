@@ -56,11 +56,9 @@ export const getAverage = (participations) => {
         let sum = 0;
 
         p.forEach((participation) => {
-            const val = participation[i];
-            if (val) {
-                sum += val;
-                nb++;
-            }
+            const val = participation[i] || 0;
+            sum += val;
+            nb++;
         });
 
         average.push(sum / nb);
