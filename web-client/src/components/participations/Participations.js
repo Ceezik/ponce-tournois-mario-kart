@@ -51,13 +51,25 @@ function Participations({ route, canAdd }) {
             setLoading(false);
         });
 
-        socket.on('refreshTournaments', () => fetchParticipations());
+        socket.on('createTournament', () => fetchParticipations());
+        socket.on('updateTournament', (tournament) => {
+            setParticipations((currentParticipations) => {
+                const currentIndex = _.findIndex(currentParticipations, {
+                    TournamentId: tournament.id,
+                });
+                const newParticipations = _.cloneDeep(currentParticipations);
+                newParticipations.splice(currentIndex, 1, {
+                    ...currentParticipations[currentIndex],
+                    Tournament: tournament,
+                });
+                return newParticipations;
+            });
+        });
 
         fetchParticipations();
 
         return () => {
             socket.off(route);
-            socket.off('refreshTournaments');
             socket.off('editParticipation');
             socket.off('addRace');
             socket.off('editRace');
@@ -65,11 +77,8 @@ function Participations({ route, canAdd }) {
     }, []);
 
     useEffect(() => {
-        if (participation) {
-            setParticipation(_.find(participations, { id: participation.id }));
-        } else {
-            if (participations.length > 0) setParticipation(participations[0]);
-        }
+        if (!participation && participations.length)
+            setParticipation(participations[0]);
     }, [participations]);
 
     const fetchParticipations = () => {
@@ -109,12 +118,13 @@ function Participations({ route, canAdd }) {
                                 <ParticipationsButtons
                                     participations={participations}
                                     setParticipation={setParticipation}
+                                    refreshParticipation={refreshParticipation}
                                 />
 
                                 {participation && (
                                     <>
                                         <TournamentInfos
-                                            tournament={
+                                            defaultTournament={
                                                 participation.Tournament
                                             }
                                         />

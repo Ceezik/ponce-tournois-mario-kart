@@ -22,6 +22,8 @@ import { fetchTracks } from './redux/actions/tracks';
 import { fetchUser } from './redux/actions/auth';
 import { setSocket } from './redux/actions/socket';
 import {
+    editTournament,
+    addTournament,
     setTournaments,
     setTournamentsError,
 } from './redux/actions/tournaments';
@@ -45,15 +47,21 @@ function App() {
             socket.on('getTournaments', (tournaments) =>
                 dispatch(setTournaments(tournaments))
             );
+            socket.on('createTournament', (tournament) => {
+                dispatch(addTournament(tournament));
+            });
+            socket.on('updateTournament', (tournament) =>
+                dispatch(editTournament(tournament))
+            );
 
-            socket.on('refreshTournaments', fetchTournaments);
             fetchTournaments();
         }
 
         return () => {
             if (socket) {
                 socket.off('getTournaments');
-                socket.off('refreshTournaments');
+                socket.off('createTournament');
+                socket.off('updateTournament');
             }
         };
     }, [socket]);
