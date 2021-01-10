@@ -54,8 +54,7 @@ module.exports = {
         _validate(tournament, onError, () => {
             db.Tournament.create(tournament)
                 .then((t) => {
-                    socket.emit('createTournament', t);
-                    io.emit('refreshTournaments');
+                    io.emit('createTournament', t);
                 })
                 .catch(() => onError('Une erreur est survenue'));
         });
@@ -67,9 +66,7 @@ module.exports = {
                 tournament
                     .update(newTournament)
                     .then((t) => {
-                        socket.emit('updateTournament', t);
-                        io.emit('refreshTournament', t);
-                        io.emit('refreshTournaments');
+                        io.emit('updateTournament', t);
                     })
                     .catch(() => onError('Une erreur est survenue'));
             });
