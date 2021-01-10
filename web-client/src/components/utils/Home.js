@@ -25,10 +25,6 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    socket
-        .off('refreshTournaments')
-        .on('refreshTournaments', () => fetchParticipation());
-
     socket.off('editParticipation').on('editParticipation', (p) => {
         if (participation && p.id === participation.id) {
             const newParticipation = _.cloneDeep(participation);
@@ -56,12 +52,12 @@ function Home() {
     });
 
     useEffect(() => {
+        socket.on('createTournament', fetchParticipation);
         fetchParticipation();
 
         return () => {
             socket.off('getLastPonceParticipation');
             socket.off('getLastUserParticipation');
-            socket.off('refreshTournaments');
             socket.off('editParticipation');
             socket.off('addRace');
             socket.off('editRace');
@@ -144,7 +140,7 @@ function Home() {
                 <Row justify="center">
                     <Col xs={12} lg={8}>
                         <TournamentInfos
-                            tournament={participation.Tournament}
+                            defaultTournament={participation.Tournament}
                         />
                         <Podium
                             tournamentId={participation.Tournament.id}

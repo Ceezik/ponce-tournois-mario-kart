@@ -9,22 +9,38 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 
-function ParticipationsButtons({ participations, setParticipation }) {
+function ParticipationsButtons({
+    participations,
+    setParticipation,
+    refreshParticipation,
+}) {
     const screenClass = useScreenClass();
     const { tournaments } = useSelector((state) => state.tournaments);
     const [index, setIndex] = useState(undefined);
+    const [tournament, setTournament] = useState(undefined);
 
     useEffect(() => {
-        if (index === undefined) setIndex(0);
+        if (index === undefined && tournaments.length) setIndex(0);
+        else {
+            const newIndex = _.findIndex(
+                tournaments,
+                (t) => t.id === tournament.id
+            );
+            if (newIndex !== -1) {
+                setIndex(newIndex);
+                if (newIndex === index) setTournament(tournaments[newIndex]);
+            }
+        }
     }, [tournaments]);
 
     useEffect(() => {
-        const tournament = tournaments[index];
-        if (tournament) {
+        const newTournament = tournaments[index];
+        if (newTournament) {
             const participation = _.find(participations, {
-                TournamentId: tournament.id,
+                TournamentId: newTournament.id,
             });
             if (participation) setParticipation(participation);
+            setTournament(newTournament);
         }
     }, [index]);
 
@@ -52,8 +68,8 @@ function ParticipationsButtons({ participations, setParticipation }) {
             <Col>
                 <Select
                     value={{
-                        value: tournaments[index]?.id,
-                        label: tournaments[index]?.name,
+                        value: tournament?.id,
+                        label: tournament?.name,
                     }}
                     onChange={onTournamentChange}
                     options={tournaments.map((tournament) => ({
