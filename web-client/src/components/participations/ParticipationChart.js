@@ -70,7 +70,7 @@ function ParticipationChart({
         layout: {
             padding: {
                 left: 20,
-                right: 20,
+                right: 40,
                 top: 20,
                 bottom: 10,
             },
@@ -101,7 +101,16 @@ function ParticipationChart({
             fill: false,
             borderColor: '#ffc1bf',
             datalabels: {
-                display: false,
+                align: 'right',
+                color: '#ffc1bf',
+                font: {
+                    family: 'Nunito',
+                },
+                formatter: (value, ctx) => {
+                    return ctx.dataIndex === ctx.dataset.data.length - 1
+                        ? value.y
+                        : null;
+                },
             },
             data: worst.Races.map(
                 ((s) => ({ nbPoints }) => (s += nbPoints))(0)
@@ -115,7 +124,16 @@ function ParticipationChart({
             fill: false,
             borderColor: '#dbdbdb',
             datalabels: {
-                display: false,
+                align: 'right',
+                color: '#dbdbdb',
+                font: {
+                    family: 'Nunito',
+                },
+                formatter: (value, ctx) => {
+                    return ctx.dataIndex === ctx.dataset.data.length - 1
+                        ? Math.round(value)
+                        : null;
+                },
             },
             data: average.map(((s) => (a) => (s += a))(0)),
         });
