@@ -69,8 +69,8 @@ function Home() {
             showPonce
                 ? 'getLastPonceParticipation'
                 : 'getLastUserParticipation',
-            (participations) => {
-                const participation = participations.shift();
+            (p) => {
+                const [participation, ...participations] = p;
                 const participationsWithNbPoints = getParticipationsWithNbPoints(
                     participations
                 );
