@@ -51,21 +51,11 @@ function Home() {
         }
     });
 
-    useEffect(() => {
-        socket.on('createTournament', fetchParticipation);
-        fetchParticipation();
-
-        return () => {
-            socket.off('getLastPonceParticipation');
-            socket.off('getLastUserParticipation');
-            socket.off('editParticipation');
-            socket.off('addRace');
-            socket.off('editRace');
-        };
-    }, []);
-
-    useEffect(() => {
-        socket.on(
+    socket
+        .off(
+            showPonce ? 'getLastPonceParticipation' : 'getLastUserParticipation'
+        )
+        .on(
             showPonce
                 ? 'getLastPonceParticipation'
                 : 'getLastUserParticipation',
@@ -88,6 +78,20 @@ function Home() {
             }
         );
 
+    useEffect(() => {
+        socket.on('createTournament', fetchParticipation);
+        fetchParticipation();
+
+        return () => {
+            socket.off('getLastPonceParticipation');
+            socket.off('getLastUserParticipation');
+            socket.off('editParticipation');
+            socket.off('addRace');
+            socket.off('editRace');
+        };
+    }, []);
+
+    useEffect(() => {
         setLoading(true);
         fetchParticipation();
     }, [showPonce]);
