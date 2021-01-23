@@ -99,10 +99,10 @@ function ParticipationChart({
         data.datasets.push({
             label: 'Pire score',
             fill: false,
-            borderColor: '#ffc1bf',
+            borderColor: '#ea4335',
             datalabels: {
                 align: 'right',
-                color: '#ffc1bf',
+                color: '#ea4335',
                 font: {
                     family: 'Nunito',
                 },
@@ -122,10 +122,10 @@ function ParticipationChart({
         data.datasets.push({
             label: 'Moyenne',
             fill: false,
-            borderColor: '#dbdbdb',
+            borderColor: '#c0c0c0',
             datalabels: {
                 align: 'right',
-                color: '#dbdbdb',
+                color: '#c0c0c0',
                 font: {
                     family: 'Nunito',
                 },
