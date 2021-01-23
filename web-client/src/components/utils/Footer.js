@@ -9,6 +9,7 @@ function Footer() {
             </span>{' '}
             par{' '}
             <a
+                className="primaryLink"
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://github.com/Ceezik"
