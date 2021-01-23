@@ -12,21 +12,12 @@ _getLastParticipation = (socket, onError, user, route, errorMessage) => {
     })
         .then((participations) => {
             if (participations.length > 0) {
-                socket.emit(route, {
-                    participation: participations[0],
-                    record: _getRecord(participations),
-                });
+                socket.emit(route, participations);
             } else {
                 onError(errorMessage);
             }
         })
         .catch(() => onError('Une erreur est survenue'));
-};
-
-_getRecord = (participations) => {
-    const p = participations.slice(1);
-    p.forEach((el) => (el.nbPoints = _.sumBy(el.Races, 'nbPoints')));
-    return _.maxBy(p, 'nbPoints');
 };
 
 module.exports = {

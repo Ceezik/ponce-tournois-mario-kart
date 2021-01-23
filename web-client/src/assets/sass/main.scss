@@ -63,7 +63,7 @@ input:focus {
     padding: 0.75rem 2rem;
     border-radius: 6px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, visibility 0s;
 }
 
 .btnPrimary:hover {
@@ -203,19 +203,19 @@ table {
     margin-top: 0;
 }
 
+.primaryLink {
+    transition: color 0.3s ease;
+}
+
+.primaryLink:hover {
+    color: $main-color;
+}
+
 footer {
     flex-shrink: 0;
     text-align: center;
     border-top: 1px solid #e6e6e6;
     padding: 2rem;
-}
-
-footer > a {
-    transition: all 0.3s ease;
-}
-
-footer > a:hover {
-    color: $main-color;
 }
 
 .switch {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-grid-system';
 import _ from 'lodash';
-import { useSocket } from '../../../utils/useSocket';
+import { useSelector } from 'react-redux';
 import Participation from '../../participations/Participation';
 import ParticipationSkeleton from './ParticipationSkeleton';
 
 function PonceParticipation({ tournament }) {
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [participation, setParticipation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

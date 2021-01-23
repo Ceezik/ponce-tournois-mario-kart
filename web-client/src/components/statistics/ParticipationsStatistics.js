@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-grid-system';
 import _ from 'lodash';
-import { useSocket } from '../../utils/useSocket';
+import { useSelector } from 'react-redux';
 import { TotalPointsChart, AveragePointsChart } from './PointsCharts';
 import ChartSkeleton from './ChartSkeleton';
 
 function ParticipationsStatistics({ route }) {
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
+    const { maxItems } = useSelector((state) => state.statistics);
     const [participations, setParticipations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -77,12 +78,16 @@ function ParticipationsStatistics({ route }) {
             <h1 className="statistics__title">
                 Évolution du nombre total de points
             </h1>
-            <TotalPointsChart participations={participations} />
+            <TotalPointsChart
+                participations={_.takeRight(participations, maxItems)}
+            />
 
             <h1 className="statistics__title">
                 Évolution du nombre moyen de points
             </h1>
-            <AveragePointsChart participations={participations} />
+            <AveragePointsChart
+                participations={_.takeRight(participations, maxItems)}
+            />
         </>
     );
 }

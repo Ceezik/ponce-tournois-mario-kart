@@ -1,11 +1,17 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import Participations from './Participations';
-import useTitle from '../../utils/useTitle';
 
 function UserParticipations() {
-    useTitle('Mon historique');
+    return (
+        <>
+            <Helmet>
+                <title>Mon historique</title>
+            </Helmet>
 
-    return <Participations canAdd={true} route="getUserParticipations" />;
+            <Participations canAdd={true} route="getUserParticipations" />
+        </>
+    );
 }
 
 export default UserParticipations;

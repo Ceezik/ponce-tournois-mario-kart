@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useSocket } from '../../utils/useSocket';
+import { useSelector } from 'react-redux';
 import PlayerForm from './PlayerForm';
 
 function EditPlayerForm({ closeForm, podium }) {
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 

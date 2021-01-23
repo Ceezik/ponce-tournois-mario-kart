@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
+import { useSelector } from 'react-redux';
 
-function TournamentInfos({ tournament }) {
+function TournamentInfos({ defaultTournament }) {
+    const { socket } = useSelector((state) => state.socket);
+    const [tournament, setTournament] = useState(defaultTournament);
+
+    useEffect(() => {
+        socket.on('updateTournament', (newTournament) => {
+            setTournament((currentTournament) =>
+                newTournament.id === currentTournament.id
+                    ? newTournament
+                    : currentTournament
+            );
+        });
+    }, []);
+
+    useEffect(() => setTournament(defaultTournament), [defaultTournament]);
+
     const formatDate = (date) => {
         return moment(date).format('DD MMM YYYY à HH:mm');
     };

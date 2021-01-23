@@ -2,6 +2,12 @@
     margin-top: 3rem;
 }
 
-.userStatistics__wrapper .statistics__title:first-of-type {
-    margin-top: 0;
+.statistics__paginationWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.statistics__pagination {
+    margin: 0 0.5em;
+    min-width: 5.5em;
 }

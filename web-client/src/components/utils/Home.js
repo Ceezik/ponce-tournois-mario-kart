@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
+import { Helmet } from 'react-helmet';
+import { useSelector } from 'react-redux';
 import { Container, Col, Row } from 'react-grid-system';
-import { useSocket } from '../../utils/useSocket';
-import { useAuth } from '../../utils/useAuth';
 import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
 import Podium from '../podiums/Podium';
-import useTitle from '../../utils/useTitle';
+import {
+    getRecord,
+    getWorst,
+    getParticipationsWithNbPoints,
+    getAverage,
+} from '../../utils/utils';
 
 function Home() {
-    useTitle('Dernier tournoi');
-    const { socket } = useSocket();
-    const { user } = useAuth();
+    const { socket } = useSelector((state) => state.socket);
+    const { user } = useSelector((state) => state.auth);
     const [showPonce, setShowPonce] = useState(true);
     const [participation, setParticipation] = useState(null);
     const [record, setRecord] = useState(null);
+    const [worst, setWorst] = useState(null);
+    const [average, setAverage] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    socket
-        .off('refreshTournaments')
-        .on('refreshTournaments', () => fetchParticipation());
 
     socket.off('editParticipation').on('editParticipation', (p) => {
         if (participation && p.id === participation.id) {
@@ -49,13 +51,40 @@ function Home() {
         }
     });
 
+    socket
+        .off(
+            showPonce ? 'getLastPonceParticipation' : 'getLastUserParticipation'
+        )
+        .on(
+            showPonce
+                ? 'getLastPonceParticipation'
+                : 'getLastUserParticipation',
+            (p) => {
+                const [participation, ...participations] = p;
+                const participationsWithNbPoints = getParticipationsWithNbPoints(
+                    participations
+                );
+
+                setRecord(getRecord(participationsWithNbPoints));
+                setWorst(getWorst(participationsWithNbPoints));
+                setAverage(
+                    getAverage(
+                        participationsWithNbPoints,
+                        participation.Tournament.nbMaxRaces
+                    )
+                );
+                setParticipation(participation);
+                setLoading(false);
+            }
+        );
+
     useEffect(() => {
+        socket.on('createTournament', fetchParticipation);
         fetchParticipation();
 
         return () => {
             socket.off('getLastPonceParticipation');
             socket.off('getLastUserParticipation');
-            socket.off('refreshTournaments');
             socket.off('editParticipation');
             socket.off('addRace');
             socket.off('editRace');
@@ -63,17 +92,6 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        socket.on(
-            showPonce
-                ? 'getLastPonceParticipation'
-                : 'getLastUserParticipation',
-            ({ participation, record }) => {
-                setRecord(record);
-                setParticipation(participation);
-                setLoading(false);
-            }
-        );
-
         setLoading(true);
         fetchParticipation();
     }, [showPonce]);
@@ -92,6 +110,10 @@ function Home() {
 
     return (
         <Container className="app__container">
+            <Helmet>
+                <title>Dernier tournoi</title>
+            </Helmet>
+
             <Row justify="center">
                 <Col xs={12} lg={8}>
                     <div className="formMessage formMessage--center formMessage__info">
@@ -122,7 +144,7 @@ function Home() {
                 <Row justify="center">
                     <Col xs={12} lg={8}>
                         <TournamentInfos
-                            tournament={participation.Tournament}
+                            defaultTournament={participation.Tournament}
                         />
                         <Podium
                             tournamentId={participation.Tournament.id}
@@ -131,6 +153,8 @@ function Home() {
                         <Participation
                             participation={participation}
                             record={record}
+                            worst={worst}
+                            average={average}
                             tournamentName={participation.Tournament.name}
                             nbMaxRaces={participation.Tournament.nbMaxRaces}
                             canAdd={!showPonce}

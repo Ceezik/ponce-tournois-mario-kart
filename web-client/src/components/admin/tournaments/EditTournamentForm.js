@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useSocket } from '../../../utils/useSocket';
+import { Helmet } from 'react-helmet';
+import { useSelector } from 'react-redux';
 import TournamentForm from './TournamentForm';
 import { nullifyEmptyFields, serializeTournament } from '../../../utils/utils';
 import history from '../../../utils/history';
-import useTitle from '../../../utils/useTitle';
 
 function EditTournamentForm({ tournament }) {
-    useTitle('Modifier un tournoi');
-    const { socket } = useSocket();
+    const { socket } = useSelector((state) => state.socket);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -32,12 +31,14 @@ function EditTournamentForm({ tournament }) {
             setLoading(false);
             history.push(`/admin/tournaments/${tournament.id}`);
         });
-
-        return () => socket.off('updateTournament');
     }, []);
 
     return (
         <>
+            <Helmet>
+                <title>Modifier un tournoi</title>
+            </Helmet>
+
             <h1 className="title--noMarginTop">Modifier un tournoi</h1>
 
             <TournamentForm

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
+import { useDispatch } from 'react-redux';
 import { Container, Row, Col } from 'react-grid-system';
 import Form from '../form/Form';
 import Input from '../form/Input';
 import Button from '../form/Button';
-import { useAuth } from '../../utils/useAuth';
-import useTitle from '../../utils/useTitle';
+import { signup } from '../../redux/actions/auth';
 
 const USERNAME_FORMAT =
     "Votre nom d'utilisateur ne doit contenir que des caractères alphanumériques";
@@ -13,20 +14,23 @@ const USERNAME_LENGTH =
     "Votre nom d'utilisateur doit faire entre 3 et 50 caractères";
 
 function Signup() {
-    useTitle('Première connexion');
+    const dispatch = useDispatch();
     const { defaultUsername, twitchId, token } = queryString.parse(
         window.location.search
     );
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { signup } = useAuth();
 
     const onSubmit = ({ username }) => {
-        signup({ username, twitchId, token }, setError, setLoading);
+        dispatch(signup({ username, twitchId, token }, setError, setLoading));
     };
 
     return (
         <Container className="app__container">
+            <Helmet>
+                <title>Première connexion</title>
+            </Helmet>
+
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
                     <h1 className="title--noMarginTop">Première connexion</h1>

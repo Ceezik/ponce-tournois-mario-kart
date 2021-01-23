@@ -1,17 +1,17 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
+import _ from 'lodash';
 
 function ParticipationChart({
     record,
+    worst,
+    average,
     goal,
     races,
     tournamentName,
     nbMaxRaces,
 }) {
-    let sum;
-    let sum2;
-
     const data = {
         labels: Array.from(Array(nbMaxRaces), (_, i) => i + 1),
         datasets: [
@@ -26,7 +26,7 @@ function ParticipationChart({
                         family: 'Nunito',
                     },
                 },
-                data: races.map((race) => (sum = (sum || 0) + race.nbPoints)),
+                data: races.map(((s) => ({ nbPoints }) => (s += nbPoints))(0)),
             },
         ],
     };
@@ -54,7 +54,10 @@ function ParticipationChart({
                     display: false,
                     ticks: {
                         suggestedMin: 0,
-                        suggestedMax: 15 * nbMaxRaces,
+                        suggestedMax:
+                            record || worst || average || goal
+                                ? undefined
+                                : nbMaxRaces * 15,
                     },
                 },
             ],
@@ -67,7 +70,7 @@ function ParticipationChart({
         layout: {
             padding: {
                 left: 20,
-                right: 20,
+                right: 40,
                 top: 20,
                 bottom: 10,
             },
@@ -87,8 +90,52 @@ function ParticipationChart({
                 },
             },
             data: record.Races.map(
-                (race) => (sum2 = (sum2 || 0) + race.nbPoints)
+                ((s) => ({ nbPoints }) => (s += nbPoints))(0)
             ),
+        });
+    }
+
+    if (worst) {
+        data.datasets.push({
+            label: 'Pire score',
+            fill: false,
+            borderColor: '#ea4335',
+            datalabels: {
+                align: 'right',
+                color: '#ea4335',
+                font: {
+                    family: 'Nunito',
+                },
+                formatter: (value, ctx) => {
+                    return ctx.dataIndex === ctx.dataset.data.length - 1
+                        ? value.y
+                        : null;
+                },
+            },
+            data: worst.Races.map(
+                ((s) => ({ nbPoints }) => (s += nbPoints))(0)
+            ),
+        });
+    }
+
+    if (average) {
+        data.datasets.push({
+            label: 'Moyenne',
+            fill: false,
+            borderColor: '#c0c0c0',
+            datalabels: {
+                align: 'right',
+                color: '#c0c0c0',
+                font: {
+                    family: 'Nunito',
+                },
+                formatter: (value, ctx) => {
+                    return ctx.dataIndex === ctx.dataset.data.length - 1
+                        ? Math.round(value)
+                        : null;
+                },
+            },
+            data: average.map(((s) => (a) => (s += a))(0)),
         });
     }
 
@@ -96,7 +143,10 @@ function ParticipationChart({
         data.datasets.push({
             label: 'Objectif',
             fill: false,
-            borderColor: sum > goal ? '#68b684' : '#f3453f',
+            borderColor:
+                _.sumBy(races, (race) => race.nbPoints) > goal
+                    ? '#68b684'
+                    : '#f3453f',
             borderWidth: 2,
             datalabels: { display: false },
             data: Array(nbMaxRaces).fill(goal),

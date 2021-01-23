@@ -1,40 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useSocket } from '../../../utils/useSocket';
+import { useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-grid-system';
 import EditTournamentForm from './EditTournamentForm';
 import TournamentFormSkeleton from './TournamentFormSkeleton';
+import { getTournamentById } from '../../../redux/selectors/tournaments';
 
 function EditTournamentWrapper() {
     const { tournamentId } = useParams();
-    const { socket } = useSocket();
-    const [tournament, setTournament] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        socket.on('getTournament', (tournament) => {
-            setTournament(tournament);
-            setLoading(false);
-        });
-
-        socket.emit('getTournament', tournamentId, (err) => {
-            setError(err);
-            setLoading(false);
-        });
-
-        return () => socket.off('getTournament');
-    }, [tournamentId]);
+    const { loading } = useSelector((state) => state.tournaments);
+    const tournament = useSelector((state) =>
+        getTournamentById(state, tournamentId)
+    );
 
     return (
         <Container className="app__container">
             {loading ? (
                 <TournamentFormSkeleton />
-            ) : error ? (
+            ) : !tournament ? (
                 <Row justify="center">
                     <Col xs="content">
                         <div className="formMessage formMessage__error">
-                            {error}
+                            Ce tournoi n'existe pas
                         </div>
                     </Col>
                 </Row>

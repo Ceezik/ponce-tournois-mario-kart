@@ -1,11 +1,17 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import Participations from './Participations';
-import useTitle from '../../utils/useTitle';
 
 function PonceParticipations() {
-    useTitle('Historique');
+    return (
+        <>
+            <Helmet>
+                <title>Historique</title>
+            </Helmet>
 
-    return <Participations canAdd={false} route="getPonceParticipations" />;
+            <Participations canAdd={false} route="getPonceParticipations" />
+        </>
+    );
 }
 
 export default PonceParticipations;

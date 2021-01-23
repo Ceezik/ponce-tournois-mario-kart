@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-grid-system';
-import { useAuth } from '../../utils/useAuth';
+import { useDispatch, useSelector } from 'react-redux';
 import Form from '../form/Form';
 import Input from '../form/Input';
 import Button from '../form/Button';
 import { update } from '../../services/user';
-import useTitle from '../../utils/useTitle';
+import { updateUser } from '../../redux/actions/auth';
 
 const USERNAME_FORMAT =
     "Votre nom d'utilisateur ne doit contenir que des caractères alphanumériques";
@@ -13,8 +14,8 @@ const USERNAME_LENGTH =
     "Votre nom d'utilisateur doit faire entre 3 et 50 caractères";
 
 function Profile() {
-    useTitle('Mon compte');
-    const { user, updateUser } = useAuth();
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
 
@@ -23,7 +24,7 @@ function Profile() {
 
         update(username)
             .then((res) => {
-                updateUser(res.data);
+                dispatch(updateUser(res.data));
                 setMessage({
                     type: 'success',
                     text: "Votre nom d'utilisateur a bien été modifié",
@@ -37,6 +38,10 @@ function Profile() {
 
     return (
         <Container className="app__container">
+            <Helmet>
+                <title>Mon compte</title>
+            </Helmet>
+
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
                     <h1 className="title--noMarginTop">Mon compte</h1>
