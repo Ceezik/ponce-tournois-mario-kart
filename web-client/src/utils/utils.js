@@ -66,3 +66,9 @@ export const getAverage = (participations) => {
 
     return average;
 };
+
+export const getMaxItemsFromScreenClass = (screenClass) => {
+    if (screenClass === 'xs' || screenClass === 'sm') return 10;
+    if (screenClass === 'md') return 25;
+    return 100;
+};

@@ -118,7 +118,6 @@ function Participations({ route, canAdd }) {
                                 <ParticipationsButtons
                                     participations={participations}
                                     setParticipation={setParticipation}
-                                    refreshParticipation={refreshParticipation}
                                 />
 
                                 {participation && (
