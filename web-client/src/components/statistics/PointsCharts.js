@@ -1,25 +1,20 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import _ from 'lodash';
-import { useScreenClass } from 'react-grid-system';
 import 'chartjs-plugin-datalabels';
+import { useSelector } from 'react-redux';
 
 export function TotalPointsChart({ participations }) {
-    const screenClass = useScreenClass();
+    const { maxItems } = useSelector((state) => state.statistics);
 
     const data = {
         labels: participations.map((p) => p.Tournament.name),
         datasets: [
             {
+                barThickness: maxItems > 50 ? 7 : 10,
                 backgroundColor: '#ff56a9',
                 datalabels: {
-                    display: !['xs', 'sm'].includes(screenClass),
-                    anchor: 'end',
-                    align: 'end',
-                    color: '#1d1d1d',
-                    font: {
-                        family: 'Nunito',
-                    },
+                    display: false,
                 },
                 data: participations.map((p) => _.sumBy(p.Races, 'nbPoints')),
             },
@@ -51,10 +46,6 @@ export function TotalPointsChart({ participations }) {
                 },
             ],
         },
-        tooltips: {
-            enabled: false,
-        },
-        events: [],
         layout: {
             padding: {
                 left: 20,
@@ -69,7 +60,7 @@ export function TotalPointsChart({ participations }) {
 }
 
 export function AveragePointsChart({ participations }) {
-    const screenClass = useScreenClass();
+    const { maxItems } = useSelector((state) => state.statistics);
 
     const getAveragePoints = () => {
         return participations.map((p) => {
@@ -83,15 +74,10 @@ export function AveragePointsChart({ participations }) {
         labels: participations.map((p) => p.Tournament.name),
         datasets: [
             {
+                barThickness: maxItems > 50 ? 7 : 10,
                 backgroundColor: '#ff56a9',
                 datalabels: {
-                    display: !['xs', 'sm'].includes(screenClass),
-                    anchor: 'end',
-                    align: 'end',
-                    color: '#1d1d1d',
-                    font: {
-                        family: 'Nunito',
-                    },
+                    display: false,
                 },
                 data: getAveragePoints(),
             },
@@ -123,10 +109,6 @@ export function AveragePointsChart({ participations }) {
                 },
             ],
         },
-        tooltips: {
-            enabled: false,
-        },
-        events: [],
         layout: {
             padding: {
                 left: 20,

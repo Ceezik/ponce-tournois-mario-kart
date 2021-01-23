@@ -9,11 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 
-function ParticipationsButtons({
-    participations,
-    setParticipation,
-    refreshParticipation,
-}) {
+function ParticipationsButtons({ participations, setParticipation }) {
     const screenClass = useScreenClass();
     const { tournaments } = useSelector((state) => state.tournaments);
     const [index, setIndex] = useState(undefined);

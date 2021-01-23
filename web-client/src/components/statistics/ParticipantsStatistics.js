@@ -1,14 +1,15 @@
 import React from 'react';
 import { Row, Col } from 'react-grid-system';
 import { Bar } from 'react-chartjs-2';
-import { useScreenClass } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import 'chartjs-plugin-datalabels';
+import _ from 'lodash';
 import ChartSkeleton from './ChartSkeleton';
 import { getReversedTournaments } from '../../redux/selectors/tournaments';
 
 function ParticipantsStatistics() {
     const tournaments = useSelector(getReversedTournaments);
+    const { maxItems } = useSelector((state) => state.statistics);
     const { loading, error } = useSelector((state) => state.tournaments);
 
     return loading ? (
@@ -20,26 +21,21 @@ function ParticipantsStatistics() {
             </Col>
         </Row>
     ) : (
-        <ParticipantsChart tournaments={tournaments} />
+        <ParticipantsChart tournaments={_.takeRight(tournaments, maxItems)} />
     );
 }
 
 function ParticipantsChart({ tournaments }) {
-    const screenClass = useScreenClass();
+    const { maxItems } = useSelector((state) => state.statistics);
 
     const data = {
         labels: tournaments.map((t) => t.name),
         datasets: [
             {
+                barThickness: maxItems > 50 ? 7 : 10,
                 backgroundColor: '#ff56a9',
                 datalabels: {
-                    display: !['xs', 'sm'].includes(screenClass),
-                    anchor: 'end',
-                    align: 'end',
-                    color: '#1d1d1d',
-                    font: {
-                        family: 'Nunito',
-                    },
+                    display: false,
                 },
                 data: tournaments.map((t) => t.nbParticipants),
             },
@@ -71,10 +67,6 @@ function ParticipantsChart({ tournaments }) {
                 },
             ],
         },
-        tooltips: {
-            enabled: false,
-        },
-        events: [],
         layout: {
             padding: {
                 left: 20,
