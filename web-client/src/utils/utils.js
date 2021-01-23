@@ -16,6 +16,8 @@ export const serializeTournament = (tournament) => {
         tournament.startDate = moment(tournament.startDate).utc().format();
     if (tournament.endDate)
         tournament.endDate = moment(tournament.endDate).utc().format();
+    if (tournament.nbMaxRaces && !isNaN(tournament.nbMaxRaces))
+        tournament.nbMaxRaces = +tournament.nbMaxRaces;
 
     return tournament;
 };
