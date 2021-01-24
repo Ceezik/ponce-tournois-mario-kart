@@ -94,6 +94,7 @@ function Participations({ route, canAdd }) {
 
         newParticipations.splice(index, 1, newParticipation);
         setParticipations(newParticipations);
+        setParticipation(newParticipation);
     };
 
     return (
