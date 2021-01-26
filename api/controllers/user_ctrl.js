@@ -18,6 +18,20 @@ module.exports = {
             .catch((err) => next(err));
     },
 
+    getByUsername: (req, res, next) => {
+        const { username } = req.params;
+
+        return db.User.findOne({ where: { username } })
+            .then((user) => {
+                if (user) return res.json(user);
+                throw {
+                    status: 404,
+                    message: "Cet utilisateur n'existe pas",
+                };
+            })
+            .catch((err) => next(err));
+    },
+
     updateById: (req, res, next) => {
         return db.User.findByPk(req.params.userId)
             .then((user) => {
