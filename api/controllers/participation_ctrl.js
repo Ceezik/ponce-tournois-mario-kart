@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const db = require('../models');
-const { getPonce, isAuthenticated } = require('../utils');
+const { getPonce, isAuthenticated, getUser } = require('../utils');
 
 _getLastParticipation = (socket, onError, user, route, errorMessage) => {
     user.getParticipations({
@@ -39,7 +39,7 @@ module.exports = {
     },
 
     getUserParticipations: (socket, onError, userId) => {
-        isAuthenticated(onError, userId, (user) => {
+        getUser(onError, userId, (user) => {
             user.getParticipations({
                 include: [{ model: db.Tournament }],
                 order: [

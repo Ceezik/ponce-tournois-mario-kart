@@ -27,6 +27,18 @@ module.exports = {
             .catch(() => onError('Une erreur est survenue'));
     },
 
+    getUser: (onError, userId, cb) => {
+        db.User.findByPk(userId)
+            .then((user) => {
+                if (user) {
+                    cb(user);
+                } else {
+                    onError("Cet utilisateur n'existe pas");
+                }
+            })
+            .catch(() => onError('Une erreur est survenue'));
+    },
+
     isAuthenticated: (onError, userId, cb) => {
         db.User.findByPk(userId)
             .then((user) => {
