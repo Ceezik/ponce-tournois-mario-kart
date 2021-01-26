@@ -9,6 +9,12 @@ module.exports = [
     },
 
     {
+        url: '/users/:username',
+        method: 'get',
+        func: user_ctrl.getByUsername,
+    },
+
+    {
         url: '/users/:userId',
         method: 'put',
         func: [
