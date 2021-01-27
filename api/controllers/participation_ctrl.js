@@ -83,7 +83,7 @@ module.exports = {
     },
 
     getLastUserParticipation: (socket, onError, userId) => {
-        isAuthenticated(onError, userId, (user) => {
+        getUser(onError, userId, (user) => {
             _getLastParticipation(
                 socket,
                 onError,
