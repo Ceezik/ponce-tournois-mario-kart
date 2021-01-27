@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { TotalPointsChart, AveragePointsChart } from './PointsCharts';
 import ChartSkeleton from './ChartSkeleton';
 
-function ParticipationsStatistics({ route }) {
+function ParticipationsStatistics({ route, userId }) {
     const { socket } = useSelector((state) => state.socket);
     const { maxItems } = useSelector((state) => state.statistics);
     const [participations, setParticipations] = useState([]);
@@ -51,7 +51,7 @@ function ParticipationsStatistics({ route }) {
     }, []);
 
     const fetchParticipations = () => {
-        socket.emit(route, (err) => {
+        socket.emit(route, userId, (err) => {
             setError(err);
             setLoading(false);
         });

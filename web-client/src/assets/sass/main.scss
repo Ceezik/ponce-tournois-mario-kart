@@ -196,7 +196,11 @@ table {
 }
 
 .app__container {
-    margin: 3rem 0 5rem 0;
+    margin: 3rem 0 0 0;
+}
+
+.app__container:last-of-type {
+    margin-bottom: 5em;
 }
 
 .title--noMarginTop {

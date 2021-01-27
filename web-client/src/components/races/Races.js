@@ -6,7 +6,7 @@ import { getAll } from '../../services/cups';
 import RacesListItem from './RacesListItem';
 import RacesSkeleton from './RacesSkeleton';
 
-function Races({ route }) {
+function Races({ route, userId }) {
     const { tracks } = useSelector((state) => state.tracks);
     const { socket } = useSelector((state) => state.socket);
     const [races, setRaces] = useState([]);
@@ -22,7 +22,7 @@ function Races({ route }) {
             setLoadingRaces(false);
         });
 
-        socket.emit(route, (err) => {
+        socket.emit(route, userId, (err) => {
             setError(err);
             setLoadingRaces(false);
         });

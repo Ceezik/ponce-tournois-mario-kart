@@ -37,3 +37,19 @@
 .users__user > div:first-child {
     text-align: left;
 }
+
+.userTitle {
+    margin-top: 0;
+}
+
+.userMenu__wrapper {
+    margin-bottom: 1.5em;
+}
+
+.userMenu__navListItem {
+    padding: 0.25em 0;
+}
+
+.userMenu__navListItem--active {
+    color: $main-color;
+}
