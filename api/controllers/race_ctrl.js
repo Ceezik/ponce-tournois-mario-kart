@@ -1,5 +1,5 @@
 const db = require('../models');
-const { getPonce, isAuthenticated } = require('../utils');
+const { getPonce, getUser } = require('../utils');
 
 const _getRaces = (user) => {
     return db.Race.findAll({
@@ -27,7 +27,7 @@ module.exports = {
     },
 
     getUserRaces: (socket, onError, userId) => {
-        isAuthenticated(onError, userId, (user) => {
+        getUser(onError, userId, (user) => {
             _getRaces(user)
                 .then((races) => socket.emit('getUserRaces', races))
                 .catch((err) => onError(err.message));

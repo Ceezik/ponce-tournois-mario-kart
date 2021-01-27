@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMaxItems } from '../../redux/actions/statistics';
 import PaginationSkeleton from './PaginationSkeleton';
 import { getMaxItemsFromScreenClass } from '../../utils/utils';
+import { getSelectStyle } from '../../utils/style';
 
 function Pagination() {
     const { maxItems, itemsPerPage } = useSelector((state) => state.statistics);
@@ -35,15 +36,7 @@ function Pagination() {
                     }))}
                     onChange={handleMaxItemChange}
                     isSearchable={false}
-                    theme={(theme) => ({
-                        ...theme,
-                        borderRadius: 6,
-                        colors: {
-                            ...theme.colors,
-                            primary: '#ff56a9',
-                            primary25: '#f3f3f4',
-                        },
-                    })}
+                    theme={getSelectStyle}
                 />
                 derniers tournois
             </Col>

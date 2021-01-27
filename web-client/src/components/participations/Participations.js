@@ -9,7 +9,7 @@ import ParticipationSkeleton from './ParticipationSkeleton';
 import Error from '../utils/Error';
 import Podium from '../podiums/Podium';
 
-function Participations({ route, canAdd }) {
+function Participations({ route, canAdd, userId }) {
     const { socket } = useSelector((state) => state.socket);
     const [participations, setParticipations] = useState([]);
     const [participation, setParticipation] = useState(null);
@@ -82,7 +82,7 @@ function Participations({ route, canAdd }) {
     }, [participations]);
 
     const fetchParticipations = () => {
-        socket.emit(route, (err) => {
+        socket.emit(route, userId, (err) => {
             setError(err);
             setLoading(false);
         });
@@ -94,7 +94,8 @@ function Participations({ route, canAdd }) {
 
         newParticipations.splice(index, 1, newParticipation);
         setParticipations(newParticipations);
-        setParticipation(newParticipation);
+        if (participation?.id === newParticipation.id)
+            setParticipation(newParticipation);
     };
 
     return (

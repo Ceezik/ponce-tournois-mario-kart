@@ -8,13 +8,10 @@ import Header from './components/utils/Header';
 import AdminWrapper from './components/admin/AdminWrapper';
 import AdminRoute from './components/auth/AdminRoute';
 import PonceParticipations from './components/participations/PonceParticipations';
-import UserParticipations from './components/participations/UserParticipations';
 import PrivateRoute from './components/auth/PrivateRoute';
 import Home from './components/utils/Home';
 import PonceRaces from './components/races/PonceRaces';
-import UserRaces from './components/races/UserRaces';
-import Profile from './components/user/Profile';
-import UserStatistics from './components/statistics/UserStatistics';
+import Settings from './components/user/Settings';
 import PonceStatistics from './components/statistics/PonceStatistics';
 import Footer from './components/utils/Footer';
 import Analytics from './components/utils/Analytics';
@@ -27,6 +24,7 @@ import {
     setTournaments,
     setTournamentsError,
 } from './redux/actions/tournaments';
+import UserWrapper from './components/user/UserWrapper';
 
 function App() {
     const dispatch = useDispatch();
@@ -100,22 +98,9 @@ function App() {
                         component={PonceStatistics}
                     />
 
-                    <PrivateRoute exact path="/profile" component={Profile} />
-                    <PrivateRoute
-                        exact
-                        path="/my-history"
-                        component={UserParticipations}
-                    />
-                    <PrivateRoute
-                        exact
-                        path="/my-races"
-                        component={UserRaces}
-                    />
-                    <PrivateRoute
-                        exact
-                        path="/my-statistics"
-                        component={UserStatistics}
-                    />
+                    <Route path="/users/:username" component={UserWrapper} />
+
+                    <PrivateRoute exact path="/settings" component={Settings} />
 
                     <AdminRoute path="/admin" component={AdminWrapper} />
                 </Switch>

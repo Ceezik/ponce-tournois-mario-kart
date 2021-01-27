@@ -8,6 +8,7 @@ import {
     faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
+import { getSelectStyle } from '../../utils/style';
 
 function ParticipationsButtons({ participations, setParticipation }) {
     const screenClass = useScreenClass();
@@ -73,15 +74,7 @@ function ParticipationsButtons({ participations, setParticipation }) {
                         label: tournament.name,
                     }))}
                     isSearchable={false}
-                    theme={(theme) => ({
-                        ...theme,
-                        borderRadius: 6,
-                        colors: {
-                            ...theme.colors,
-                            primary: '#ff56a9',
-                            primary25: '#f3f3f4',
-                        },
-                    })}
+                    theme={getSelectStyle}
                 />
             </Col>
 

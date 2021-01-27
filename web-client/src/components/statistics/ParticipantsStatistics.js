@@ -32,7 +32,7 @@ function ParticipantsChart({ tournaments }) {
         labels: tournaments.map((t) => t.name),
         datasets: [
             {
-                barThickness: maxItems > 50 ? 7 : 10,
+                barThickness: maxItems > 50 ? 8 : 10,
                 backgroundColor: '#ff56a9',
                 datalabels: {
                     display: false,
