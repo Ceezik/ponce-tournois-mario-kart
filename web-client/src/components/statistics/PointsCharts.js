@@ -11,7 +11,7 @@ export function TotalPointsChart({ participations }) {
         labels: participations.map((p) => p.Tournament.name),
         datasets: [
             {
-                barThickness: maxItems > 50 ? 7 : 10,
+                barThickness: maxItems > 50 ? 8 : 10,
                 backgroundColor: '#ff56a9',
                 datalabels: {
                     display: false,
@@ -74,7 +74,7 @@ export function AveragePointsChart({ participations }) {
         labels: participations.map((p) => p.Tournament.name),
         datasets: [
             {
-                barThickness: maxItems > 50 ? 7 : 10,
+                barThickness: maxItems > 50 ? 8 : 10,
                 backgroundColor: '#ff56a9',
                 datalabels: {
                     display: false,
