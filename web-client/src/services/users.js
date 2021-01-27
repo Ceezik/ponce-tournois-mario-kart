@@ -6,6 +6,10 @@ export const getAll = (page, pageSize, usernameFilter) => {
     );
 };
 
+export const getByUsername = (username) => {
+    return request.get(`/users/${username}`);
+};
+
 export const updateById = (user) => {
     return request.put(`/users/${user.id}`, user);
 };

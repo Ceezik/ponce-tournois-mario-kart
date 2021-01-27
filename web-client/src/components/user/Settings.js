@@ -13,7 +13,7 @@ const USERNAME_FORMAT =
 const USERNAME_LENGTH =
     "Votre nom d'utilisateur doit faire entre 3 et 50 caractères";
 
-function Profile() {
+function Settings() {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
@@ -39,12 +39,12 @@ function Profile() {
     return (
         <Container className="app__container">
             <Helmet>
-                <title>Mon compte</title>
+                <title>Paramètres</title>
             </Helmet>
 
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
-                    <h1 className="title--noMarginTop">Mon compte</h1>
+                    <h1 className="title--noMarginTop">Paramètres</h1>
 
                     <Form onSubmit={onSubmit}>
                         {message && (
@@ -94,4 +94,4 @@ function Profile() {
     );
 }
 
-export default Profile;
+export default Settings;

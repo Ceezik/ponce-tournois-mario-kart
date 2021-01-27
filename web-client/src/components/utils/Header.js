@@ -110,20 +110,15 @@ function DesktopHeader() {
                         }`}
                     >
                         <ul className="header__dropdownNavList">
-                            <NavLink to="/profile" onClick={close}>
-                                <li>Mon compte</li>
+                            <NavLink
+                                to={`/users/${user.username}`}
+                                onClick={close}
+                            >
+                                <li>Profil</li>
                             </NavLink>
 
-                            <NavLink to="/my-history" onClick={close}>
-                                <li>Mon historique</li>
-                            </NavLink>
-
-                            <NavLink to="/my-races" onClick={close}>
-                                <li>Mes circuits joués</li>
-                            </NavLink>
-
-                            <NavLink to="/my-statistics" onClick={close}>
-                                <li>Mes statistiques</li>
+                            <NavLink to="/settings" onClick={close}>
+                                <li>Paramètres</li>
                             </NavLink>
 
                             <li onClick={() => dispatch(signout())}>
@@ -221,26 +216,16 @@ function MobileHeader() {
 
                             <Row className="header__smProfilLinks">
                                 <Col xs={6}>
-                                    <NavLink to="/profile" onClick={close}>
-                                        Mon profil
-                                    </NavLink>
-                                </Col>
-                                <Col xs={6}>
-                                    <NavLink to="/my-history" onClick={close}>
-                                        Mon historique
-                                    </NavLink>
-                                </Col>
-                                <Col xs={6}>
-                                    <NavLink to="/my-races" onClick={close}>
-                                        Mes circuits joués
-                                    </NavLink>
-                                </Col>
-                                <Col xs={6}>
                                     <NavLink
-                                        to="/my-statistics"
+                                        to={`/users/${user.username}`}
                                         onClick={close}
                                     >
-                                        Mes statistiques
+                                        Profil
+                                    </NavLink>
+                                </Col>
+                                <Col xs={6}>
+                                    <NavLink to="/settings" onClick={close}>
+                                        Paramètres
                                     </NavLink>
                                 </Col>
                                 <Col
