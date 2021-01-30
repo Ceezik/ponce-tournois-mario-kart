@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const db = require('../models');
-const { getPonce, isAuthenticated, getUser } = require('../utils');
+const { getPonce, getUser } = require('../utils');
 
 _getLastParticipation = (socket, onError, user, route, errorMessage) => {
     user.getParticipations({
