@@ -43,12 +43,12 @@ module.exports = (sequelize, DataTypes) => {
     User.afterCreate((user) => {
         sequelize.models.Tournament.findAll()
             .then((tournaments) => {
-                tournaments.forEach((tournament) => {
-                    sequelize.models.Participation.create({
-                        TournamentId: tournament.id,
-                        UserId: user.id,
-                    });
-                });
+                const participations = tournaments.map((tournament) => ({
+                    TournamentId: tournament.id,
+                    UserId: user.id,
+                }));
+
+                sequelize.models.Participation.bulkCreate(participations);
             })
             .catch(() => {});
     });
