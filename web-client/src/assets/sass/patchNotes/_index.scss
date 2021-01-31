@@ -1,0 +1,39 @@
+@import '../variables';
+
+.patchNotesList__title {
+    margin-top: 3rem;
+}
+
+.patchNotesList__title--skeleton {
+    margin-top: 2.25rem;
+}
+
+.patchNotesList__patchNote {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #e6e6e6;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.patchNotesList__patchNote:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.patchNotesList__patchNote--skeleton {
+    margin: 1rem 0;
+    padding: 2rem 0rem;
+}
+
+.patchNotesList__patchNoteVersion {
+    margin: 0;
+    margin-bottom: 0.25rem;
+}
+
+.patchNotesList__patchNoteDates {
+    cursor: pointer;
+    color: $tertiary-text-color;
+    font-style: italic;
+}
