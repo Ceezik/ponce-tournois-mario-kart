@@ -46,9 +46,6 @@
         "sass": "sass --watch ./src/assets/sass/main.scss:./src/style.css --style compressed",
         "autoprefix": "postcss ./src/style.css --use autoprefixer -o ./src/style.css"
     },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
     "browserslist": {
         "production": [
             ">0.2%",
