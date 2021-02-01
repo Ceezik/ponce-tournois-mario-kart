@@ -44,7 +44,8 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "sass": "sass --watch ./src/assets/sass/main.scss:./src/style.css --style compressed",
-        "autoprefix": "postcss ./src/style.css --use autoprefixer -o ./src/style.css"
+        "autoprefix": "postcss ./src/style.css --use autoprefixer -o ./src/style.css",
+        "heroku-postbuild": "react-scripts build"
     },
     "eslintConfig": {
         "extends": "react-app"
