@@ -2,6 +2,10 @@
     "name": "web-client",
     "version": "0.1.0",
     "private": true,
+    "engines": {
+        "node": ">= 13.7.0",
+        "npm": ">= 6.13.7"
+    },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.29",
         "@fortawesome/free-solid-svg-icons": "^5.13.1",
