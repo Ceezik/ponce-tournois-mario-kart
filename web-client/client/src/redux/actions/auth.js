@@ -28,6 +28,13 @@ export const signup = (user, setError, setLoading) => (dispatch) => {
         });
 };
 
+export const signin = (token) => (dispatch) => {
+    Cookies.set('token', token, { expires: 365 });
+    getProfil()
+        .then((res) => dispatch({ type: SET_USER, payload: res.data }))
+        .finally(() => history.push('/'));
+};
+
 export const signout = () => (dispatch) => {
     Cookies.remove('token');
     dispatch({ type: SET_USER, payload: null });
