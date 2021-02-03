@@ -40,11 +40,7 @@ module.exports = {
 
         return res
             .status(200)
-            .cookie('token', token, {
-                expires: moment().add(1, 'y').toDate(),
-                httpOnly: false,
-            })
-            .redirect(process.env.WEB_CLIENT_URL);
+            .redirect(`${process.env.WEB_CLIENT_URL}/signin?token=${token}`);
     },
 
     signup: (req, res, next) => {
