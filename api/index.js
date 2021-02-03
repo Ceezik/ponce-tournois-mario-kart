@@ -9,15 +9,15 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
     helmet = require('helmet'),
-    cluster = require('cluster'),
-    numCPUs = require('os').cpus().length;
+    cluster = require('cluster');
 
-const { NODE_ENV, PORT, REDIS_URL } = process.env;
+const { NODE_ENV, PORT, REDIS_URL, WEB_CONCURRENCY } = process.env;
 
 if (cluster.isMaster && NODE_ENV !== 'test') {
-    console.log(`Master cluster setting up ${numCPUs} workers....`);
+    const numWorkers = WEB_CONCURRENCY || 1;
+    console.log(`Master cluster setting up ${numWorkers} workers....`);
 
-    for (let i = 0; i < numCPUs; i += 1) {
+    for (let i = 0; i < numWorkers; i += 1) {
         cluster.fork();
     }
 
