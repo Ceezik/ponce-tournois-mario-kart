@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
@@ -8,6 +8,10 @@ import LastParticipation from '../participations/LastParticipation';
 function Home() {
     const { user } = useSelector((state) => state.auth);
     const [showPonce, setShowPonce] = useState(true);
+
+    useEffect(() => {
+        if (!user && !showPonce) setShowPonce(true);
+    }, [user]);
 
     return (
         <Container className="app__container">
@@ -32,7 +36,11 @@ function Home() {
             </Row>
 
             <LastParticipation
-                route={`getLast${showPonce ? 'Ponce' : 'User'}Participation`}
+                route={
+                    !showPonce && user
+                        ? 'getLastUserParticipation'
+                        : 'getLastPonceParticipation'
+                }
                 userId={showPonce ? undefined : user?.id}
             />
         </Container>
