@@ -3,6 +3,7 @@ import { Router, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import Signup from './components/auth/Signup';
+import Signin from './components/auth/Signin';
 import history from './utils/history';
 import Header from './components/utils/Header';
 import AdminWrapper from './components/admin/AdminWrapper';
@@ -84,6 +85,7 @@ function App() {
                 <Analytics />
                 <Switch>
                     <Route exact path="/signup" component={Signup} />
+                    <Route exact path="/signin" component={Signin} />
 
                     <Route exact path="/" component={Home} />
                     <Route
