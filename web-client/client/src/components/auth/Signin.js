@@ -8,7 +8,6 @@ function Signin() {
 
     useEffect(() => {
         const { token } = queryString.parse(window.location.search);
-        console.log(token);
         dispatch(signin(token));
     }, []);
 

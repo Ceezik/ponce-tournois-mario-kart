@@ -5,5 +5,8 @@ export const setSocket = (user) => (dispatch) => {
     const url = user
         ? `${process.env.REACT_APP_API_URL}?userId=${user.id}&isAdmin=${user.isAdmin}`
         : process.env.REACT_APP_API_URL;
-    dispatch({ type: SET_SOCKET, payload: socketIo(url) });
+    dispatch({
+        type: SET_SOCKET,
+        payload: socketIo(url, { transports: ['websocket'] }),
+    });
 };
