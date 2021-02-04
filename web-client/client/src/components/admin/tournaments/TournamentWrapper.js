@@ -16,7 +16,7 @@ function TournamentWrapper() {
     return (
         <Container className="app__container">
             {loading ? (
-                <TournamentSkeleton />
+                <TournamentSkeleton showHistory={false} showEdit={true} />
             ) : !tournament ? (
                 <Row justify="center">
                     <Col xs="content">
