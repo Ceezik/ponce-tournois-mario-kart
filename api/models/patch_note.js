@@ -2,9 +2,9 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
     class PatchNote extends Model {
-        static versionIsUnique(version) {
+        static versionIsUnique(version, id = null) {
             return this.findOne({ where: { version } })
-                .then((pn) => (pn ? false : true))
+                .then((pn) => (pn ? pn.id === id : true))
                 .catch((err) => false);
         }
     }
