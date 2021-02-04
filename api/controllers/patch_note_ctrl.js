@@ -29,4 +29,20 @@ module.exports = {
         }
         throw { status: 406, message: 'Paramètres invalides' };
     },
+
+    loadById: (req, res, next) => {
+        return db.PatchNote.findByPk(req.params.patchNoteId)
+            .then((patchNote) => {
+                if (patchNote) {
+                    req.patchNote = patchNote;
+                    return next();
+                }
+                throw { staus: 404, message: "Ce patch note n'existe pas" };
+            })
+            .catch((err) => next(err));
+    },
+
+    getById: (req, res, next) => {
+        return res.json(req.patchNote);
+    },
 };
