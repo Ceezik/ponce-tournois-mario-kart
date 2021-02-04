@@ -1,5 +1,22 @@
 const db = require('../models');
 
+const _validate = (patchNote) => {
+    if (patchNote.version && patchNote.content) {
+        return db.PatchNote.versionIsUnique(patchNote.version, patchNote.id)
+            .then((isUnique) => {
+                if (isUnique) {
+                    return Promise.resolve();
+                }
+                return Promise.reject({
+                    status: 409,
+                    message: 'Un patch note avec cette version existe déjà',
+                });
+            })
+            .catch((err) => Promise.reject(err));
+    }
+    return Promise.reject({ status: 406, message: 'Paramètres invalides' });
+};
+
 module.exports = {
     getAll: (req, res, next) => {
         return db.PatchNote.findAll({
@@ -10,24 +27,13 @@ module.exports = {
     },
 
     create: (req, res, next) => {
-        const { version, content } = req.body;
-
-        if (version && content) {
-            return db.PatchNote.versionIsUnique(version)
-                .then((isUnique) => {
-                    if (isUnique) {
-                        return db.PatchNote.create({ version, content })
-                            .then((patchNote) => res.json(patchNote))
-                            .catch((err) => next(err));
-                    }
-                    throw {
-                        status: 409,
-                        message: 'Un patch note avec cette version existe déjà',
-                    };
-                })
-                .catch((err) => next(err));
-        }
-        throw { status: 406, message: 'Paramètres invalides' };
+        return _validate(req.body)
+            .then(() => {
+                return db.PatchNote.create({ version, content })
+                    .then((patchNote) => res.json(patchNote))
+                    .catch((err) => next(err));
+            })
+            .catch((err) => next(err));
     },
 
     loadById: (req, res, next) => {
@@ -44,5 +50,16 @@ module.exports = {
 
     getById: (req, res, next) => {
         return res.json(req.patchNote);
+    },
+
+    updateById: (req, res, next) => {
+        return _validate({ ...req.body, id: req.patchNote.id })
+            .then(() => {
+                return req.patchNote
+                    .update(req.body)
+                    .then((patchNote) => res.json(patchNote))
+                    .catch((err) => next(err));
+            })
+            .catch((err) => next(err));
     },
 };

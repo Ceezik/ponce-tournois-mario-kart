@@ -29,4 +29,10 @@ module.exports = [
         method: 'get',
         func: patch_note_ctrl.getById,
     },
+
+    {
+        url: '/patch-notes/:patchNoteId',
+        method: 'put',
+        func: patch_note_ctrl.updateById,
+    },
 ];
