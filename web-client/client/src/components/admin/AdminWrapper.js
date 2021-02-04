@@ -10,6 +10,7 @@ import TournamentWrapper from './tournaments/TournamentWrapper';
 import EditTournamentWrapper from './tournaments/EditTournamentWrapper';
 import UsersWrapper from './users/UsersWrapper';
 import PatchNotes from './patchNotes/PatchNotes';
+import AddPatchNoteForm from './patchNotes/AddPatchNoteForm';
 
 function AdminWrapper() {
     return (
@@ -50,6 +51,11 @@ function AdminWrapper() {
                     exact
                     path="/admin/patch-notes"
                     component={PatchNotes}
+                />
+                <AdminRoute
+                    exact
+                    path="/admin/patch-notes/create"
+                    component={AddPatchNoteForm}
                 />
             </Switch>
         </>
