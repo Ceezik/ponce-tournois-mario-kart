@@ -2,13 +2,13 @@ import React from 'react';
 import { Row, Col, Hidden, useScreenClass } from 'react-grid-system';
 import Skeleton from 'react-loading-skeleton';
 
-function TournamentSkeleton({ showButton = true }) {
+function TournamentSkeleton({ showHistory = true, showEdit = false }) {
     const screenClass = useScreenClass();
 
     return (
         <Row justify="center">
             <Col xs={12} lg={8}>
-                {showButton && (
+                {showHistory && (
                     <Row
                         align="center"
                         justify={screenClass === 'xs' ? 'center' : 'end'}
@@ -35,6 +35,14 @@ function TournamentSkeleton({ showButton = true }) {
                                 />
                             </Col>
                         </Hidden>
+                    </Row>
+                )}
+
+                {showEdit && (
+                    <Row justify="end">
+                        <Col xs="content">
+                            <Skeleton className="btnSkeleton" width="4rem" />
+                        </Col>
                     </Row>
                 )}
 

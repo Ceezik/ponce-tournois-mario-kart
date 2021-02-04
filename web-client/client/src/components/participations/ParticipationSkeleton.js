@@ -6,7 +6,7 @@ import { Row, Col } from 'react-grid-system';
 function ParticipationSkeleton({ showButton = true }) {
     return (
         <>
-            <TournamentSkeleton showButton={showButton} />
+            <TournamentSkeleton showHistory={showButton} />
 
             <Row justify="center">
                 <Col xs={12} lg={8}>
