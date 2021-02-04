@@ -37,3 +37,24 @@
     color: $tertiary-text-color;
     font-style: italic;
 }
+
+.patchNoteForm__content,
+.patchNote__preview {
+    height: 40vh;
+}
+
+.patchNoteForm__content {
+    resize: vertical;
+}
+
+.patchNote__preview {
+    margin-top: 2rem;
+}
+
+.patchNote__preview a {
+    color: $main-color;
+}
+
+.patchNote__preview a:hover {
+    text-decoration: underline;
+}

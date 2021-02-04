@@ -24,47 +24,41 @@ function PatchNotes() {
                 <title>Patch notes</title>
             </Helmet>
 
-            <Row justify="center">
-                <Col xs={12} lg={8}>
-                    {loading ? (
-                        <PatchNotesSkeleton />
-                    ) : error ? (
-                        <Row justify="center">
-                            <Col xs="content">
-                                <div className="formMessage formMessage__error">
-                                    {error}
-                                </div>
-                            </Col>
-                        </Row>
-                    ) : (
-                        <>
-                            <Row justify="end">
-                                <Col xs="content">
-                                    <Link
-                                        to="/admin/patch-notes/create"
-                                        className="btnPrimary"
-                                    >
-                                        Créer un patch note
-                                    </Link>
-                                </Col>
-                            </Row>
+            {loading ? (
+                <PatchNotesSkeleton />
+            ) : error ? (
+                <Row justify="center">
+                    <Col xs="content">
+                        <div className="formMessage formMessage__error">
+                            {error}
+                        </div>
+                    </Col>
+                </Row>
+            ) : (
+                <>
+                    <Row justify="end">
+                        <Col xs="content">
+                            <Link
+                                to="/admin/patch-notes/create"
+                                className="btnPrimary"
+                            >
+                                Créer un patch note
+                            </Link>
+                        </Col>
+                    </Row>
 
-                            <h1 className="patchNotesList__title">
-                                Patch notes
-                            </h1>
+                    <h1 className="patchNotesList__title">Patch notes</h1>
 
-                            <Row>
-                                {patchNotes.map((patchNote) => (
-                                    <PatchNoteListItem
-                                        key={patchNote.id}
-                                        patchNote={patchNote}
-                                    />
-                                ))}
-                            </Row>
-                        </>
-                    )}
-                </Col>
-            </Row>
+                    <Row>
+                        {patchNotes.map((patchNote) => (
+                            <PatchNoteListItem
+                                key={patchNote.id}
+                                patchNote={patchNote}
+                            />
+                        ))}
+                    </Row>
+                </>
+            )}
         </Container>
     );
 }
