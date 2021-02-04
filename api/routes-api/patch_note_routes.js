@@ -17,4 +17,16 @@ module.exports = [
             patch_note_ctrl.create,
         ],
     },
+
+    {
+        url: '/patch-notes/:patchNoteId',
+        method: 'use',
+        func: patch_note_ctrl.loadById,
+    },
+
+    {
+        url: '/patch-notes/:patchNoteId',
+        method: 'get',
+        func: patch_note_ctrl.getById,
+    },
 ];
