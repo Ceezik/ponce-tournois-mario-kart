@@ -11,3 +11,7 @@ export const create = (patchNote) => {
 export const getById = (id) => {
     return request.get(`/patch-notes/${id}`);
 };
+
+export const updateById = (id, patchNote) => {
+    return request.put(`/patch-notes/${id}`, patchNote);
+};

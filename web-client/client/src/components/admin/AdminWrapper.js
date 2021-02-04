@@ -12,6 +12,7 @@ import UsersWrapper from './users/UsersWrapper';
 import PatchNotes from './patchNotes/PatchNotes';
 import AddPatchNoteForm from './patchNotes/AddPatchNoteForm';
 import PatchNoteWrapper from './patchNotes/PatchNoteWrapper';
+import EditPatchNoteWrapper from './patchNotes/EditPatchNoteWrapper';
 
 function AdminWrapper() {
     return (
@@ -62,6 +63,11 @@ function AdminWrapper() {
                     exact
                     path="/admin/patch-notes/:patchNoteId"
                     component={PatchNoteWrapper}
+                />
+                <AdminRoute
+                    exact
+                    path="/admin/patch-notes/:patchNoteId/edit"
+                    component={EditPatchNoteWrapper}
                 />
             </Switch>
         </>
