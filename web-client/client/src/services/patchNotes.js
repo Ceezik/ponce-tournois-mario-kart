@@ -7,3 +7,7 @@ export const getAll = () => {
 export const create = (patchNote) => {
     return request.post('/patch-notes', patchNote);
 };
+
+export const getById = (id) => {
+    return request.get(`/patch-notes/${id}`);
+};
