@@ -29,7 +29,7 @@ module.exports = {
     create: (req, res, next) => {
         return _validate(req.body)
             .then(() => {
-                return db.PatchNote.create({ version, content })
+                return db.PatchNote.create(req.body)
                     .then((patchNote) => res.json(patchNote))
                     .catch((err) => next(err));
             })
