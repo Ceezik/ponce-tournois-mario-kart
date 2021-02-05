@@ -36,6 +36,14 @@ module.exports = {
             .catch((err) => next(err));
     },
 
+    getLatest: (req, res, next) => {
+        return db.PatchNote.findOne({
+            order: [['createdAt', 'DESC']],
+        })
+            .then((patchNote) => res.json(patchNote))
+            .catch((err) => next(err));
+    },
+
     loadById: (req, res, next) => {
         return db.PatchNote.findByPk(req.params.patchNoteId)
             .then((patchNote) => {
