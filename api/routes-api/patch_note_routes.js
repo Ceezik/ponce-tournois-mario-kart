@@ -19,6 +19,12 @@ module.exports = [
     },
 
     {
+        url: '/patch-notes/latest',
+        method: 'get',
+        func: patch_note_ctrl.getLatest,
+    },
+
+    {
         url: '/patch-notes/:patchNoteId',
         method: 'use',
         func: patch_note_ctrl.loadById,
