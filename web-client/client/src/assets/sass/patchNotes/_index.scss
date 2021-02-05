@@ -55,14 +55,59 @@
     margin-bottom: 2rem;
 }
 
-.patchNote__preview a {
+.patchNote__preview a,
+.latestPatchNote__content a {
     color: $main-color;
 }
 
-.patchNote__preview a:hover {
+.patchNote__preview a:hover,
+.latestPatchNote__content a:hover {
     text-decoration: underline;
 }
 
 .patchNote__title {
     margin-top: 3rem;
+}
+
+.latestPatchNote__overlay {
+    position: fixed;
+    z-index: 8;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.latestPatchNote__modal {
+    position: fixed;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 2rem;
+    border-radius: 6px;
+    max-width: 90%;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.latestPatchNote__close {
+    cursor: pointer;
+}
+
+.latestPatchNote__title {
+    margin-bottom: 0;
+}
+
+.latestPatchNote__subtitle {
+    margin-top: 0.5rem;
+    font-weight: normal;
+    color: $tertiary-text-color;
+}
+
+.latestPatchNote__content {
+    margin-top: 2rem;
 }

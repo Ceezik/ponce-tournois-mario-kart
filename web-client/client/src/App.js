@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import moment from 'moment';
 import Signup from './components/auth/Signup';
 import Signin from './components/auth/Signin';
 import history from './utils/history';
@@ -26,20 +27,40 @@ import {
     setTournamentsError,
 } from './redux/actions/tournaments';
 import UserWrapper from './components/user/UserWrapper';
+import { fetchLatestPatchNote } from './redux/actions/patchNotes';
+import LatestPatchNote from './components/patchNotes/LatestPatchNote';
 
 function App() {
+    const [showLatestPatchNote, setShowLatestPatchNote] = useState(false);
+
     const dispatch = useDispatch();
     const { loading, user } = useSelector((state) => state.auth);
     const { socket } = useSelector((state) => state.socket);
+    const { latest: latestPatchNote } = useSelector(
+        (state) => state.patchNotes
+    );
 
     useEffect(() => {
         dispatch(fetchUser());
         dispatch(fetchTracks());
+        dispatch(fetchLatestPatchNote());
     }, []);
 
     useEffect(() => {
         dispatch(setSocket(user));
     }, [user]);
+
+    useEffect(() => {
+        if (latestPatchNote) {
+            const previousPatchNote = localStorage.getItem('latestPatchNote');
+
+            if (
+                !previousPatchNote ||
+                moment(previousPatchNote).isBefore(latestPatchNote.createdAt)
+            )
+                setShowLatestPatchNote(true);
+        }
+    }, [latestPatchNote]);
 
     useEffect(() => {
         if (socket) {
@@ -65,6 +86,11 @@ function App() {
         };
     }, [socket]);
 
+    const closePatchNote = () => {
+        setShowLatestPatchNote(false);
+        localStorage.setItem('latestPatchNote', latestPatchNote.createdAt);
+    };
+
     const fetchTournaments = () => {
         socket.emit('getTournaments', {}, (err) =>
             dispatch(setTournamentsError(err))
@@ -79,6 +105,13 @@ function App() {
                 titleTemplate="%s - Tournoi des fleurs"
                 defaultTitle="Tournoi des fleurs"
             />
+
+            {showLatestPatchNote && (
+                <LatestPatchNote
+                    patchNote={latestPatchNote}
+                    onClose={closePatchNote}
+                />
+            )}
 
             <div className="container">
                 <Header />

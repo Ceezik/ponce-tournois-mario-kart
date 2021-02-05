@@ -4,6 +4,10 @@ export const getAll = () => {
     return request.get('/patch-notes');
 };
 
+export const getLatest = () => {
+    return request.get('/patch-notes/latest');
+};
+
 export const create = (patchNote) => {
     return request.post('/patch-notes', patchNote);
 };
