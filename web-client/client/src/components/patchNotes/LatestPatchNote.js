@@ -13,9 +13,11 @@ function LatestPatchNote({ patchNote, onClose }) {
     }, []);
 
     return (
-        <>
-            <div className="latestPatchNote__overlay" onClick={onClose} />
-            <div className="latestPatchNote__modal">
+        <div className="latestPatchNote__overlay" onClick={onClose}>
+            <div
+                className="latestPatchNote__modal"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <Row justify="end">
                     <Col>
                         <h1 className="latestPatchNote__title">
@@ -39,7 +41,7 @@ function LatestPatchNote({ patchNote, onClose }) {
                     <Markdown>{patchNote.content}</Markdown>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
