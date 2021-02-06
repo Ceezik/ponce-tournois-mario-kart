@@ -4,6 +4,7 @@ import auth from './auth';
 import socket from './socket';
 import tournaments from './tournaments';
 import statistics from './statistics';
+import patchNotes from './patchNotes';
 
 export default combineReducers({
     tracks,
@@ -11,4 +12,5 @@ export default combineReducers({
     socket,
     tournaments,
     statistics,
+    patchNotes,
 });

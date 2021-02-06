@@ -1,0 +1,113 @@
+@import '../variables';
+
+.patchNotesList__title {
+    margin-top: 3rem;
+}
+
+.patchNotesList__title--skeleton {
+    margin-top: 2.25rem;
+}
+
+.patchNotesList__patchNote {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #e6e6e6;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.patchNotesList__patchNote:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.patchNotesList__patchNote--skeleton {
+    margin: 1rem 0;
+    padding: 2rem 0rem;
+}
+
+.patchNotesList__patchNoteVersion {
+    margin: 0;
+    margin-bottom: 0.25rem;
+}
+
+.patchNotesList__patchNoteDates {
+    cursor: pointer;
+    color: $tertiary-text-color;
+    font-style: italic;
+}
+
+.patchNoteForm__content,
+.patchNote__preview {
+    height: 40vh;
+}
+
+.patchNoteForm__content {
+    resize: vertical;
+}
+
+.patchNote__preview {
+    margin-top: 2rem;
+}
+
+.patchNote__preview--skeleton {
+    margin-bottom: 2rem;
+}
+
+.patchNote__preview a,
+.latestPatchNote__content a {
+    color: $main-color;
+}
+
+.patchNote__preview a:hover,
+.latestPatchNote__content a:hover {
+    text-decoration: underline;
+}
+
+.patchNote__title {
+    margin-top: 3rem;
+}
+
+.latestPatchNote__overlay {
+    position: fixed;
+    z-index: 8;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.latestPatchNote__modal {
+    position: fixed;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 2rem;
+    border-radius: 6px;
+    max-width: 90%;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.latestPatchNote__close {
+    cursor: pointer;
+}
+
+.latestPatchNote__title {
+    margin-bottom: 0;
+}
+
+.latestPatchNote__subtitle {
+    margin-top: 0.5rem;
+    font-weight: normal;
+    color: $tertiary-text-color;
+}
+
+.latestPatchNote__content {
+    margin-top: 2rem;
+}

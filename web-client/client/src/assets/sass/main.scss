@@ -1,5 +1,6 @@
 @import 'normalize', 'variables', 'loader', 'auth', 'header', 'cups',
-    'tournaments', 'participations', 'races', 'statistics', 'podiums', 'users';
+    'tournaments', 'participations', 'races', 'statistics', 'podiums', 'users',
+    'patchNotes';
 
 html,
 body,
@@ -35,7 +36,8 @@ a {
     color: inherit;
 }
 
-input {
+input,
+textarea {
     box-sizing: border-box;
     margin-top: 0.5rem;
     padding: 0.75rem 1.5rem;
@@ -44,15 +46,18 @@ input {
     border-radius: 6px;
     width: 100%;
     transition: all 0.2s ease;
+    transition-property: border, background-color;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
     background-color: transparent;
     border: 1px solid $main-color;
 }
 
 button:focus,
-input:focus {
+input:focus,
+textarea:focus {
     outline: none;
 }
 
@@ -113,6 +118,7 @@ input:focus {
 
 .inputLabel {
     font-weight: bold;
+    display: block;
 }
 
 .typeahead {

@@ -9,6 +9,10 @@ import TournamentsWrapper from './tournaments/TournamentsWrapper';
 import TournamentWrapper from './tournaments/TournamentWrapper';
 import EditTournamentWrapper from './tournaments/EditTournamentWrapper';
 import UsersWrapper from './users/UsersWrapper';
+import PatchNotes from './patchNotes/PatchNotes';
+import AddPatchNoteForm from './patchNotes/AddPatchNoteForm';
+import PatchNoteWrapper from './patchNotes/PatchNoteWrapper';
+import EditPatchNoteWrapper from './patchNotes/EditPatchNoteWrapper';
 
 function AdminWrapper() {
     return (
@@ -45,6 +49,26 @@ function AdminWrapper() {
                     path="/admin/users"
                     component={UsersWrapper}
                 />
+                <AdminRoute
+                    exact
+                    path="/admin/patch-notes"
+                    component={PatchNotes}
+                />
+                <AdminRoute
+                    exact
+                    path="/admin/patch-notes/create"
+                    component={AddPatchNoteForm}
+                />
+                <AdminRoute
+                    exact
+                    path="/admin/patch-notes/:patchNoteId"
+                    component={PatchNoteWrapper}
+                />
+                <AdminRoute
+                    exact
+                    path="/admin/patch-notes/:patchNoteId/edit"
+                    component={EditPatchNoteWrapper}
+                />
             </Switch>
         </>
     );
@@ -55,6 +79,7 @@ function AdminHeader() {
         { url: '/cups', name: 'Coupes/Circuits' },
         { url: '/tournaments', name: 'Tournois' },
         { url: '/users', name: 'Utilisateurs' },
+        { url: '/patch-notes', name: 'Patch notes' },
     ];
 
     return (
