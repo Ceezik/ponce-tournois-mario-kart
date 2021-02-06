@@ -78,20 +78,31 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .latestPatchNote__modal {
-    position: fixed;
-    z-index: 9;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    flex-basis: 30%;
     background-color: white;
     padding: 2rem;
     border-radius: 6px;
-    max-width: 90%;
     max-height: 70vh;
     overflow-y: auto;
+}
+
+@media screen and (max-width: 1200px) {
+    .latestPatchNote__modal {
+        flex-basis: 50%;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .latestPatchNote__modal {
+        flex-basis: 70%;
+    }
 }
 
 .latestPatchNote__close {
