@@ -29,6 +29,7 @@ import {
 import UserWrapper from './components/user/UserWrapper';
 import { fetchLatestPatchNote } from './redux/actions/patchNotes';
 import LatestPatchNote from './components/patchNotes/LatestPatchNote';
+import CGU from './components/utils/CGU';
 
 function App() {
     const [showLatestPatchNote, setShowLatestPatchNote] = useState(false);
@@ -138,6 +139,8 @@ function App() {
                     <PrivateRoute exact path="/settings" component={Settings} />
 
                     <AdminRoute path="/admin" component={AdminWrapper} />
+
+                    <Route exact path="/cgu" component={CGU} />
                 </Switch>
             </div>
             <Footer />
