@@ -1,6 +1,6 @@
 @import 'normalize', 'variables', 'loader', 'auth', 'header', 'cups',
     'tournaments', 'participations', 'races', 'statistics', 'podiums', 'users',
-    'patchNotes';
+    'patchNotes', 'footer';
 
 html,
 body,
@@ -220,13 +220,6 @@ table {
 
 .primaryLink:hover {
     color: $main-color;
-}
-
-footer {
-    flex-shrink: 0;
-    text-align: center;
-    border-top: 1px solid #e6e6e6;
-    padding: 2rem;
 }
 
 .switch {

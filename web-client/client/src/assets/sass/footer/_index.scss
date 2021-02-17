@@ -1,0 +1,25 @@
+@import '../variables';
+
+footer {
+    flex-shrink: 0;
+    text-align: center;
+    border-top: 1px solid #e6e6e6;
+    padding: 2rem;
+}
+
+.footer__links {
+    & a {
+        margin: 0 1em;
+    }
+    & a:first-of-type {
+        margin-left: 0;
+    }
+    & a:last-of-type {
+        margin-right: 0;
+    }
+}
+
+.footer__logo {
+    width: 3rem;
+    height: 3rem;
+}
