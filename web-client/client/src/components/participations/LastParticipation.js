@@ -56,15 +56,19 @@ function LastParticipation({ route, userId }) {
         const participationsWithNbPoints = getParticipationsWithNbPoints(
             participations
         );
+        const record = getRecord(participationsWithNbPoints);
+        const worst = getWorst(participationsWithNbPoints);
 
-        setRecord(getRecord(participationsWithNbPoints));
-        setWorst(getWorst(participationsWithNbPoints));
-        setAverage(
-            getAverage(
-                participationsWithNbPoints,
-                participation.Tournament.nbMaxRaces
-            )
-        );
+        if (record.id !== worst.id) setWorst(worst);
+        if (participationsWithNbPoints.length > 1) {
+            setAverage(
+                getAverage(
+                    participationsWithNbPoints,
+                    participation.Tournament.nbMaxRaces
+                )
+            );
+        }
+        setRecord(record);
         setParticipation(participation);
         setLoading(false);
     });
