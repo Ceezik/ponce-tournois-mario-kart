@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import { useFormContext } from './Form';
 import { getSortedTracks } from '../../redux/selectors/tracks';
@@ -78,13 +79,17 @@ function Typeahead({ ...rest }) {
                             </p>
                         ) : (
                             <ul className="typeahead__suggestionsWrapper">
-                                {suggestions.map((suggestion, index) => (
-                                    <li
-                                        key={index}
+                                {suggestions.map((suggestion, idx) => (
+                                    <motion.li
+                                        key={suggestion.id}
                                         onClick={() => selectItem(suggestion)}
+                                        initial={{ opacity: 0, x: '-30px' }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: '-10px' }}
+                                        transition={{ delay: idx * 0.1 }}
                                     >
                                         {suggestion.name}
-                                    </li>
+                                    </motion.li>
                                 ))}
                             </ul>
                         )}
