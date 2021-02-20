@@ -30,6 +30,7 @@ import UserWrapper from './components/user/UserWrapper';
 import { fetchLatestPatchNote } from './redux/actions/patchNotes';
 import LatestPatchNote from './components/patchNotes/LatestPatchNote';
 import CGU from './components/utils/CGU';
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
     const [showLatestPatchNote, setShowLatestPatchNote] = useState(false);
@@ -107,12 +108,14 @@ function App() {
                 defaultTitle="Tournoi des fleurs"
             />
 
-            {showLatestPatchNote && (
-                <LatestPatchNote
-                    patchNote={latestPatchNote}
-                    onClose={closePatchNote}
-                />
-            )}
+            <AnimatePresence>
+                {showLatestPatchNote && (
+                    <LatestPatchNote
+                        patchNote={latestPatchNote}
+                        onClose={closePatchNote}
+                    />
+                )}
+            </AnimatePresence>
 
             <div className="container">
                 <Header />
