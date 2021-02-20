@@ -55,7 +55,7 @@ function ParticipationsButtons({ participations, setParticipation }) {
                     <button
                         className="btnPrimary"
                         onClick={() => setIndex(index - 1)}
-                        style={{ visibility: index > 0 ? 'visible' : 'hidden' }}
+                        disabled={index <= 0}
                     >
                         <FontAwesomeIcon icon={faChevronLeft} />
                     </button>
@@ -83,12 +83,7 @@ function ParticipationsButtons({ participations, setParticipation }) {
                     <button
                         className="btnPrimary"
                         onClick={() => setIndex(index + 1)}
-                        style={{
-                            visibility:
-                                index < tournaments.length - 1
-                                    ? 'visible'
-                                    : 'hidden',
-                        }}
+                        disabled={index >= tournaments.length - 1}
                     >
                         <FontAwesomeIcon icon={faChevronRight} />
                     </button>
