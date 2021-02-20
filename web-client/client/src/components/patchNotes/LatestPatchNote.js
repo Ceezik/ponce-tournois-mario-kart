@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
+import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Row, Col } from 'react-grid-system';
@@ -13,10 +14,19 @@ function LatestPatchNote({ patchNote, onClose }) {
     }, []);
 
     return (
-        <div className="latestPatchNote__overlay" onClick={onClose}>
-            <div
+        <motion.div
+            className="latestPatchNote__overlay"
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
+            <motion.div
                 className="latestPatchNote__modal"
                 onClick={(e) => e.stopPropagation()}
+                initial={{ opacity: 0, y: -100 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -100 }}
             >
                 <Row justify="end">
                     <Col>
@@ -40,8 +50,8 @@ function LatestPatchNote({ patchNote, onClose }) {
                 <div className="latestPatchNote__content">
                     <Markdown>{patchNote.content}</Markdown>
                 </div>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 }
 
