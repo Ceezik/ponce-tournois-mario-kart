@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Hidden, Row, Col } from 'react-grid-system';
 import { Link, NavLink } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBars,
@@ -104,28 +105,42 @@ function DesktopHeader() {
                         className="header__profilPicture"
                         onClick={() => setOpen(!open)}
                     />
-                    <div
-                        className={`header__dropdown header__dropdown--${
-                            open ? 'open' : 'closed'
-                        }`}
-                    >
-                        <ul className="header__dropdownNavList">
-                            <NavLink
-                                to={`/users/${user.username}`}
-                                onClick={close}
+                    <AnimatePresence>
+                        {open && (
+                            <motion.div
+                                className="header__dropdown"
+                                initial={{
+                                    opacity: 0,
+                                    y: '-50px',
+                                }}
+                                animate={{
+                                    opacity: 1,
+                                    y: 0,
+                                }}
+                                exit={{
+                                    opacity: 0,
+                                    y: '-30px',
+                                }}
                             >
-                                <li>Profil</li>
-                            </NavLink>
+                                <ul className="header__dropdownNavList">
+                                    <NavLink
+                                        to={`/users/${user.username}`}
+                                        onClick={close}
+                                    >
+                                        <li>Profil</li>
+                                    </NavLink>
 
-                            <NavLink to="/settings" onClick={close}>
-                                <li>Paramètres</li>
-                            </NavLink>
+                                    <NavLink to="/settings" onClick={close}>
+                                        <li>Paramètres</li>
+                                    </NavLink>
 
-                            <li onClick={() => dispatch(signout())}>
-                                Déconnexion
-                            </li>
-                        </ul>
-                    </div>
+                                    <li onClick={() => dispatch(signout())}>
+                                        Déconnexion
+                                    </li>
+                                </ul>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             ) : (
                 <TwitchButton />
@@ -153,101 +168,120 @@ function MobileHeader() {
                 onClick={() => setOpen(!open)}
             />
 
-            {open && (
-                <div style={{ flexBasis: '100%' }}>
-                    <ul className="header__smNavList">
-                        <li>
-                            <NavLink
-                                to="/history"
-                                activeClassName="header__smNavListItem--active"
-                                onClick={close}
-                            >
-                                Historique
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to="/races"
-                                activeClassName="header__smNavListItem--active"
-                                onClick={close}
-                            >
-                                Circuits joués
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to="/statistics"
-                                activeClassName="header__smNavListItem--active"
-                                onClick={close}
-                            >
-                                Statistiques
-                            </NavLink>
-                        </li>
-                        {user && user.isAdmin && (
+            <AnimatePresence>
+                {open && (
+                    <motion.div
+                        style={{ flexBasis: '100%' }}
+                        initial={{
+                            opacity: 0,
+                            y: '-50px',
+                        }}
+                        animate={{
+                            opacity: 1,
+                            y: 0,
+                        }}
+                        exit={{
+                            opacity: 0,
+                            y: '-20px',
+                        }}
+                    >
+                        <ul className="header__smNavList">
                             <li>
                                 <NavLink
-                                    to="/admin"
+                                    to="/history"
                                     activeClassName="header__smNavListItem--active"
                                     onClick={close}
                                 >
-                                    Administration
+                                    Historique
                                 </NavLink>
                             </li>
-                        )}
-                    </ul>
-
-                    <hr />
-
-                    {user ? (
-                        <div className="header__smProfilWrapper">
-                            <Row align="center">
-                                <Col xs="content">
-                                    <FontAwesomeIcon
-                                        icon={faUserCircle}
-                                        size="2x"
-                                        className="header__profilPicture"
-                                        onClick={() => setOpen(!open)}
-                                    />
-                                </Col>
-                                <Col>
-                                    <strong>{user.username}</strong>
-                                </Col>
-                            </Row>
-
-                            <Row className="header__smProfilLinks">
-                                <Col xs={6}>
+                            <li>
+                                <NavLink
+                                    to="/races"
+                                    activeClassName="header__smNavListItem--active"
+                                    onClick={close}
+                                >
+                                    Circuits joués
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/statistics"
+                                    activeClassName="header__smNavListItem--active"
+                                    onClick={close}
+                                >
+                                    Statistiques
+                                </NavLink>
+                            </li>
+                            {user && user.isAdmin && (
+                                <li>
                                     <NavLink
-                                        to={`/users/${user.username}`}
+                                        to="/admin"
+                                        activeClassName="header__smNavListItem--active"
                                         onClick={close}
                                     >
-                                        Profil
+                                        Administration
                                     </NavLink>
-                                </Col>
-                                <Col xs={6}>
-                                    <NavLink to="/settings" onClick={close}>
-                                        Paramètres
-                                    </NavLink>
-                                </Col>
-                                <Col
-                                    xs={6}
-                                    onClick={() => {
-                                        close();
-                                        dispatch(signout());
-                                    }}
-                                >
-                                    <span>Déconnexion</span>
+                                </li>
+                            )}
+                        </ul>
+
+                        <hr />
+
+                        {user ? (
+                            <div className="header__smProfilWrapper">
+                                <Row align="center">
+                                    <Col xs="content">
+                                        <FontAwesomeIcon
+                                            icon={faUserCircle}
+                                            size="2x"
+                                            className="header__profilPicture"
+                                            onClick={() => setOpen(!open)}
+                                        />
+                                    </Col>
+                                    <Col>
+                                        <strong>{user.username}</strong>
+                                    </Col>
+                                </Row>
+
+                                <Row className="header__smProfilLinks">
+                                    <Col xs={6}>
+                                        <NavLink
+                                            to={`/users/${user.username}`}
+                                            onClick={close}
+                                        >
+                                            Profil
+                                        </NavLink>
+                                    </Col>
+                                    <Col xs={6}>
+                                        <NavLink to="/settings" onClick={close}>
+                                            Paramètres
+                                        </NavLink>
+                                    </Col>
+                                    <Col
+                                        xs={6}
+                                        onClick={() => {
+                                            close();
+                                            dispatch(signout());
+                                        }}
+                                    >
+                                        <span>Déconnexion</span>
+                                    </Col>
+                                </Row>
+                            </div>
+                        ) : (
+                            <Row
+                                className="header__smAuthButton"
+                                justify="center"
+                            >
+                                <Col xs="content">
+                                    <TwitchButton />
                                 </Col>
                             </Row>
-                        </div>
-                    ) : (
-                        <Row className="header__smAuthButton" justify="center">
-                            <Col xs="content">
-                                <TwitchButton />
-                            </Col>
-                        </Row>
-                    )}
-                </div>
-            )}
+                        )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 }
