@@ -72,17 +72,16 @@ textarea:focus {
     transition: all 0.3s ease, visibility 0s;
 }
 
-.btnPrimary:hover {
+.btnPrimary:not(:disabled):hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.btnPrimary:hover,
-.btnPrimary:focus {
+.btnPrimary:not(:disabled):hover,
+.btnPrimary:not(:disabled):focus {
     cursor: pointer;
     background-color: $main-color-dark;
 }
 
-.btnPrimary[disabled],
 .btnPrimary:disabled {
     background-color: #fda3cf;
     cursor: initial;
@@ -97,8 +96,8 @@ textarea:focus {
     transition: all 0.3s ease;
 }
 
-.btnSecondary:hover,
-.btnSecondary:focus {
+.btnSecondary:not(:disabled):hover,
+.btnSecondary:not(:disabled):focus {
     cursor: pointer;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
