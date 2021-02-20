@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { AnimatePresence } from 'framer-motion';
 import moment from 'moment';
 import Signup from './components/auth/Signup';
 import Signin from './components/auth/Signin';
 import history from './utils/history';
 import Header from './components/utils/Header';
+import ScrollToTop from './components/utils/ScrollToTop';
 import AdminWrapper from './components/admin/AdminWrapper';
 import AdminRoute from './components/auth/AdminRoute';
 import PonceParticipations from './components/participations/PonceParticipations';
@@ -30,7 +32,6 @@ import UserWrapper from './components/user/UserWrapper';
 import { fetchLatestPatchNote } from './redux/actions/patchNotes';
 import LatestPatchNote from './components/patchNotes/LatestPatchNote';
 import CGU from './components/utils/CGU';
-import { AnimatePresence } from 'framer-motion';
 
 function App() {
     const [showLatestPatchNote, setShowLatestPatchNote] = useState(false);
@@ -107,6 +108,8 @@ function App() {
                 titleTemplate="%s - Tournoi des fleurs"
                 defaultTitle="Tournoi des fleurs"
             />
+
+            <ScrollToTop />
 
             <AnimatePresence>
                 {showLatestPatchNote && (
