@@ -55,7 +55,9 @@ function Footer() {
                         lg={5}
                         style={{ textAlign: isSmall ? 'center' : 'end' }}
                     >
-                        <Link to="/cgu">CGU</Link>
+                        <Link className="primaryLink" to="/cgu">
+                            CGU
+                        </Link>
                         <ExternalLink
                             href="https://github.com/Ceezik/ponce-tournois-mario-kart"
                             external
