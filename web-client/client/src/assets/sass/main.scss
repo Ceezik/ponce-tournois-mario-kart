@@ -1,6 +1,6 @@
-@import 'normalize', 'variables', 'loader', 'auth', 'header', 'cups',
+@import 'normalize', 'loader', 'auth', 'header', 'cups',
     'tournaments', 'participations', 'races', 'statistics', 'podiums', 'users',
-    'patchNotes', 'footer';
+    'patchNotes', 'footer', 'settings', 'theme';
 
 html,
 body,
@@ -10,17 +10,18 @@ body,
 
 #root {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
 }
 
 .container {
     flex: 1 0 auto;
+    background-color: var(--main-background-color);
 }
 
 body,
 button {
     font-family: 'Nunito', sans-serif;
-    color: $main-text-color;
+    color: var(--main-text-color);
 }
 
 img {
@@ -42,7 +43,8 @@ textarea {
     box-sizing: border-box;
     margin-top: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background-color: #f3f3f4;
+    color: var(--main-text-color);
+    background-color: var(--secondary-background-color);
     border: 1px solid transparent;
     border-radius: 6px;
     width: 100%;
@@ -53,7 +55,7 @@ textarea {
 input:focus,
 textarea:focus {
     background-color: transparent;
-    border: 1px solid $main-color;
+    border: 1px solid var(--main-color);
 }
 
 button:focus,
@@ -62,8 +64,13 @@ textarea:focus {
     outline: none;
 }
 
+input::placeholder,
+textarea::placeholder {
+    color: var(--tertiary-text-color);
+}
+
 .btnPrimary {
-    background-color: $main-color;
+    background-color: var(--main-color);
     color: white;
     border: none;
     padding: 0.75rem 2rem;
@@ -79,17 +86,17 @@ textarea:focus {
 .btnPrimary:not(:disabled):hover,
 .btnPrimary:not(:disabled):focus {
     cursor: pointer;
-    background-color: $main-color-dark;
+    background-color: var(--main-color-dark);
 }
 
 .btnPrimary:disabled {
-    background-color: #fda3cf;
+    background-color: var(--main-color-light);
     cursor: initial;
 }
 
 .btnSecondary {
-    background-color: white;
-    color: $main-color;
+    background-color: var(--main-background-color);
+    color: var(--main-color);
     border: none;
     padding: 0.75rem 2rem;
     border-radius: 6px;
@@ -104,12 +111,12 @@ textarea:focus {
 
 .inputErrorMessage {
     margin: 0.5rem 0;
-    color: $error-color;
+    color: var(--error-color);
 }
 
 .inputInvalid {
     background-color: transparent;
-    border-color: $error-color;
+    border-color: var(--error-color);
 }
 
 .inputWrapper {
@@ -132,7 +139,7 @@ textarea:focus {
     left: 0;
     width: 100%;
     border-radius: 6px;
-    background-color: white;
+    background-color: var(--main-background-color);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -154,16 +161,16 @@ textarea:focus {
 
 .typeahead__suggestionsWrapper li:hover {
     cursor: pointer;
-    background-color: #f3f3f4;
+    background-color: var(--secondary-background-color);
 }
 
 .text-- {
     &error {
-        color: $error-color;
+        color: var(--error-color);
     }
 
     &success {
-        color: $success-color;
+        color: var(--success-color);
     }
 }
 
@@ -178,23 +185,23 @@ textarea:focus {
     }
 
     &__error {
-        background-color: $error-color;
+        background-color: var(--error-color);
     }
 
     &__success {
-        background-color: $success-color;
+        background-color: var(--success-color);
     }
 
     &__info {
-        background-color: $main-color;
+        background-color: var(--main-color);
     }
 }
 
 hr {
     border: none;
     height: 1px;
-    color: #e6e6e6;
-    background-color: #e6e6e6;
+    color: var(--border-color);
+    background-color: var(--border-color);
 }
 
 table {
@@ -218,7 +225,7 @@ table {
 }
 
 .primaryLink:hover {
-    color: $main-color;
+    color: var(--main-color);
 }
 
 .switch {
@@ -242,7 +249,7 @@ table {
     right: 0;
     bottom: 0;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-    background-color: #ccc;
+    background-color: var(--border-color);
     transition: 0.2s ease;
 }
 
@@ -258,7 +265,7 @@ table {
 }
 
 input:checked + .slider {
-    background-color: $main-color;
+    background-color: var(--main-color);
 }
 
 input:checked + .slider:before {

@@ -4,7 +4,7 @@
     padding: 1rem 0;
     border-radius: 6px;
     text-align: center;
-    border: 1px solid #e6e6e6;
+    border: 1px solid var(--border-color);
     transition: box-shadow 0.3s ease;
 }
 
@@ -24,12 +24,12 @@
 }
 
 .cupsList__cup--selected {
-    color: $main-color;
-    border: 1px solid $main-color;
+    color: var(--main-color);
+    border: 1px solid var(--main-color);
 }
 
 .cupsList__addCupIcon {
-    color: $main-color;
+    color: var(--main-color);
     margin-right: 1rem;
 }
 

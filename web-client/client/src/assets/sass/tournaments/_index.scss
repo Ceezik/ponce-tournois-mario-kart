@@ -1,5 +1,3 @@
-@import '../variables';
-
 .home__buttons {
     margin-top: 3rem;
 }
@@ -15,7 +13,7 @@
     padding: 1rem;
     border-radius: 6px;
     text-align: center;
-    border: 1px solid #e6e6e6;
+    border: 1px solid var(--border-color);
     transition: box-shadow 0.3s ease;
     cursor: pointer;
 }
@@ -37,12 +35,12 @@
 
 .tournamentsList__tournamentDates {
     cursor: pointer;
-    color: $tertiary-text-color;
+    color: var(--tertiary-text-color);
     font-style: italic;
 }
 
 .tournament__infos {
-    border: 1px solid #e6e6e6;
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 0 1rem;
     margin: 0.5rem 0;
@@ -57,7 +55,7 @@
 }
 
 .tournament__info > label {
-    color: $tertiary-text-color;
+    color: var(--tertiary-text-color);
 }
 
 .tournament__info > h4 {

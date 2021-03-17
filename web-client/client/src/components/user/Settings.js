@@ -7,6 +7,8 @@ import Input from '../form/Input';
 import Button from '../form/Button';
 import { update } from '../../services/user';
 import { updateUser } from '../../redux/actions/auth';
+import Switch from '../utils/Switch';
+import { switchTheme } from '../../redux/actions/settings';
 
 const USERNAME_FORMAT =
     "Votre nom d'utilisateur ne doit contenir que des caractères alphanumériques";
@@ -16,6 +18,7 @@ const USERNAME_LENGTH =
 function Settings() {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
+    const { theme } = useSelector((state) => state.settings);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
 
@@ -45,6 +48,18 @@ function Settings() {
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
                     <h1 className="title--noMarginTop">Paramètres</h1>
+
+                    <label className="inputLabel themeSwitch__label">
+                        Mode sombre
+                    </label>
+                    <Switch
+                        on={theme === 'dark'}
+                        setOn={() =>
+                            dispatch(
+                                switchTheme(theme === 'dark' ? 'light' : 'dark')
+                            )
+                        }
+                    />
 
                     <Form onSubmit={onSubmit}>
                         {message && (

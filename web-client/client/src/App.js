@@ -32,6 +32,7 @@ import UserWrapper from './components/user/UserWrapper';
 import { fetchLatestPatchNote } from './redux/actions/patchNotes';
 import LatestPatchNote from './components/patchNotes/LatestPatchNote';
 import CGU from './components/utils/CGU';
+import { fetchTheme } from './redux/actions/settings';
 
 function App() {
     const [showLatestPatchNote, setShowLatestPatchNote] = useState(false);
@@ -47,6 +48,7 @@ function App() {
         dispatch(fetchUser());
         dispatch(fetchTracks());
         dispatch(fetchLatestPatchNote());
+        dispatch(fetchTheme());
     }, []);
 
     useEffect(() => {
