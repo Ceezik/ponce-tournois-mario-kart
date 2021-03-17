@@ -38,12 +38,12 @@ function LatestPatchNote({ patchNote, onClose }) {
                             Version {patchNote.version}
                         </h4>
                     </Col>
-                    <Col
-                        xs="content"
-                        className="latestPatchNote__close"
-                        onClick={onClose}
-                    >
-                        <FontAwesomeIcon icon={faTimes} />
+                    <Col xs="content">
+                        <FontAwesomeIcon
+                            className="latestPatchNote__close"
+                            icon={faTimes}
+                            onClick={onClose}
+                        />
                     </Col>
                 </Row>
 
