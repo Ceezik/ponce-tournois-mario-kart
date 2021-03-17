@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import Select from 'react-select';
 import { Row, Col, useScreenClass } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMaxItems } from '../../redux/actions/statistics';
 import PaginationSkeleton from './PaginationSkeleton';
 import { getMaxItemsFromScreenClass } from '../../utils/utils';
-import { getSelectStyle } from '../../utils/style';
+import Select from '../form/Select';
 
 function Pagination() {
     const { maxItems, itemsPerPage } = useSelector((state) => state.statistics);
@@ -36,7 +35,6 @@ function Pagination() {
                     }))}
                     onChange={handleMaxItemChange}
                     isSearchable={false}
-                    theme={getSelectStyle}
                 />
                 derniers tournois
             </Col>

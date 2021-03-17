@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
 import { Row, Col, Hidden, useScreenClass } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,7 +7,7 @@ import {
     faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
-import { getSelectStyle } from '../../utils/style';
+import Select from '../form/Select';
 
 function ParticipationsButtons({ participations, setParticipation }) {
     const screenClass = useScreenClass();
@@ -74,7 +73,6 @@ function ParticipationsButtons({ participations, setParticipation }) {
                         label: tournament.name,
                     }))}
                     isSearchable={false}
-                    theme={getSelectStyle}
                 />
             </Col>
 
