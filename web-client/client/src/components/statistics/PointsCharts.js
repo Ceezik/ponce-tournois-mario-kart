@@ -3,16 +3,18 @@ import { Bar } from 'react-chartjs-2';
 import _ from 'lodash';
 import 'chartjs-plugin-datalabels';
 import { useSelector } from 'react-redux';
+import { CSSTheme } from '../../utils/style';
 
 export function TotalPointsChart({ participations }) {
     const { maxItems } = useSelector((state) => state.statistics);
+    const { theme } = useSelector((state) => state.settings);
 
     const data = {
         labels: participations.map((p) => p.Tournament.name),
         datasets: [
             {
                 barThickness: maxItems > 50 ? 8 : 10,
-                backgroundColor: '#ff56a9',
+                backgroundColor: CSSTheme[theme].mainColor,
                 datalabels: {
                     display: false,
                 },
@@ -31,15 +33,11 @@ export function TotalPointsChart({ participations }) {
                     gridLines: {
                         display: false,
                     },
-                    ticks: {
-                        fontFamily: 'Nunito',
-                    },
                 },
             ],
             yAxes: [
                 {
                     ticks: {
-                        fontFamily: 'Nunito',
                         suggestedMin: 100,
                         stepSize: 50,
                     },
@@ -61,6 +59,7 @@ export function TotalPointsChart({ participations }) {
 
 export function AveragePointsChart({ participations }) {
     const { maxItems } = useSelector((state) => state.statistics);
+    const { theme } = useSelector((state) => state.settings);
 
     const getAveragePoints = () => {
         return participations.map((p) => {
@@ -75,7 +74,7 @@ export function AveragePointsChart({ participations }) {
         datasets: [
             {
                 barThickness: maxItems > 50 ? 8 : 10,
-                backgroundColor: '#ff56a9',
+                backgroundColor: CSSTheme[theme].mainColor,
                 datalabels: {
                     display: false,
                 },
@@ -94,15 +93,11 @@ export function AveragePointsChart({ participations }) {
                     gridLines: {
                         display: false,
                     },
-                    ticks: {
-                        fontFamily: 'Nunito',
-                    },
                 },
             ],
             yAxes: [
                 {
                     ticks: {
-                        fontFamily: 'Nunito',
                         max: 15,
                         stepSize: 5,
                     },

@@ -2,6 +2,8 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 import _ from 'lodash';
+import { useSelector } from 'react-redux';
+import { CSSTheme } from '../../utils/style';
 
 function ParticipationChart({
     record,
@@ -12,19 +14,18 @@ function ParticipationChart({
     tournamentName,
     nbMaxRaces,
 }) {
+    const { theme } = useSelector((state) => state.settings);
+
     const data = {
         labels: Array.from(Array(nbMaxRaces), (_, i) => i + 1),
         datasets: [
             {
                 label: tournamentName,
                 fill: false,
-                borderColor: '#ff56a9',
+                borderColor: CSSTheme[theme].mainColor,
                 datalabels: {
                     align: 'start',
-                    color: '#ff56a9',
-                    font: {
-                        family: 'Nunito',
-                    },
+                    color: CSSTheme[theme].mainColor,
                 },
                 data: races.map(((s) => ({ nbPoints }) => (s += nbPoints))(0)),
             },
@@ -32,11 +33,6 @@ function ParticipationChart({
     };
 
     const options = {
-        legend: {
-            labels: {
-                fontfamily: 'Nunito',
-            },
-        },
         scales: {
             xAxes: [
                 {
@@ -44,7 +40,6 @@ function ParticipationChart({
                         display: false,
                     },
                     ticks: {
-                        fontFamily: 'Nunito',
                         padding: 20,
                     },
                 },
@@ -81,13 +76,10 @@ function ParticipationChart({
         data.datasets.push({
             label: 'Record',
             fill: false,
-            borderColor: '#424242',
+            borderColor: CSSTheme[theme].mainTextColor,
             datalabels: {
                 align: 'end',
-                color: '#424242',
-                font: {
-                    family: 'Nunito',
-                },
+                color: CSSTheme[theme].mainTextColor,
             },
             data: record.Races.map(
                 ((s) => ({ nbPoints }) => (s += nbPoints))(0)
@@ -103,9 +95,6 @@ function ParticipationChart({
             datalabels: {
                 align: 'right',
                 color: '#ea4335',
-                font: {
-                    family: 'Nunito',
-                },
                 formatter: (value, ctx) => {
                     return ctx.dataIndex === ctx.dataset.data.length - 1
                         ? value.y
@@ -122,13 +111,10 @@ function ParticipationChart({
         data.datasets.push({
             label: 'Moyenne',
             fill: false,
-            borderColor: '#c0c0c0',
+            borderColor: CSSTheme[theme].tertiaryTextColor,
             datalabels: {
                 align: 'right',
-                color: '#c0c0c0',
-                font: {
-                    family: 'Nunito',
-                },
+                color: CSSTheme[theme].tertiaryTextColor,
                 formatter: (value, ctx) => {
                     return ctx.dataIndex === ctx.dataset.data.length - 1
                         ? Math.round(value)
