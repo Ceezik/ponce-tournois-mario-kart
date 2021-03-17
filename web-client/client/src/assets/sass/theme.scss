@@ -1,0 +1,35 @@
+@import 'variables';
+
+:root {
+    --main-background-color: #{$light__main-background-color};
+    --secondary-background-color: #{$light__secondary-background-color};
+
+    --border-color: #{$light__border-color};
+
+    --main-text-color: #{$light__main-text-color};
+    --tertiary-text-color: #{$light__tertiary-text-color};
+
+    --main-color: #{$light__main-color};
+    --main-color-dark: #{$light__main-color-dark};
+    --main-color-light: #{$light__main-color-light};
+
+    --error-color: #{$light__error-color};
+    --success-color: #{$light__success-color};
+}
+
+[data-theme='dark'] {
+    --main-background-color: #{$dark__main-background-color};
+    --secondary-background-color: #{$dark__secondary-background-color};
+
+    --border-color: #{$dark__border-color};
+
+    --main-text-color: #{$dark__main-text-color};
+    --tertiary-text-color: #{$dark__tertiary-text-color};
+
+    --main-color: #{$dark__main-color};
+    --main-color-dark: #{$dark__main-color-dark};
+    --main-color-light: #{$dark__main-color-light};
+
+    --error-color: #{$dark__error-color};
+    --success-color: #{$dark__success-color};
+}

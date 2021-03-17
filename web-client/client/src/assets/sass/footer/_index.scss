@@ -1,10 +1,9 @@
-@import '../variables';
-
 footer {
     flex-shrink: 0;
     text-align: center;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid var(--border-color);
     padding: 2rem;
+    background-color: var(--main-background-color);
 }
 
 .footer__links {

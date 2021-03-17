@@ -12,7 +12,7 @@
 }
 
 .races__title {
-    color: $main-color;
+    color: var(--main-color);
     margin-bottom: 0.5rem;
     text-align: center;
 }
@@ -22,7 +22,7 @@
 }
 
 .races__trackWrapper {
-    border: 1px solid #e6e6e6;
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 1rem;
     margin: 0.5rem 0;

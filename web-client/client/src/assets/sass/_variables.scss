@@ -1,8 +1,33 @@
-$main-text-color: #1d1d1d;
-$tertiary-text-color: #989aa0;
+/* Light theme */
+$light__main-background-color: white;
+$light__secondary-background-color: #f3f3f4;
 
-$main-color: #ff56a9;
-$main-color-dark: #ff469f;
+$light__border-color: #e6e6e6;
 
-$error-color: #f3453f;
-$success-color: #68b684;
+$light__main-text-color: #1d1d1d;
+$light__tertiary-text-color: #989aa0;
+
+$light__main-color: #ff56a9;
+$light__main-color-dark: #ff469f;
+$light__main-color-light: #fda3cf;
+
+$light__error-color: #f3453f;
+$light__success-color: #68b684;
+
+
+/* Dark theme */
+$dark__main-background-color: #36393f;
+$dark__secondary-background-color: #2f3136;
+
+$dark__border-color: #202225;
+
+$dark__main-text-color: white;
+$dark__tertiary-text-color: #989aa0;
+
+$dark__main-color: #ff56a9;
+$dark__main-color-dark: #ff469f;
+$dark__main-color-light: #fda3cf;
+
+$dark__error-color: #f3453f;
+$dark__success-color: #68b684;
+
