@@ -59,7 +59,7 @@ function LastParticipation({ route, userId }) {
         const record = getRecord(participationsWithNbPoints);
         const worst = getWorst(participationsWithNbPoints);
 
-        if (record.id !== worst.id) setWorst(worst);
+        if (record?.id !== worst?.id) setWorst(worst);
         if (participationsWithNbPoints.length > 1) {
             setAverage(
                 getAverage(
