@@ -1,4 +1,4 @@
-const CSSTheme = {
+export const CSSTheme = {
     light: {
         mainColor: '#ff56a9',
         mainColorLight: '#fda3cf',
