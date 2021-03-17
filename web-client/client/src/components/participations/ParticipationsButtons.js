@@ -20,7 +20,7 @@ function ParticipationsButtons({ participations, setParticipation }) {
         else {
             const newIndex = _.findIndex(
                 tournaments,
-                (t) => t.id === tournament.id
+                (t) => t.id === tournament?.id
             );
             if (newIndex !== -1) {
                 setIndex(newIndex);
