@@ -1,6 +1,6 @@
-@import 'normalize', 'loader', 'auth', 'header', 'cups',
-    'tournaments', 'participations', 'races', 'statistics', 'podiums', 'users',
-    'patchNotes', 'footer', 'settings', 'theme';
+@import 'normalize', 'loader', 'auth', 'header', 'cups', 'tournaments',
+    'participations', 'races', 'statistics', 'podiums', 'users', 'patchNotes',
+    'footer', 'settings', 'theme';
 
 html,
 body,
@@ -10,11 +10,17 @@ body,
 
 #root {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 .container {
     flex: 1 0 auto;
+}
+
+html,
+body,
+#root,
+.container {
     background-color: var(--main-background-color);
 }
 
@@ -36,6 +42,15 @@ label {
 a {
     text-decoration: none;
     color: inherit;
+}
+
+strong {
+    transition: all 0.3s ease;
+}
+
+strong:hover {
+    cursor: pointer;
+    color: var(--main-color);
 }
 
 input,

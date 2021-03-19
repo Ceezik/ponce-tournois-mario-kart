@@ -6,12 +6,15 @@ import 'moment/locale/fr';
 import './style.css';
 import App from './App';
 import store from './redux/store';
+import { ErrorBoundary } from './components/utils/ErrorBoundary';
 
 moment.locale('fr');
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <ErrorBoundary>
+            <App />
+        </ErrorBoundary>
     </Provider>,
     document.getElementById('root')
 );
