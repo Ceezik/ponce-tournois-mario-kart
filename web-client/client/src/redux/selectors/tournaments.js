@@ -9,5 +9,5 @@ export const getReversedTournaments = createSelector(
 export const getTournamentById = createSelector(
     (state) => state.tournaments,
     (_, id) => +id,
-    ({ tournaments }, id) => _.find(tournaments, { id: id })
+    ({ tournaments }, id) => _.find(tournaments, { id })
 );
