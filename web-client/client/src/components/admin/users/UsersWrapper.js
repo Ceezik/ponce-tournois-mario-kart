@@ -13,6 +13,7 @@ const PAGE_SIZE = 20;
 
 function UsersWrapper() {
     const [users, setUsers] = useState([]);
+    const [count, setCount] = useState(undefined);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -33,10 +34,12 @@ function UsersWrapper() {
             PAGE_SIZE,
             usernameFilter
         ).then((res) => {
-            if (res.data.length < PAGE_SIZE) {
+            const { users, count } = res.data;
+            if (users.length < PAGE_SIZE) {
                 setHasMore(false);
             }
-            setUsers([...currentUsers, ...res.data]);
+            setUsers([...currentUsers, ...users]);
+            setCount(count);
         });
     };
 
@@ -48,7 +51,9 @@ function UsersWrapper() {
 
             <Row justify="center">
                 <Col xs={12} lg={8}>
-                    <h1 className="title--noMarginTop">Utilisateurs</h1>
+                    <h1 className="title--noMarginTop">
+                        Utilisateurs {count !== undefined && `(${count})`}
+                    </h1>
 
                     <UsersFilter
                         usernameFilter={usernameFilter}
