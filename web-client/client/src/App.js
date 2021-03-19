@@ -31,7 +31,10 @@ import {
     setTournamentsError,
 } from './redux/actions/tournaments';
 import UserWrapper from './components/user/UserWrapper';
-import { fetchLatestPatchNote } from './redux/actions/patchNotes';
+import {
+    fetchLatestPatchNote,
+    fetchPatchNotes,
+} from './redux/actions/patchNotes';
 import LatestPatchNote from './components/patchNotes/LatestPatchNote';
 import CGU from './components/utils/CGU';
 import { fetchTheme } from './redux/actions/settings';
@@ -51,6 +54,7 @@ function App() {
     useEffect(() => {
         dispatch(fetchUser());
         dispatch(fetchTracks());
+        dispatch(fetchPatchNotes());
         dispatch(fetchLatestPatchNote());
         dispatch(fetchTheme());
     }, []);

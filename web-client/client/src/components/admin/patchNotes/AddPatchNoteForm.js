@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'react-grid-system';
 import { Helmet } from 'react-helmet';
 import PatchNoteForm from './PatchNoteForm';
 import { create } from '../../../services/patchNotes';
 import history from '../../../utils/history';
+import { addPatchNote } from '../../../redux/actions/patchNotes';
 
 function AddPatchNoteForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const dispatch = useDispatch();
 
     const onSubmit = (patchNote) => {
         setLoading(true);
         setError(null);
 
         create(patchNote)
-            .then(() => history.push('/admin/patch-notes'))
+            .then((res) => {
+                dispatch(addPatchNote(res.data));
+                history.push('/admin/patch-notes');
+            })
             .catch((err) => {
                 setError(err.response.data);
                 setLoading(false);
