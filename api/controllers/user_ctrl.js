@@ -4,7 +4,7 @@ const db = require('../models'),
 
 module.exports = {
     getAll: (req, res, next) => {
-        return db.User.findAll({
+        return db.User.findAndCountAll({
             where: {
                 username: { [Op.substring]: `${req.query.username}` },
             },
@@ -14,7 +14,7 @@ module.exports = {
             ],
             ...paginate(parseInt(req.query.page), parseInt(req.query.pageSize)),
         })
-            .then((users) => res.json(users))
+            .then(({ count, rows }) => res.json({ count, users: rows }))
             .catch((err) => next(err));
     },
 
