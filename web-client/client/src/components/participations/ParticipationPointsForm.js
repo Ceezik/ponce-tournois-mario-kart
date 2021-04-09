@@ -2,9 +2,9 @@ import React from 'react';
 import Input from '../form/Input';
 import EditParticipationForm from './EditParticipationForm';
 
-function ParticipationGoalForm({ closeForm, nbMaxRaces, participation }) {
+function ParticipationPointsForm({ closeForm, nbMaxRaces, participation }) {
     const maxPoints = nbMaxRaces * 15;
-    const GOAL_VALIDATION = `Veuillez entrer un nombre compris entre 1 et ${maxPoints}`;
+    const NB_POINTS_VALIDATION = `Veuillez entrer un nombre compris entre 1 et ${maxPoints}`;
 
     return (
         <EditParticipationForm
@@ -12,18 +12,18 @@ function ParticipationGoalForm({ closeForm, nbMaxRaces, participation }) {
             participation={participation}
         >
             <Input
-                label="Objectif"
-                name="goal"
+                label="Nombre de points (sera supprimé si vous saisissez le score de vos courses)"
+                name="nbPoints"
                 type="number"
-                defaultValue={participation.goal}
+                defaultValue={participation.nbPoints}
                 validationSchema={{
                     min: {
                         value: 1,
-                        message: GOAL_VALIDATION,
+                        message: NB_POINTS_VALIDATION,
                     },
                     max: {
                         value: maxPoints,
-                        message: GOAL_VALIDATION,
+                        message: NB_POINTS_VALIDATION,
                     },
                 }}
             />
@@ -31,4 +31,4 @@ function ParticipationGoalForm({ closeForm, nbMaxRaces, participation }) {
     );
 }
 
-export default ParticipationGoalForm;
+export default ParticipationPointsForm;

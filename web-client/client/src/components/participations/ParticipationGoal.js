@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Row, Col } from 'react-grid-system';
+import { getParticipationNbPoints } from '../../utils/utils';
 import ParticipationGoalForm from './ParticipationGoalForm';
 
-function ParticipationGoal({ participation, nbMaxRaces, nbPoints, canAdd }) {
+function ParticipationGoal({ participation, nbMaxRaces, canAdd }) {
     const [showForm, setShowForm] = useState(false);
     const { goal } = participation;
-    const diff = nbPoints - goal;
+    const diff = getParticipationNbPoints(participation) - goal;
 
     const openForm = () => {
         if (!showForm && canAdd) setShowForm(true);

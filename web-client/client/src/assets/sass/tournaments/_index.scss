@@ -55,9 +55,21 @@
 }
 
 .tournament__info > label {
+    display: block;
     color: var(--tertiary-text-color);
 }
 
-.tournament__info > h4 {
+.tournament__info > h4,
+.tournament__setNbPoints {
     margin: 0.5rem 0 0 0;
+}
+
+.tournament__setNbPoints {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.tournament__setNbPointsIcon {
+    color: var(--main-color);
+    margin-right: 1rem;
 }

@@ -26,11 +26,8 @@ function LastParticipation({ route, userId }) {
     const canAdd = user ? user.id === userId || user.isAdmin : false;
 
     socket.off('editParticipation').on('editParticipation', (p) => {
-        if (participation && p.id === participation.id) {
-            const newParticipation = _.cloneDeep(participation);
-            newParticipation.goal = p.goal;
-            setParticipation(newParticipation);
-        }
+        if (participation && p.id === participation.id)
+            setParticipation({ ...participation, ...p });
     });
 
     socket.off('addRace').on('addRace', (race) => {

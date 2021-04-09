@@ -18,11 +18,7 @@ function Participations({ route, canAdd, userId }) {
 
     socket.off('editParticipation').on('editParticipation', (participation) => {
         const p = _.find(participations, { id: participation.id });
-        if (p) {
-            const newParticipation = _.cloneDeep(p);
-            newParticipation.goal = participation.goal;
-            refreshParticipation(newParticipation);
-        }
+        if (p) refreshParticipation({ ...p, ...participation });
     });
 
     socket.off('addRace').on('addRace', (race) => {
