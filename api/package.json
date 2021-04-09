@@ -18,7 +18,6 @@
         "prettier": "^2.0.5"
     },
     "dependencies": {
-        "@d-fischer/passport-twitch": "^1.0.5",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
@@ -29,6 +28,7 @@
         "moment": "^2.27.0",
         "mysql2": "^2.1.0",
         "passport": "^0.4.1",
+        "passport-twitch-new": "0.0.2",
         "sequelize": "^5.21.5",
         "sequelize-cli": "^6.2.0",
         "socket.io": "^2.3.0",

@@ -1,4 +1,4 @@
-const TwitchStrategy = require('@d-fischer/passport-twitch').Strategy,
+const TwitchStrategy = require('passport-twitch-new').Strategy,
     auth_ctrl = require('../controllers/auth_ctrl');
 
 module.exports = new TwitchStrategy(
