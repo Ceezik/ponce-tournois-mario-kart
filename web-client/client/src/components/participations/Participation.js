@@ -5,6 +5,7 @@ import AddRaceBtn from '../admin/participations/AddRaceBtn';
 import ParticipationChart from './ParticipationChart';
 import ParticipationRace from './ParticipationRace';
 import ParticipationGoal from './ParticipationGoal';
+import ParticipationPoints from './ParticipationPoints';
 
 function Participation({
     participation,
@@ -16,44 +17,20 @@ function Participation({
     canAdd = true,
 }) {
     const nbRaces = participation.Races.length;
-    const nbPoints = _.sumBy(participation.Races, 'nbPoints');
-    const averagePoints = nbRaces ? (nbPoints / nbRaces).toFixed(1) : 0;
 
     return (
         <>
             <Row>
-                <Col xs={12}>
-                    <div className="tournament__infos">
-                        <Row>
-                            <Col xs={12} sm={6} md={4}>
-                                <div className="tournament__info">
-                                    <label>Nombre de points</label>
-                                    <h4>{nbPoints}</h4>
-                                </div>
-                            </Col>
-
-                            <Col xs={12} sm={6} md={4}>
-                                <div className="tournament__info">
-                                    <label>Nombre de courses</label>
-                                    <h4>{nbRaces}</h4>
-                                </div>
-                            </Col>
-
-                            <Col xs={12} sm={6} md={4}>
-                                <div className="tournament__info">
-                                    <label>Moyenne de points</label>
-                                    <h4>{averagePoints}</h4>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                </Col>
+                <ParticipationPoints
+                    participation={participation}
+                    canAdd={canAdd}
+                    nbMaxRaces={nbMaxRaces}
+                />
 
                 <ParticipationGoal
                     participation={participation}
                     canAdd={canAdd}
                     nbMaxRaces={nbMaxRaces}
-                    nbPoints={nbPoints}
                 />
             </Row>
 
