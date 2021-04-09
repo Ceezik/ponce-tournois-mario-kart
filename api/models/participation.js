@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
             goal: {
                 type: DataTypes.NUMBER,
             },
+            nbPoints: {
+                type: DataTypes.NUMBER,
+            },
         },
         {
             sequelize,
