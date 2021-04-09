@@ -98,7 +98,7 @@ module.exports = {
         io,
         socket,
         onError,
-        { goal, participationId },
+        { goal, nbPoints, participationId },
         userId,
         isAdmin
     ) => {
@@ -109,9 +109,9 @@ module.exports = {
                     (participation.UserId === userId || isAdmin)
                 ) {
                     participation
-                        .update({ goal })
+                        .update({ goal, nbPoints })
                         .then((newParticipation) => {
-                            socket.emit('closeGoalForm');
+                            socket.emit('closeEditParticipationForm');
                             io.emit('editParticipation', newParticipation);
                         })
                         .catch(() => onError('Une erreur est survenue'));
