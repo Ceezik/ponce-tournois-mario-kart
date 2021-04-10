@@ -4,6 +4,7 @@ import _ from 'lodash';
 import 'chartjs-plugin-datalabels';
 import { useSelector } from 'react-redux';
 import { CSSTheme } from '../../utils/style';
+import { getParticipationNbPoints } from '../../utils/utils';
 
 export function TotalPointsChart({ participations }) {
     const { maxItems } = useSelector((state) => state.statistics);
@@ -18,7 +19,7 @@ export function TotalPointsChart({ participations }) {
                 datalabels: {
                     display: false,
                 },
-                data: participations.map((p) => _.sumBy(p.Races, 'nbPoints')),
+                data: participations.map((p) => getParticipationNbPoints(p)),
             },
         ],
     };
@@ -63,6 +64,7 @@ export function AveragePointsChart({ participations }) {
 
     const getAveragePoints = () => {
         return participations.map((p) => {
+            if (p.nbPoints) return 0;
             const nbRaces = p.Races.length;
             const nbPoints = _.sumBy(p.Races, 'nbPoints');
             return nbRaces ? (nbPoints / nbRaces).toFixed(1) : 0;

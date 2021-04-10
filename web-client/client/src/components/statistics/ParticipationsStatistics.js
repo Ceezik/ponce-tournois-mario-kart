@@ -12,6 +12,11 @@ function ParticipationsStatistics({ route, userId }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    socket.off('editParticipation').on('editParticipation', (participation) => {
+        const p = _.find(participations, { id: participation.id });
+        if (p) refreshParticipation({ ...p, ...participation });
+    });
+
     socket.off('addRace').on('addRace', (race) => {
         const p = _.find(participations, { id: race.ParticipationId });
         if (p) {
