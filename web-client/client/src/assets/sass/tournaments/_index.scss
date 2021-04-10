@@ -69,6 +69,11 @@
     display: inline-block;
 }
 
+.tournament__nbPoints {
+    display: inline-block;
+    margin: 0;
+}
+
 .tournament__setNbPointsIcon {
     color: var(--main-color);
     margin-right: 1rem;
