@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Row } from 'react-grid-system';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { getParticipationNbPoints } from '../../utils/utils';
 import ParticipationPointsForm from './ParticipationPointsForm';
 
@@ -33,27 +33,18 @@ function ParticipationPoints({ participation, canAdd, nbMaxRaces }) {
                         <Col xs={12} sm={6} md={4}>
                             <div className="tournament__info">
                                 <label>Nombre de points</label>
-
-                                {participation.Races.length ? (
-                                    <h4>{nbPoints}</h4>
-                                ) : (
-                                    <div
-                                        className="tournament__setNbPoints"
-                                        onClick={openForm}
-                                    >
-                                        <FontAwesomeIcon
-                                            className="tournament__setNbPointsIcon"
-                                            icon={
-                                                participation.nbPoints
-                                                    ? faPencilAlt
-                                                    : faPlus
-                                            }
-                                        />
-                                        <span>
-                                            {participation.nbPoints || 'Saisir'}
-                                        </span>
-                                    </div>
-                                )}
+                                <div
+                                    className="tournament__setNbPoints"
+                                    onClick={openForm}
+                                >
+                                    <FontAwesomeIcon
+                                        className="tournament__setNbPointsIcon"
+                                        icon={faPencilAlt}
+                                    />
+                                    <h4 className="tournament__nbPoints">
+                                        {nbPoints}
+                                    </h4>
+                                </div>
                             </div>
                         </Col>
 

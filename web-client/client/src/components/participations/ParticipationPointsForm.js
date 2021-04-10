@@ -12,7 +12,7 @@ function ParticipationPointsForm({ closeForm, nbMaxRaces, participation }) {
             participation={participation}
         >
             <Input
-                label="Nombre de points (sera supprimé si vous saisissez le score de vos courses)"
+                label="Nombre de points (saisie manuelle)"
                 name="nbPoints"
                 type="number"
                 defaultValue={participation.nbPoints}

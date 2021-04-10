@@ -76,7 +76,5 @@ export const getMaxItemsFromScreenClass = (screenClass) => {
 };
 
 export const getParticipationNbPoints = (participation) => {
-    return participation.Races.length
-        ? _.sumBy(participation.Races, 'nbPoints')
-        : participation.nbPoints || 0;
+    return participation.nbPoints || _.sumBy(participation.Races, 'nbPoints');
 };
