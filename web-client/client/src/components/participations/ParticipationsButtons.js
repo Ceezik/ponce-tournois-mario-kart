@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Row, Col, Hidden, useScreenClass } from 'react-grid-system';
+import { useLocation } from 'react-router';
 import queryString from 'query-string';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,12 +16,11 @@ function ParticipationsButtons({ participations, setParticipation }) {
     const { tournaments } = useSelector((state) => state.tournaments);
     const [index, setIndex] = useState(undefined);
     const [tournament, setTournament] = useState(undefined);
+    const { search } = useLocation();
 
     useEffect(() => {
         if (index === undefined && tournaments.length) {
-            const { participationId } = queryString.parse(
-                window.location.search
-            );
+            const { participationId } = queryString.parse(search);
             if (!participationId) setIndex(0);
             else {
                 const participation = participations.find(
