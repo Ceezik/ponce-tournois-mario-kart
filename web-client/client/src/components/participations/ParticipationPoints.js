@@ -10,6 +10,7 @@ function ParticipationPoints({ participation, canAdd, nbMaxRaces }) {
     const nbPoints = getParticipationNbPoints(participation);
     const nbRaces = participation.Races.length;
     const averagePoints = nbRaces ? (nbPoints / nbRaces).toFixed(1) : 0;
+    const isManual = !!participation.nbPoints;
 
     const openForm = () => {
         if (!showForm && canAdd) setShowForm(true);
@@ -38,13 +39,19 @@ function ParticipationPoints({ participation, canAdd, nbMaxRaces }) {
                             <div className="tournament__info">
                                 <label>Nombre de points</label>
                                 <div
-                                    className="tournament__setNbPoints"
+                                    className={`tournament__setNbPoints ${
+                                        canAdd
+                                            ? 'tournament__setNbPoints--canAdd'
+                                            : ''
+                                    }`}
                                     onClick={openForm}
                                 >
-                                    <FontAwesomeIcon
-                                        className="tournament__setNbPointsIcon"
-                                        icon={faPencilAlt}
-                                    />
+                                    {canAdd && (
+                                        <FontAwesomeIcon
+                                            className="tournament__setNbPointsIcon"
+                                            icon={faPencilAlt}
+                                        />
+                                    )}
                                     <h4 className="tournament__nbPoints">
                                         {nbPoints}
                                     </h4>
@@ -55,14 +62,14 @@ function ParticipationPoints({ participation, canAdd, nbMaxRaces }) {
                         <Col xs={12} sm={6} md={4}>
                             <div className="tournament__info">
                                 <label>Nombre de courses</label>
-                                <h4>{nbRaces}</h4>
+                                <h4>{isManual ? '-' : nbRaces}</h4>
                             </div>
                         </Col>
 
                         <Col xs={12} sm={6} md={4}>
                             <div className="tournament__info">
                                 <label>Moyenne de points</label>
-                                <h4>{averagePoints}</h4>
+                                <h4>{isManual ? '-' : averagePoints}</h4>
                             </div>
                         </Col>
                     </Row>
