@@ -1,4 +1,3 @@
-import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Row, Col } from 'react-grid-system';
 import UserSkeleton from './UserSkeleton';

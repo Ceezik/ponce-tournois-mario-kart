@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container } from 'react-grid-system';
 import LastParticipation from './LastParticipation';
 

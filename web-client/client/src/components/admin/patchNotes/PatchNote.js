@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Col } from 'react-grid-system';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';

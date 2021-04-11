@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { Col, Container, Row } from 'react-grid-system';
 import { Helmet } from 'react-helmet';

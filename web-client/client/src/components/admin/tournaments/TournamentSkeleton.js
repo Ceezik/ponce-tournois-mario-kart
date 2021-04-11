@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Col, Hidden, useScreenClass } from 'react-grid-system';
 import Skeleton from 'react-loading-skeleton';
 

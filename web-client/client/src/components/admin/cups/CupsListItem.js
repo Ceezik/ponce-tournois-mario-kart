@@ -1,4 +1,3 @@
-import React from 'react';
 import { Col } from 'react-grid-system';
 
 function CupsListItem({ cup, setSelectedCup, isSelected }) {

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import _ from 'lodash';
 
 function UsersFilter({ usernameFilter, setUsernameFilter }) {

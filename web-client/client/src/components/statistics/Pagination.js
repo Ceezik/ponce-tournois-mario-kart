@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Row, Col, useScreenClass } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMaxItems } from '../../redux/actions/statistics';
