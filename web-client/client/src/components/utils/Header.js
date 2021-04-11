@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Hidden, Row, Col } from 'react-grid-system';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -26,6 +26,7 @@ function Header() {
 }
 
 function DesktopHeader() {
+    const history = useHistory();
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
@@ -47,6 +48,7 @@ function DesktopHeader() {
     }, [dropdownRef, open, setOpen]);
 
     const close = () => setOpen(false);
+    const onSignout = () => history.push('/');
 
     return (
         <>
@@ -134,7 +136,11 @@ function DesktopHeader() {
                                         <li>Paramètres</li>
                                     </NavLink>
 
-                                    <li onClick={() => dispatch(signout())}>
+                                    <li
+                                        onClick={() =>
+                                            dispatch(signout(onSignout))
+                                        }
+                                    >
                                         Déconnexion
                                     </li>
                                 </ul>
@@ -151,10 +157,12 @@ function DesktopHeader() {
 
 function MobileHeader() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { user } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
 
     const close = () => setOpen(false);
+    const onSignout = () => history.push('/');
 
     return (
         <>
@@ -262,7 +270,7 @@ function MobileHeader() {
                                         xs={6}
                                         onClick={() => {
                                             close();
-                                            dispatch(signout());
+                                            dispatch(signout(onSignout));
                                         }}
                                     >
                                         <span>Déconnexion</span>

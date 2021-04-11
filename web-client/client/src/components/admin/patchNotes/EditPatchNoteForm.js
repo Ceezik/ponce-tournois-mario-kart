@@ -2,15 +2,16 @@ import { useState } from 'react';
 import { Col, Container, Row } from 'react-grid-system';
 import { Helmet } from 'react-helmet';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import PatchNoteForm from './PatchNoteForm';
 import { updateById } from '../../../services/patchNotes';
-import history from '../../../utils/history';
 import { editPatchNote } from '../../../redux/actions/patchNotes';
 
 function EditPatchNoteForm({ patchNote }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const onSubmit = (newPatchNote) => {
         setLoading(true);

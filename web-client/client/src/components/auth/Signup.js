@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 import { useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Container, Row, Col } from 'react-grid-system';
 import Form from '../form/Form';
 import Input from '../form/Input';
@@ -15,14 +16,23 @@ const USERNAME_LENGTH =
 
 function Signup() {
     const dispatch = useDispatch();
-    const { defaultUsername, twitchId, token } = queryString.parse(
-        window.location.search
-    );
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const history = useHistory();
+    const { search } = useLocation();
+    const { defaultUsername, twitchId, token } = queryString.parse(search);
+
+    const onSignup = () => history.push('/');
 
     const onSubmit = ({ username }) => {
-        dispatch(signup({ username, twitchId, token }, setError, setLoading));
+        dispatch(
+            signup(
+                { username, twitchId, token },
+                setError,
+                setLoading,
+                onSignup
+            )
+        );
     };
 
     return (

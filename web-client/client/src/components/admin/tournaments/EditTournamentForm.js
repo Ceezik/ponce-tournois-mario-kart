@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import TournamentForm from './TournamentForm';
 import { nullifyEmptyFields, serializeTournament } from '../../../utils/utils';
-import history from '../../../utils/history';
 
 function EditTournamentForm({ tournament }) {
     const { socket } = useSelector((state) => state.socket);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const history = useHistory();
 
     const onSubmit = (newTournament) => {
         setLoading(true);

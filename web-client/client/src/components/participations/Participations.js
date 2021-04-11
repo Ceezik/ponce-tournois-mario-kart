@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-grid-system';
+import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
@@ -9,7 +10,6 @@ import ParticipationsButtons from './ParticipationsButtons';
 import ParticipationSkeleton from './ParticipationSkeleton';
 import Error from '../utils/Error';
 import Podium from '../podiums/Podium';
-import history from '../../utils/history';
 
 function Participations({ route, canAdd, userId }) {
     const { socket } = useSelector((state) => state.socket);
@@ -17,6 +17,8 @@ function Participations({ route, canAdd, userId }) {
     const [participation, setParticipation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const history = useHistory();
+    const { search } = useLocation();
 
     socket.off('editParticipation').on('editParticipation', (participation) => {
         const p = _.find(participations, { id: participation.id });
@@ -75,9 +77,9 @@ function Participations({ route, canAdd, userId }) {
     }, []);
 
     useEffect(() => {
-        const { participationId } = queryString.parse(window.location.search);
+        const { participationId } = queryString.parse(search);
         setParticipation(participations.find((p) => p.id === +participationId));
-    }, [window.location.search, participations]);
+    }, [search, participations]);
 
     const fetchParticipations = () => {
         socket.emit(route, userId, (err) => {
@@ -97,10 +99,10 @@ function Participations({ route, canAdd, userId }) {
     };
 
     const changeParticipation = (newParticipation) => {
-        const search = queryString.parse(window.location.search);
+        const currentSearch = queryString.parse(search);
         history.push(
             `${history.location.pathname}?${queryString.stringify({
-                ...search,
+                ...currentSearch,
                 participationId: newParticipation.id,
             })}`
         );
