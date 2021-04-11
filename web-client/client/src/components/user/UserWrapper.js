@@ -143,7 +143,10 @@ function UserWrapper() {
                         render={() => (
                             <Participations
                                 route="getUserParticipations"
-                                canAdd={user.id === currentUser?.id}
+                                canAdd={
+                                    user.id === currentUser?.id ||
+                                    currentUser?.isAdmin
+                                }
                                 userId={user.id}
                             />
                         )}
