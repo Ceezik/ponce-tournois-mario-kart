@@ -1,6 +1,19 @@
 const db = require('./models');
 
 module.exports = {
+    formatWebClientURLForCORS: () => {
+        const { WEB_CLIENT_URL } = process.env;
+        if (!WEB_CLIENT_URL) return [];
+
+        try {
+            const protocols = ['http://', 'https://'];
+            const { host } = new URL(WEB_CLIENT_URL);
+            return protocols.map((protocol) => `${protocol}${host}`);
+        } catch (err) {
+            return [WEB_CLIENT_URL];
+        }
+    },
+
     paginate: (page, pageSize) => {
         if (isNaN(page) || isNaN(pageSize)) return {};
 
