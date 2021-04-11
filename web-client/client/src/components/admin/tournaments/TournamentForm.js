@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Col } from 'react-grid-system';
 import moment from 'moment';
 import Form from '../../form/Form';

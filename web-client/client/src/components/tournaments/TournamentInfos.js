@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';

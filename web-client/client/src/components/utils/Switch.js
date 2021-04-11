@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Switch({ on, setOn }) {
     return (
         <label className="switch">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import queryString from 'query-string';
 import { signin } from '../../redux/actions/auth';

@@ -1,4 +1,3 @@
-import React from 'react';
 import TournamentSkeleton from '../admin/tournaments/TournamentSkeleton';
 import AdminParticipationSkeleton from '../admin/participations/ParticipationSkeleton';
 import { Row, Col } from 'react-grid-system';

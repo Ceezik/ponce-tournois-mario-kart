@@ -1,4 +1,3 @@
-import React from 'react';
 import { useFormContext } from './Form';
 
 function Textarea({

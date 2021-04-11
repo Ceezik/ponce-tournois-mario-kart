@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Col } from 'react-grid-system';
 import Skeleton from 'react-loading-skeleton';
 import PodiumSkeleton from '../../podiums/PodiumSkeleton';

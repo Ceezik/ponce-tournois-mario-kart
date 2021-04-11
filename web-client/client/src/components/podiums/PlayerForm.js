@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Col } from 'react-grid-system';
 import Form from '../form/Form';
 import Input from '../form/Input';

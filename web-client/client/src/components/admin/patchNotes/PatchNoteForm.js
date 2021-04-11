@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Col, Row } from 'react-grid-system';
 import Markdown from 'react-markdown';
 import Button from '../../form/Button';

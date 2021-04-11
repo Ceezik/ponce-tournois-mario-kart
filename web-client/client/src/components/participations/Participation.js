@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Col, Hidden } from 'react-grid-system';
 import _ from 'lodash';
 import AddRaceBtn from '../admin/participations/AddRaceBtn';

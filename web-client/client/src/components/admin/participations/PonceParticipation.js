@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Row, Col } from 'react-grid-system';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';

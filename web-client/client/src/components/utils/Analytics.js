@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import ReactGA from 'react-ga';
 import { useLocation } from 'react-router-dom';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactSelect from 'react-select';
 import { useSelector } from 'react-redux';
 import { getSelectStyle } from '../../utils/style';

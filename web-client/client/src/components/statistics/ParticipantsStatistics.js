@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Col } from 'react-grid-system';
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';

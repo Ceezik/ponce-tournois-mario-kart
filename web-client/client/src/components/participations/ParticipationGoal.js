@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Row, Col } from 'react-grid-system';
 import { getParticipationNbPoints } from '../../utils/utils';
 import ParticipationGoalForm from './ParticipationGoalForm';

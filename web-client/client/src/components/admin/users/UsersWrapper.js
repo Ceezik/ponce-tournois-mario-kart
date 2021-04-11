@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { getAll } from '../../../services/users';
 import { Container, Row, Col } from 'react-grid-system';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 import { useDispatch } from 'react-redux';
