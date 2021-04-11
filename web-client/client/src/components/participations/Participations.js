@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-grid-system';
+import queryString from 'query-string';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import TournamentInfos from '../tournaments/TournamentInfos';
@@ -8,6 +9,7 @@ import ParticipationsButtons from './ParticipationsButtons';
 import ParticipationSkeleton from './ParticipationSkeleton';
 import Error from '../utils/Error';
 import Podium from '../podiums/Podium';
+import history from '../../utils/history';
 
 function Participations({ route, canAdd, userId }) {
     const { socket } = useSelector((state) => state.socket);
@@ -73,9 +75,9 @@ function Participations({ route, canAdd, userId }) {
     }, []);
 
     useEffect(() => {
-        if (!participation && participations.length)
-            setParticipation(participations[0]);
-    }, [participations]);
+        const { participationId } = queryString.parse(window.location.search);
+        setParticipation(participations.find((p) => p.id === +participationId));
+    }, [window.location.search, participations]);
 
     const fetchParticipations = () => {
         socket.emit(route, userId, (err) => {
@@ -92,6 +94,16 @@ function Participations({ route, canAdd, userId }) {
         setParticipations(newParticipations);
         if (participation?.id === newParticipation.id)
             setParticipation(newParticipation);
+    };
+
+    const changeParticipation = (newParticipation) => {
+        const search = queryString.parse(window.location.search);
+        history.push(
+            `${history.location.pathname}?${queryString.stringify({
+                ...search,
+                participationId: newParticipation.id,
+            })}`
+        );
     };
 
     return (
@@ -115,7 +127,7 @@ function Participations({ route, canAdd, userId }) {
                             <>
                                 <ParticipationsButtons
                                     participations={participations}
-                                    setParticipation={setParticipation}
+                                    setParticipation={changeParticipation}
                                 />
 
                                 {participation && (
