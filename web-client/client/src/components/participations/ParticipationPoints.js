@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-grid-system';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +18,10 @@ function ParticipationPoints({ participation, canAdd, nbMaxRaces }) {
     const closeForm = () => {
         setShowForm(false);
     };
+
+    useEffect(() => {
+        if (showForm) closeForm();
+    }, [participation.id]);
 
     return (
         <Col xs={12}>
