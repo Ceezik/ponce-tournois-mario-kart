@@ -59,6 +59,11 @@ function ParticipationsButtons({ participations, setParticipation }) {
         }
     }, [index]);
 
+    useEffect(() => {
+        const { participationId } = queryString.parse(search);
+        if (!participationId) setIndex(0);
+    }, [search]);
+
     const onTournamentChange = ({ value }) => {
         setIndex(_.findIndex(tournaments, { id: value }));
     };

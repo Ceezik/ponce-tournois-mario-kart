@@ -78,7 +78,12 @@ function Participations({ route, canAdd, userId }) {
 
     useEffect(() => {
         const { participationId } = queryString.parse(search);
-        setParticipation(participations.find((p) => p.id === +participationId));
+        if (!participationId && participations.length) {
+            changeParticipation(participations[0]);
+        } else
+            setParticipation(
+                participations.find((p) => p.id === +participationId)
+            );
     }, [search, participations]);
 
     const fetchParticipations = () => {
