@@ -100,9 +100,9 @@ function ParticipationChart({
                 nbMaxRaces,
                 label: 'Pire score',
                 fill: false,
-                borderColor: '#ea4335',
+                borderColor: CSSTheme[theme].worstChartColor,
                 datalabels: {
-                    color: '#ea4335',
+                    color: CSSTheme[theme].worstChartColor,
                     align: 'start',
                 },
             })
@@ -133,8 +133,8 @@ function ParticipationChart({
             fill: false,
             borderColor:
                 getParticipationNbPoints(current) > goal
-                    ? '#68b684'
-                    : '#f3453f',
+                    ? CSSTheme[theme].successColor
+                    : CSSTheme[theme].errorColor,
             borderWidth: 2,
             datalabels: { display: false },
             data: Array(nbMaxRaces).fill(goal),
