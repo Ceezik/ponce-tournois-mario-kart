@@ -53,13 +53,13 @@ function App() {
     useEffect(() => {
         dispatch(fetchUser());
         dispatch(fetchTracks());
-        dispatch(fetchPatchNotes());
         dispatch(fetchLatestPatchNote());
         dispatch(fetchTheme());
     }, []);
 
     useEffect(() => {
         dispatch(setSocket(user));
+        if (user?.isAdmin) dispatch(fetchPatchNotes());
     }, [user]);
 
     useEffect(() => {

@@ -28,7 +28,7 @@ export const fetchPatchNotes = () => (dispatch) => {
         .catch((err) =>
             dispatch({
                 type: SET_PATCH_NOTES_STATE,
-                payload: { loading: false, error: err.response.message },
+                payload: { loading: false, error: err.response.data },
             })
         );
 };
