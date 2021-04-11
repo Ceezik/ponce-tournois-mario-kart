@@ -65,8 +65,11 @@
 }
 
 .tournament__setNbPoints {
-    cursor: pointer;
     display: inline-block;
+}
+
+.tournament__setNbPoints--canAdd {
+    cursor: pointer;
 }
 
 .tournament__nbPoints {
