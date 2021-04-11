@@ -15,6 +15,8 @@
 
     --error-color: #{$light__error-color};
     --success-color: #{$light__success-color};
+
+    --worst-chart-color: #{$light__worst-chart-color};
 }
 
 [data-theme='dark'] {
@@ -32,4 +34,6 @@
 
     --error-color: #{$dark__error-color};
     --success-color: #{$dark__success-color};
+
+    --worst-chart-color: #{$dark__worst-chart-color};
 }
