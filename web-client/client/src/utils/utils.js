@@ -34,20 +34,36 @@ export const getPositionColor = (position) => {
 };
 
 export const getParticipationsWithNbPoints = (participations) => {
-    participations.forEach((p) => (p.nbPoints = _.sumBy(p.Races, 'nbPoints')));
-    return participations.filter((p) => p.nbPoints > 0);
+    const participationsWithNbPoints = participations.map((p) => {
+        return { ...p, nbPoints: p.nbPoints || _.sumBy(p.Races, 'nbPoints') };
+    });
+    return participationsWithNbPoints.filter((p) => p.nbPoints > 0);
 };
 
 export const getRecord = (participations) => {
-    return _.maxBy(participations, 'nbPoints');
+    const participationsWithNbPoints = getParticipationsWithNbPoints(
+        participations
+    );
+    const id = _.maxBy(participationsWithNbPoints, 'nbPoints')?.id;
+    return participations.find((p) => p.id === id);
 };
 
 export const getWorst = (participations) => {
-    return _.minBy(participations, 'nbPoints');
+    const participationsWithNbPoints = getParticipationsWithNbPoints(
+        participations
+    );
+    const id = _.minBy(participationsWithNbPoints, 'nbPoints')?.id;
+    return participations.find((p) => p.id === id);
 };
 
 export const getAverage = (participations) => {
-    const p = participations.map((p) => p.Races.map((r) => r.nbPoints));
+    const participationsWithNbPoints = getParticipationsWithNbPoints(
+        participations.filter((p) => !p.nbPoints)
+    );
+
+    const p = participationsWithNbPoints.map((p) =>
+        p.Races.map((r) => r.nbPoints)
+    );
     if (!p.length) return null;
 
     const maxLength = _.maxBy(p, (el) => el.length).length;
@@ -77,4 +93,34 @@ export const getMaxItemsFromScreenClass = (screenClass) => {
 
 export const getParticipationNbPoints = (participation) => {
     return participation.nbPoints || _.sumBy(participation.Races, 'nbPoints');
+};
+
+export const createParticipationChart = ({
+    participation,
+    nbMaxRaces,
+    ...props
+}) => {
+    const {
+        datalabels: { align, ...datalabelsProps },
+        ...rest
+    } = props;
+
+    return {
+        datalabels: {
+            formatter: (value, ctx) => {
+                if (!participation.nbPoints) return value.y;
+                return ctx.dataIndex === ctx.dataset.data.length - 1
+                    ? value.y
+                    : null;
+            },
+            align: participation.nbPoints ? 'right' : align,
+            ...datalabelsProps,
+        },
+        data: participation.nbPoints
+            ? Array(nbMaxRaces).fill(participation.nbPoints)
+            : participation.Races.map(
+                  ((s) => ({ nbPoints }) => (s += nbPoints))(0)
+              ),
+        ...rest,
+    };
 };

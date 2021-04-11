@@ -40,7 +40,7 @@ function Participation({
                         record={record}
                         worst={worst}
                         average={average}
-                        races={participation.Races}
+                        current={participation}
                         tournamentName={tournamentName}
                         nbMaxRaces={nbMaxRaces}
                         goal={participation.goal}
