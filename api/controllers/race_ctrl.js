@@ -92,29 +92,46 @@ module.exports = {
         io,
         socket,
         onError,
+        userId,
+        isAdmin,
         { position, nbPoints, trackId, raceId }
     ) => {
         db.Race.findByPk(raceId)
             .then((race) => {
                 if (race) {
-                    race.update({
-                        position,
-                        nbPoints,
-                        TrackId: trackId,
-                    })
-                        .then((newRace) => {
-                            newRace
-                                .getTrack({ attributes: ['name'] })
-                                .then((track) => {
-                                    newRace.setDataValue('Track', track);
-                                    socket.emit('closeEditRaceForm');
-                                    io.emit('editRace', newRace);
+                    canAccessParticipation(
+                        race.ParticipationId,
+                        userId,
+                        isAdmin,
+                        onError,
+                        () => {
+                            race.update({
+                                position,
+                                nbPoints,
+                                TrackId: trackId,
+                            })
+                                .then((newRace) => {
+                                    newRace
+                                        .getTrack({ attributes: ['name'] })
+                                        .then((track) => {
+                                            newRace.setDataValue(
+                                                'Track',
+                                                track
+                                            );
+                                            socket.emit('closeEditRaceForm');
+                                            io.emit('editRace', newRace);
+                                        })
+                                        .catch(() =>
+                                            onError(
+                                                'Veuillez rafraichir la page'
+                                            )
+                                        );
                                 })
                                 .catch(() =>
-                                    onError('Veuillez rafraichir la page')
+                                    onError('Une erreur est survenue')
                                 );
-                        })
-                        .catch(() => onError('Une erreur est survenue'));
+                        }
+                    );
                 } else {
                     onError('Une erreur est survenue');
                 }
