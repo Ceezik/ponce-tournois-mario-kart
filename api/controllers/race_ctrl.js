@@ -17,6 +17,24 @@ const _getRaces = (user) => {
     });
 };
 
+const canAccessParticipation = (
+    participationId,
+    userId,
+    isAdmin,
+    onError,
+    cb
+) => {
+    db.Participation.findByPk(participationId)
+        .then((participation) => {
+            if (participation && (participation.UserId == userId || isAdmin)) {
+                cb();
+            } else {
+                onError("Vous n'êtes pas autorisé à effectuer cette action");
+            }
+        })
+        .catch(() => onError('Une erreur est survenue'));
+};
+
 module.exports = {
     getPonceRaces: (socket, onError) => {
         getPonce(onError, (ponce) => {
@@ -42,37 +60,32 @@ module.exports = {
         isAdmin,
         { position, nbPoints, trackId, participationId }
     ) => {
-        db.Participation.findByPk(participationId)
-            .then((participation) => {
-                if (
-                    participation &&
-                    (participation.UserId == userId || isAdmin)
-                ) {
-                    db.Race.create({
-                        position,
-                        nbPoints,
-                        TrackId: trackId,
-                        ParticipationId: participationId,
+        canAccessParticipation(
+            participationId,
+            userId,
+            isAdmin,
+            onError,
+            () => {
+                db.Race.create({
+                    position,
+                    nbPoints,
+                    TrackId: trackId,
+                    ParticipationId: participationId,
+                })
+                    .then((race) => {
+                        race.getTrack({ attributes: ['name'] })
+                            .then((track) => {
+                                race.setDataValue('Track', track);
+                                socket.emit('closeAddRaceForm');
+                                io.emit('addRace', race);
+                            })
+                            .catch(() =>
+                                onError('Veuillez rafraichir la page')
+                            );
                     })
-                        .then((race) => {
-                            race.getTrack({ attributes: ['name'] })
-                                .then((track) => {
-                                    race.setDataValue('Track', track);
-                                    socket.emit('closeAddRaceForm');
-                                    io.emit('addRace', race);
-                                })
-                                .catch(() =>
-                                    onError('Veuillez rafraichir la page')
-                                );
-                        })
-                        .catch(() => onError('Une erreur est survenue'));
-                } else {
-                    onError(
-                        "Vous n'êtes pas autorisé à effectuer cette action"
-                    );
-                }
-            })
-            .catch(() => onError('Une erreur est survenue'));
+                    .catch(() => onError('Une erreur est survenue'));
+            }
+        );
     },
 
     editRace: (
@@ -104,6 +117,27 @@ module.exports = {
                         .catch(() => onError('Une erreur est survenue'));
                 } else {
                     onError('Une erreur est survenue');
+                }
+            })
+            .catch(() => onError('Une erreur est survenue'));
+    },
+
+    deleteRace: (io, onError, userId, isAdmin, id) => {
+        db.Race.findByPk(id)
+            .then((race) => {
+                if (race) {
+                    canAccessParticipation(
+                        race.ParticipationId,
+                        userId,
+                        isAdmin,
+                        onError,
+                        () => {
+                            race.destroy();
+                            io.emit('deleteRace', race);
+                        }
+                    );
+                } else {
+                    onError("Cette course n'existe pas");
                 }
             })
             .catch(() => onError('Une erreur est survenue'));
