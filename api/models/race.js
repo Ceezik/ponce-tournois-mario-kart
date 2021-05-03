@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: { min: 1, max: 15 },
             },
+            disconnected: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+            },
         },
         {
             sequelize,

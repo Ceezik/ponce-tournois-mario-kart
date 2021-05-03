@@ -58,7 +58,7 @@ module.exports = {
         onError,
         userId,
         isAdmin,
-        { position, nbPoints, trackId, participationId }
+        { position, nbPoints, disconnected, trackId, participationId }
     ) => {
         canAccessParticipation(
             participationId,
@@ -69,6 +69,7 @@ module.exports = {
                 db.Race.create({
                     position,
                     nbPoints,
+                    disconnected,
                     TrackId: trackId,
                     ParticipationId: participationId,
                 })
@@ -94,7 +95,7 @@ module.exports = {
         onError,
         userId,
         isAdmin,
-        { position, nbPoints, trackId, raceId }
+        { position, nbPoints, disconnected, trackId, raceId }
     ) => {
         db.Race.findByPk(raceId)
             .then((race) => {
@@ -108,6 +109,7 @@ module.exports = {
                             race.update({
                                 position,
                                 nbPoints,
+                                disconnected,
                                 TrackId: trackId,
                             })
                                 .then((newRace) => {
