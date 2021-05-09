@@ -16,7 +16,7 @@ function AddRaceForm({ closeForm, participationId }) {
         return () => socket.off('closeAddRaceForm');
     }, []);
 
-    const onSubmit = ({ position, trackName }) => {
+    const onSubmit = ({ position, trackName, disconnected }) => {
         const track = _.find(tracks, ['name', trackName]);
 
         if (track) {
@@ -27,6 +27,7 @@ function AddRaceForm({ closeForm, participationId }) {
                 {
                     position: parseInt(position),
                     nbPoints: getNbPointsFromPosition(position),
+                    disconnected,
                     trackId: track.id,
                     participationId,
                 },
