@@ -33,9 +33,15 @@ export const getPositionColor = (position) => {
     return position === 1 ? 'gold' : position === 2 ? '#CBCDCD' : '#cd7f32';
 };
 
+export const getParticipationNbPoints = (participation) => {
+    if (participation.nbPoints) return participation.nbPoints;
+    const races = participation.Races.filter((r) => !r.disconnected);
+    return _.sumBy(races, 'nbPoints');
+};
+
 export const getParticipationsWithNbPoints = (participations) => {
     const participationsWithNbPoints = participations.map((p) => {
-        return { ...p, nbPoints: p.nbPoints || _.sumBy(p.Races, 'nbPoints') };
+        return { ...p, nbPoints: getParticipationNbPoints(p) };
     });
     return participationsWithNbPoints.filter((p) => p.nbPoints > 0);
 };
@@ -62,7 +68,9 @@ export const getAverage = (participations) => {
     );
 
     const p = participationsWithNbPoints.map((p) =>
-        p.Races.map((r) => r.nbPoints)
+        p.Races.map(({ nbPoints, disconnected }) =>
+            disconnected ? 0 : nbPoints
+        )
     );
     if (!p.length) return null;
 
@@ -91,10 +99,6 @@ export const getMaxItemsFromScreenClass = (screenClass) => {
     return 100;
 };
 
-export const getParticipationNbPoints = (participation) => {
-    return participation.nbPoints || _.sumBy(participation.Races, 'nbPoints');
-};
-
 export const createParticipationChart = ({
     participation,
     nbMaxRaces,
@@ -119,7 +123,8 @@ export const createParticipationChart = ({
         data: participation.nbPoints
             ? Array(nbMaxRaces).fill(participation.nbPoints)
             : participation.Races.map(
-                  ((s) => ({ nbPoints }) => (s += nbPoints))(0)
+                  ((s) => ({ nbPoints, disconnected }) =>
+                      (s += disconnected ? 0 : nbPoints))(0)
               ),
         ...rest,
     };

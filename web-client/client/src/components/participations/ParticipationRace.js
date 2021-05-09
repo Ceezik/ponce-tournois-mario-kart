@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { getPositionColor } from '../../utils/utils';
 import EditRaceForm from '../admin/participations/EditRaceForm';
+import { ReactComponent as NoWifiIcon } from '../../assets/icons/wifiSlash.svg';
 
 function ParticipationRace({ race, canAdd }) {
     const [showForm, setShowForm] = useState(false);
@@ -29,6 +30,11 @@ function ParticipationRace({ race, canAdd }) {
                             <EditRaceForm closeForm={closeForm} race={race} />
                         ) : (
                             <>
+                                {race.disconnected && (
+                                    <div className="participation__disconnectedRace">
+                                        <NoWifiIcon />
+                                    </div>
+                                )}
                                 <Col xs={3}>
                                     {race.position <= 3 ? (
                                         <FontAwesomeIcon
