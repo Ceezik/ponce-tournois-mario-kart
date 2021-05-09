@@ -16,7 +16,7 @@ function EditRaceForm({ closeForm, race }) {
         return () => socket.off('closeEditRaceForm');
     }, []);
 
-    const onSubmit = ({ position, trackName }) => {
+    const onSubmit = ({ position, trackName, disconnected }) => {
         const track = _.find(tracks, ['name', trackName]);
 
         if (track) {
@@ -27,6 +27,7 @@ function EditRaceForm({ closeForm, race }) {
                 {
                     position: parseInt(position),
                     nbPoints: getNbPointsFromPosition(position),
+                    disconnected,
                     trackId: track.id,
                     raceId: race.id,
                 },

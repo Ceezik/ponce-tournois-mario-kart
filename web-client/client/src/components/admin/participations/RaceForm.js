@@ -17,7 +17,15 @@ function RaceForm({ onSubmit, error, loading, closeForm, race = null }) {
                 )}
 
                 <Row>
-                    <Col xs={4}>
+                    <Col xs="content">
+                        <Input
+                            name="disconnected"
+                            label="Déco"
+                            type="checkbox"
+                            defaultChecked={race && race.disconnected}
+                        />
+                    </Col>
+                    <Col xs="content" style={{ flex: 1 }}>
                         <Input
                             name="position"
                             label="Position"
@@ -36,7 +44,7 @@ function RaceForm({ onSubmit, error, loading, closeForm, race = null }) {
                             defaultValue={race && race.position}
                         />
                     </Col>
-                    <Col xs={8}>
+                    <Col xs={12} md={8}>
                         <Typeahead
                             name="trackName"
                             label="Circuit"

@@ -143,6 +143,14 @@ textarea::placeholder {
     display: block;
 }
 
+.inputCheckboxWrapper {
+    margin-top: 0.5rem;
+}
+
+.inputCheckboxWrapper > input[type='checkbox'] {
+    display: none;
+}
+
 .typeahead {
     position: relative;
 }
