@@ -6,12 +6,7 @@ import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
 import Podium from '../podiums/Podium';
-import {
-    getRecord,
-    getWorst,
-    getParticipationsWithNbPoints,
-    getAverage,
-} from '../../utils/utils';
+import { getRecord, getWorst, getAverage } from '../../utils/utils';
 
 function LastParticipation({ route, userId }) {
     const { socket } = useSelector((state) => state.socket);
@@ -77,6 +72,8 @@ function LastParticipation({ route, userId }) {
         setLoading(true);
         fetchParticipation();
     }, [route, userId]);
+
+    useEffect(() => {}, [participation]);
 
     const fetchParticipation = () => {
         socket.emit(route, userId, (err) => {

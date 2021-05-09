@@ -55,6 +55,25 @@
     text-align: start;
 }
 
+.participation__disconnectedRace {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    background-color: var(--error-color);
+    height: 20px;
+    width: 20px;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.participation__disconnectedRace > svg {
+    width: 20px;
+    height: 14px;
+}
+
 .participation__goal {
     padding: 0 1rem;
     margin: 0.5rem 0;
