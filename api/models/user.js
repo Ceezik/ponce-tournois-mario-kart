@@ -38,6 +38,16 @@ module.exports = (sequelize, DataTypes) => {
 
     User.associate = (db) => {
         User.hasMany(db.Participation);
+        User.belongsToMany(db.User, {
+            through: db.ManagersEditors,
+            as: 'Editors',
+            foreignKey: 'ManagerId',
+        });
+        User.belongsToMany(db.User, {
+            through: db.ManagersEditors,
+            as: 'Managers',
+            foreignKey: 'EditorId',
+        });
     };
 
     User.afterCreate((user) => {
