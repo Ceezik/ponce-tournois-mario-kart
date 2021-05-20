@@ -15,10 +15,26 @@ const USERNAME_FORMAT =
 const USERNAME_LENGTH =
     "Votre nom d'utilisateur doit faire entre 3 et 50 caractères";
 
-function Settings() {
+function ThemeSwitcher() {
+    const dispatch = useDispatch();
+    const { theme } = useSelector((state) => state.settings);
+
+    return (
+        <div className="themeSwicth__wrapper">
+            <label className="inputLabel themeSwitch__label">Mode sombre</label>
+            <Switch
+                on={theme === 'dark'}
+                setOn={() =>
+                    dispatch(switchTheme(theme === 'dark' ? 'light' : 'dark'))
+                }
+            />
+        </div>
+    );
+}
+
+function UsernameForm() {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
-    const { theme } = useSelector((state) => state.settings);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(null);
 
@@ -40,6 +56,51 @@ function Settings() {
     };
 
     return (
+        <Form onSubmit={onSubmit}>
+            {message && (
+                <div className={`formMessage formMessage__${message.type}`}>
+                    {message.text}
+                </div>
+            )}
+
+            <Input
+                label="Nom d'utilisateur"
+                name="username"
+                defaultValue={user.username}
+                validationSchema={{
+                    required: 'Ce champ est obligatoire',
+                    minLength: {
+                        value: 3,
+                        message: USERNAME_LENGTH,
+                    },
+                    maxLength: {
+                        value: 50,
+                        message: USERNAME_LENGTH,
+                    },
+                    pattern: {
+                        value: /^[a-zA-Z0-9_]*$/i,
+                        message: USERNAME_FORMAT,
+                    },
+                }}
+            />
+
+            <Row justify="end">
+                <Col xs="content">
+                    <Button
+                        type="submit"
+                        className="btnPrimary"
+                        loading={loading}
+                    >
+                        Modifier
+                    </Button>
+                </Col>
+            </Row>
+        </Form>
+    );
+}
+
+function Settings() {
+    return (
         <Container className="app__container">
             <Helmet>
                 <title>Paramètres</title>
@@ -49,60 +110,12 @@ function Settings() {
                 <Col xs={12} md={10} lg={6}>
                     <h1 className="title--noMarginTop">Paramètres</h1>
 
-                    <label className="inputLabel themeSwitch__label">
-                        Mode sombre
-                    </label>
-                    <Switch
-                        on={theme === 'dark'}
-                        setOn={() =>
-                            dispatch(
-                                switchTheme(theme === 'dark' ? 'light' : 'dark')
-                            )
-                        }
-                    />
-
-                    <Form onSubmit={onSubmit}>
-                        {message && (
-                            <div
-                                className={`formMessage formMessage__${message.type}`}
-                            >
-                                {message.text}
-                            </div>
-                        )}
-
-                        <Input
-                            label="Nom d'utilisateur"
-                            name="username"
-                            defaultValue={user.username}
-                            validationSchema={{
-                                required: 'Ce champ est obligatoire',
-                                minLength: {
-                                    value: 3,
-                                    message: USERNAME_LENGTH,
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: USERNAME_LENGTH,
-                                },
-                                pattern: {
-                                    value: /^[a-zA-Z0-9_]*$/i,
-                                    message: USERNAME_FORMAT,
-                                },
-                            }}
-                        />
-
-                        <Row justify="end">
-                            <Col xs="content">
-                                <Button
-                                    type="submit"
-                                    className="btnPrimary"
-                                    loading={loading}
-                                >
-                                    Modifier
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Form>
+                    <div className="settings__part">
+                        <ThemeSwitcher />
+                    </div>
+                    <div className="settings__part">
+                        <UsernameForm />
+                    </div>
                 </Col>
             </Row>
         </Container>
