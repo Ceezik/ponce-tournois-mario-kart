@@ -49,8 +49,23 @@ module.exports = {
             .catch((err) => next(err));
     },
 
-    getCurrent: (req, res, next) => {
-        return res.json(req.user);
+    getCurrent: async (req, res, next) => {
+        return db.User.findByPk(req.user.id, {
+            include: [
+                {
+                    model: db.User,
+                    as: 'Editors',
+                    attributes: ['id', 'username'],
+                },
+                {
+                    model: db.User,
+                    as: 'Managers',
+                    attributes: ['id', 'username'],
+                },
+            ],
+        })
+            .then((user) => res.json(user))
+            .catch((err) => next(err));
     },
 
     update: (req, res, next) => {
