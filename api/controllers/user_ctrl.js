@@ -115,4 +115,18 @@ module.exports = {
         }
         throw { status: 406, message: 'Paramètres invalides' };
     },
+
+    removeEditor: (req, res, next) => {
+        return req.user
+            .removeEditor(req.params.editorId)
+            .then((nbRemoved) => {
+                if (nbRemoved) return res.status(204).send();
+                throw {
+                    status: 404,
+                    message:
+                        'Cet utilisateur ne fait pas partie de vos éditeurs',
+                };
+            })
+            .catch((err) => next(err));
+    },
 };

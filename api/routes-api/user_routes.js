@@ -41,4 +41,10 @@ module.exports = [
         method: 'post',
         func: [auth_ctrl.isAuthenticated, user_ctrl.addEditor],
     },
+
+    {
+        url: '/user/editors/:editorId',
+        method: 'delete',
+        func: [auth_ctrl.isAuthenticated, user_ctrl.removeEditor],
+    },
 ];
