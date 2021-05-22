@@ -29,11 +29,11 @@ function UsersWrapper() {
     }, [usernameFilter]);
 
     const fetchUsers = (currentUsers) => {
-        return getAll(
-            currentUsers.length / PAGE_SIZE,
-            PAGE_SIZE,
-            usernameFilter
-        ).then((res) => {
+        return getAll({
+            page: currentUsers.length / PAGE_SIZE,
+            pageSize: PAGE_SIZE,
+            username: usernameFilter,
+        }).then((res) => {
             const { users, count } = res.data;
             if (users.length < PAGE_SIZE) {
                 setHasMore(false);

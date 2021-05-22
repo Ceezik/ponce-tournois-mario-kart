@@ -1,6 +1,11 @@
 import Cookies from 'js-cookie';
 import { getProfil, signup as _signup } from '../../services/auth';
-import { SET_USER, SET_LOADING } from '../types/auth';
+import {
+    SET_USER,
+    SET_LOADING,
+    ADD_EDITOR,
+    REMOVE_EDITOR,
+} from '../types/auth';
 
 export const fetchUser = () => (dispatch) => {
     getProfil()
@@ -11,6 +16,14 @@ export const fetchUser = () => (dispatch) => {
 
 export const updateUser = (user) => (dispatch) => {
     dispatch({ type: SET_USER, payload: user });
+};
+
+export const addEditor = (editor) => (dispatch) => {
+    dispatch({ type: ADD_EDITOR, payload: editor });
+};
+
+export const removeEditor = (editor) => (dispatch) => {
+    dispatch({ type: REMOVE_EDITOR, payload: editor });
 };
 
 export const signup = (user, setError, setLoading, onSignup) => (dispatch) => {
