@@ -2,13 +2,21 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Form from '../form/Form';
 import Input from '../form/Input';
 import Button from '../form/Button';
-import { update } from '../../services/user';
-import { updateUser } from '../../redux/actions/auth';
+import {
+    update,
+    addEditor as _addEditor,
+    removeEditor as _removeEditor,
+} from '../../services/user';
+import { addEditor, removeEditor, updateUser } from '../../redux/actions/auth';
 import Switch from '../utils/Switch';
 import { switchTheme } from '../../redux/actions/settings';
+import UsersTypeahead from '../form/UsersTypeahead';
 
 const USERNAME_FORMAT =
     "Votre nom d'utilisateur ne doit contenir que des caractères alphanumériques";
@@ -20,7 +28,7 @@ function ThemeSwitcher() {
     const { theme } = useSelector((state) => state.settings);
 
     return (
-        <div className="themeSwicth__wrapper">
+        <>
             <label className="inputLabel themeSwitch__label">Mode sombre</label>
             <Switch
                 on={theme === 'dark'}
@@ -28,7 +36,7 @@ function ThemeSwitcher() {
                     dispatch(switchTheme(theme === 'dark' ? 'light' : 'dark'))
                 }
             />
-        </div>
+        </>
     );
 }
 
@@ -99,6 +107,172 @@ function UsernameForm() {
     );
 }
 
+function ManagerEditorItem({ entity, onDelete }) {
+    return (
+        <div className="managersEditors__item">
+            <Row justify="between">
+                <Col xs="content">
+                    <Link
+                        className="primaryLink"
+                        to={`/users/${entity.username}`}
+                    >
+                        {entity.username}
+                    </Link>
+                </Col>
+                {onDelete && (
+                    <Col
+                        xs="content"
+                        className="managersEditors__delete"
+                        onClick={onDelete}
+                    >
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                    </Col>
+                )}
+            </Row>
+        </div>
+    );
+}
+
+function AddEditorForm({ closeForm }) {
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.auth);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const onSubmit = ({ username }) => {
+        setLoading(true);
+
+        _addEditor({ username })
+            .then((res) => {
+                dispatch(addEditor(res.data));
+                closeForm();
+            })
+            .catch((err) => {
+                setError(err.response.data);
+                setLoading(false);
+            });
+    };
+
+    return (
+        <Form onSubmit={onSubmit}>
+            {error && (
+                <div className="formMessage formMessage__error">{error}</div>
+            )}
+
+            <UsersTypeahead
+                name="username"
+                label="Nom d'utilisateur"
+                validationSchema={{
+                    required: 'Ce champ est obligatoire',
+                }}
+                excluded={[user.id, ...user.Editors.map((e) => e.id)]}
+            />
+
+            <Row justify="end">
+                <Col xs="content">
+                    <Button
+                        type="button"
+                        className="btnSecondary"
+                        onClick={closeForm}
+                        primary={false}
+                    >
+                        Annuler
+                    </Button>
+                </Col>
+
+                <Col xs="content">
+                    <Button
+                        type="submit"
+                        className="btnPrimary"
+                        loading={loading}
+                    >
+                        Ajouter
+                    </Button>
+                </Col>
+            </Row>
+        </Form>
+    );
+}
+
+function AddEditorBtn() {
+    const [showForm, setShowForm] = useState(false);
+
+    const openForm = () => {
+        if (!showForm) setShowForm(true);
+    };
+
+    const closeForm = () => {
+        setShowForm(false);
+    };
+
+    return (
+        <div
+            className={`managersEditors__item ${
+                !showForm ? 'managersEditors__addEditor' : ''
+            }`}
+            onClick={openForm}
+        >
+            {showForm ? (
+                <AddEditorForm closeForm={closeForm} />
+            ) : (
+                <div>
+                    <FontAwesomeIcon
+                        icon={faPlus}
+                        className="managersEditors__addEditorBtn"
+                    />
+                    Ajouter un utilisateur
+                </div>
+            )}
+        </div>
+    );
+}
+
+function Managers() {
+    const { user } = useSelector((state) => state.auth);
+
+    return (
+        <>
+            {user.Managers.length && (
+                <>
+                    <p>
+                        Vous pouvez éditer les données des utilisateurs suivants
+                        :
+                    </p>
+
+                    {user.Managers.map((manager) => (
+                        <ManagerEditorItem key={manager.id} entity={manager} />
+                    ))}
+                </>
+            )}
+        </>
+    );
+}
+
+function Editors() {
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.auth);
+
+    const onDelete = (editor) => {
+        _removeEditor(editor.id).then(() => dispatch(removeEditor(editor.id)));
+    };
+
+    return (
+        <>
+            <p>Les utilisateurs suivants peuvent modifier vos données :</p>
+
+            {user.Editors.map((editor) => (
+                <ManagerEditorItem
+                    key={editor.id}
+                    entity={editor}
+                    onDelete={() => onDelete(editor)}
+                />
+            ))}
+
+            <AddEditorBtn />
+        </>
+    );
+}
+
 function Settings() {
     return (
         <Container className="app__container">
@@ -109,12 +283,19 @@ function Settings() {
             <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
                     <h1 className="title--noMarginTop">Paramètres</h1>
-
                     <div className="settings__part">
                         <ThemeSwitcher />
                     </div>
                     <div className="settings__part">
                         <UsernameForm />
+                    </div>
+
+                    <h1 className="title--noMarginTop">Éditeurs des données</h1>
+                    <div className="settings__part">
+                        <Managers />
+                    </div>
+                    <div className="settings__part">
+                        <Editors />
                     </div>
                 </Col>
             </Row>

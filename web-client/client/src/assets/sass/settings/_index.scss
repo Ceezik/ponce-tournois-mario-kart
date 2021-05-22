@@ -5,3 +5,31 @@
 .settings__part {
     margin-bottom: 2rem;
 }
+
+.managersEditors__item {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+.managersEditors__delete {
+    text-align: right;
+    color: var(--error-color);
+    cursor: pointer;
+}
+
+.managersEditors__addEditor {
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.managersEditors__addEditor:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.managersEditors__addEditorBtn {
+    color: var(--main-color);
+    margin-right: 1rem;
+}

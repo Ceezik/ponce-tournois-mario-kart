@@ -1,15 +1,23 @@
-import { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion } from 'framer-motion';
+import _ from 'lodash';
 import Input from './Input';
 import { useFormContext } from './Form';
-import { getSortedTracks } from '../../redux/selectors/tracks';
 
-function Typeahead({ ...rest }) {
+function Typeahead({
+    name,
+    options,
+    loading,
+    error,
+    messages,
+    onAsyncChange,
+    ...rest
+}) {
     const { setValue } = useFormContext();
-    const { loading, error } = useSelector((state) => state.tracks);
-    const sortedTracks = useSelector(getSortedTracks);
     const suggestionsRef = useRef(null);
+    const inputRef = useRef(null);
+    const [localLoading, setLocalLoading] = useState(false);
+    const [asyncFetching, setAsyncFetching] = useState(false);
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -28,22 +36,45 @@ function Typeahead({ ...rest }) {
         return () => document.removeEventListener('mousedown', hideSuggestions);
     }, [showSuggestions]);
 
-    const handleChange = (e) => {
-        const value = e.target.value;
+    useEffect(() => {
+        if (asyncFetching && inputRef?.current) {
+            const { value } = inputRef.current;
+            onAsyncChange(value).finally(() => {
+                filterSuggestions(value);
+                setAsyncFetching(false);
+                setLocalLoading(false);
+            });
+        }
+    }, [asyncFetching, options]);
 
+    const debounceFilter = useCallback(
+        _.debounce(() => setAsyncFetching(true), 300),
+        []
+    );
+
+    const filterSuggestions = (value) => {
         setShowSuggestions(value.length > 0);
         if (value.length > 0) {
             const regex = new RegExp(`${value}`, `i`);
             setSuggestions(
-                sortedTracks.filter((i) => regex.test(i.name)).slice(0, 5)
+                options.filter((o) => regex.test(o.value)).slice(0, 5)
             );
         } else {
             setSuggestions([]);
         }
     };
 
+    const handleChange = async (e) => {
+        const value = e.target.value;
+
+        if (onAsyncChange) {
+            setLocalLoading(true);
+            debounceFilter(value);
+        } else filterSuggestions(value);
+    };
+
     const selectItem = (suggestion) => {
-        setValue('trackName', suggestion.name);
+        setValue(name, suggestion.value);
         setShowSuggestions(false);
         setSuggestions([]);
     };
@@ -51,27 +82,29 @@ function Typeahead({ ...rest }) {
     return (
         <div className="typeahead">
             <Input
+                {...rest}
                 onChange={handleChange}
                 onClick={handleChange}
                 autoComplete="off"
-                {...rest}
+                name={name}
+                ref={inputRef}
             >
                 {showSuggestions && (
                     <div
                         className="typeahead__suggestionsWrapper"
                         ref={suggestionsRef}
                     >
-                        {loading ? (
+                        {loading || localLoading ? (
                             <p className="typeahead__message">
-                                Récupération des circuits ...
+                                {messages.loading}
                             </p>
                         ) : error ? (
                             <p className="typeahead__message">
-                                Impossible de récupérer les circuits
+                                {messages.error}
                             </p>
                         ) : suggestions.length === 0 ? (
                             <p className="typeahead__message">
-                                Aucun circuit trouvé
+                                {messages.noResult}
                             </p>
                         ) : (
                             <ul className="typeahead__suggestionsWrapper">
@@ -84,7 +117,7 @@ function Typeahead({ ...rest }) {
                                         exit={{ opacity: 0, x: '-10px' }}
                                         transition={{ delay: idx * 0.1 }}
                                     >
-                                        {suggestion.name}
+                                        {suggestion.label}
                                     </motion.li>
                                 ))}
                             </ul>

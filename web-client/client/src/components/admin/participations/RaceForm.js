@@ -2,7 +2,7 @@ import { Row, Col } from 'react-grid-system';
 import Form from '../../form/Form';
 import Input from '../../form/Input';
 import Button from '../../form/Button';
-import Typeahead from '../../form/Typeahead';
+import TracksTypeahead from '../../form/TracksTypeahead';
 
 const POSITION_VALIDATION = 'Veuillez entrer un nombre compris entre 1 et 12';
 
@@ -45,7 +45,7 @@ function RaceForm({ onSubmit, error, loading, closeForm, race = null }) {
                         />
                     </Col>
                     <Col xs={12} md={8}>
-                        <Typeahead
+                        <TracksTypeahead
                             name="trackName"
                             label="Circuit"
                             validationSchema={{

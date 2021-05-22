@@ -1,9 +1,7 @@
 import request from '../utils/request';
 
-export const getAll = (page, pageSize, usernameFilter) => {
-    return request.get(
-        `/users?page=${page}&pageSize=${pageSize}&username=${usernameFilter}`
-    );
+export const getAll = (params) => {
+    return request.get(`/users`, { params });
 };
 
 export const getByUsername = (username) => {
