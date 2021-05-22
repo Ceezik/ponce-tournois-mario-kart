@@ -35,4 +35,10 @@ module.exports = [
         method: 'put',
         func: [auth_ctrl.isAuthenticated, user_ctrl.update],
     },
+
+    {
+        url: '/user/editors',
+        method: 'post',
+        func: [auth_ctrl.isAuthenticated, user_ctrl.addEditor],
+    },
 ];

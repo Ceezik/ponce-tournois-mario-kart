@@ -89,4 +89,29 @@ module.exports = {
         }
         throw { status: 406, message: 'Paramètres invalides' };
     },
+
+    addEditor: (req, res, next) => {
+        const { username } = req.body;
+
+        if (username) {
+            return db.User.findOne({
+                where: { username },
+                attributes: ['id', 'username'],
+            })
+                .then((user) => {
+                    if (user) {
+                        return req.user
+                            .addEditor(user)
+                            .then(() => res.json(user))
+                            .catch((err) => next(err));
+                    }
+                    throw {
+                        status: 404,
+                        message: "Cet utilisateur n'existe pas",
+                    };
+                })
+                .catch((err) => next(err));
+        }
+        throw { status: 406, message: 'Paramètres invalides' };
+    },
 };
