@@ -7,6 +7,7 @@ module.exports = {
         return db.User.findAndCountAll({
             where: {
                 username: { [Op.substring]: `${req.query.username}` },
+                id: { [Op.notIn]: req.query.excluded || [] },
             },
             order: [
                 ['isAdmin', 'DESC'],
