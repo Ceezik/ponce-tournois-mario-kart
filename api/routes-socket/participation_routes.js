@@ -22,13 +22,6 @@ module.exports = (io, socket, userId, isAdmin) => {
     });
 
     socket.on('editParticipation', (participation, onError) => {
-        participation_ctrl.update(
-            io,
-            socket,
-            onError,
-            participation,
-            userId,
-            isAdmin
-        );
+        participation_ctrl.update(io, socket, onError, participation, userId);
     });
 };

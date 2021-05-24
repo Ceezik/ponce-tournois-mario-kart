@@ -1,5 +1,5 @@
 const db = require('../models');
-const { getPonce, getUser } = require('../utils');
+const { getPonce, getUser, canUserManage } = require('../utils');
 
 const _getRaces = (user) => {
     return db.Race.findAll({
@@ -17,20 +17,21 @@ const _getRaces = (user) => {
     });
 };
 
-const canAccessParticipation = (
-    participationId,
-    userId,
-    isAdmin,
-    onError,
-    cb
-) => {
+const canAccessParticipation = (participationId, userId, onError, cb) => {
     db.Participation.findByPk(participationId)
         .then((participation) => {
-            if (participation && (participation.UserId == userId || isAdmin)) {
-                cb();
-            } else {
+            if (!participation) {
                 onError("Vous n'êtes pas autorisé à effectuer cette action");
             }
+            canUserManage(userId, participation.UserId)
+                .then((canManage) => {
+                    if (canManage) cb();
+                    else
+                        onError(
+                            "Vous n'êtes pas autorisé à effectuer cette action"
+                        );
+                })
+                .catch(() => onError('Une erreur est survenue'));
         })
         .catch(() => onError('Une erreur est survenue'));
 };
@@ -57,36 +58,27 @@ module.exports = {
         socket,
         onError,
         userId,
-        isAdmin,
         { position, nbPoints, disconnected, trackId, participationId }
     ) => {
-        canAccessParticipation(
-            participationId,
-            userId,
-            isAdmin,
-            onError,
-            () => {
-                db.Race.create({
-                    position,
-                    nbPoints,
-                    disconnected,
-                    TrackId: trackId,
-                    ParticipationId: participationId,
+        canAccessParticipation(participationId, userId, onError, () => {
+            db.Race.create({
+                position,
+                nbPoints,
+                disconnected,
+                TrackId: trackId,
+                ParticipationId: participationId,
+            })
+                .then((race) => {
+                    race.getTrack({ attributes: ['name'] })
+                        .then((track) => {
+                            race.setDataValue('Track', track);
+                            socket.emit('closeAddRaceForm');
+                            io.emit('addRace', race);
+                        })
+                        .catch(() => onError('Veuillez rafraichir la page'));
                 })
-                    .then((race) => {
-                        race.getTrack({ attributes: ['name'] })
-                            .then((track) => {
-                                race.setDataValue('Track', track);
-                                socket.emit('closeAddRaceForm');
-                                io.emit('addRace', race);
-                            })
-                            .catch(() =>
-                                onError('Veuillez rafraichir la page')
-                            );
-                    })
-                    .catch(() => onError('Une erreur est survenue'));
-            }
-        );
+                .catch(() => onError('Une erreur est survenue'));
+        });
     },
 
     editRace: (
@@ -94,7 +86,6 @@ module.exports = {
         socket,
         onError,
         userId,
-        isAdmin,
         { position, nbPoints, disconnected, trackId, raceId }
     ) => {
         db.Race.findByPk(raceId)
@@ -103,7 +94,6 @@ module.exports = {
                     canAccessParticipation(
                         race.ParticipationId,
                         userId,
-                        isAdmin,
                         onError,
                         () => {
                             race.update({
@@ -141,14 +131,13 @@ module.exports = {
             .catch(() => onError('Une erreur est survenue'));
     },
 
-    deleteRace: (io, onError, userId, isAdmin, id) => {
+    deleteRace: (io, onError, userId, id) => {
         db.Race.findByPk(id)
             .then((race) => {
                 if (race) {
                     canAccessParticipation(
                         race.ParticipationId,
                         userId,
-                        isAdmin,
                         onError,
                         () => {
                             race.destroy();
