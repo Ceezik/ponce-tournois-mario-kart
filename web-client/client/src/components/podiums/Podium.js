@@ -6,7 +6,7 @@ import AddPlayerBtn from './AddPlayerBtn';
 import PodiumSkeleton from './PodiumSkeleton';
 import PodiumListItem from './PodiumListItem';
 
-function Podium({ tournamentId, canAdd = false }) {
+function Podium({ tournamentId, canManage = false }) {
     const { socket } = useSelector((state) => state.socket);
     const [podia, setPodia] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -63,11 +63,11 @@ function Podium({ tournamentId, canAdd = false }) {
                     <PodiumListItem
                         key={podium.id}
                         podium={podium}
-                        canAdd={canAdd}
+                        canManage={canManage}
                     />
                 ))}
             </Row>
-            {canAdd && <AddPlayerBtn tournamentId={tournamentId} />}
+            {canManage && <AddPlayerBtn tournamentId={tournamentId} />}
         </>
     );
 }

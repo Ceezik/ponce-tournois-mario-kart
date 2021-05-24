@@ -16,7 +16,7 @@ import Races from '../races/Races';
 import UserStatistics from '../statistics/UserStatistics';
 import UserLastParticipation from '../participations/UserLastParticipation';
 import UserWrapperSkeleton from './UserWrapperSkeleton';
-import { canUserAdd } from '../../utils/utils';
+import { canUserManage } from '../../utils/utils';
 
 function UserWrapper() {
     const { user: currentUser } = useSelector((state) => state.auth);
@@ -44,7 +44,7 @@ function UserWrapper() {
         }
     };
 
-    const canAdd = canUserAdd(currentUser, user?.id);
+    const canManage = canUserManage(currentUser, user?.id);
 
     return (
         <>
@@ -146,7 +146,7 @@ function UserWrapper() {
                         render={() => (
                             <Participations
                                 route="getUserParticipations"
-                                canAdd={canAdd}
+                                canManage={canManage}
                                 userId={user.id}
                             />
                         )}

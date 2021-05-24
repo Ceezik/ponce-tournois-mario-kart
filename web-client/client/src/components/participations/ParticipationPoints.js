@@ -5,7 +5,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { getParticipationNbPoints } from '../../utils/utils';
 import ParticipationPointsForm from './ParticipationPointsForm';
 
-function ParticipationPoints({ participation, canAdd, nbMaxRaces }) {
+function ParticipationPoints({ participation, canManage, nbMaxRaces }) {
     const [showForm, setShowForm] = useState(false);
     const nbPoints = getParticipationNbPoints(participation);
     const nbRaces = participation.Races.length;
@@ -13,7 +13,7 @@ function ParticipationPoints({ participation, canAdd, nbMaxRaces }) {
     const isManual = !!participation.nbPoints;
 
     const openForm = () => {
-        if (!showForm && canAdd) setShowForm(true);
+        if (!showForm && canManage) setShowForm(true);
     };
 
     const closeForm = () => {
@@ -40,13 +40,13 @@ function ParticipationPoints({ participation, canAdd, nbMaxRaces }) {
                                 <label>Nombre de points</label>
                                 <div
                                     className={`tournament__setNbPoints ${
-                                        canAdd
+                                        canManage
                                             ? 'tournament__setNbPoints--canAdd'
                                             : ''
                                     }`}
                                     onClick={openForm}
                                 >
-                                    {canAdd && (
+                                    {canManage && (
                                         <FontAwesomeIcon
                                             className="tournament__setNbPointsIcon"
                                             icon={faPencilAlt}
