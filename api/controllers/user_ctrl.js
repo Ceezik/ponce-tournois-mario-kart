@@ -19,6 +19,15 @@ module.exports = {
             .catch((err) => next(err));
     },
 
+    getPonce: (req, res, next) => {
+        return db.User.findOne({
+            where: { twitchId: process.env.PONCE_TWITCH_ID },
+            attributes: ['id'],
+        })
+            .then((ponce) => res.json(ponce))
+            .catch((err) => next(err));
+    },
+
     getByUsername: (req, res, next) => {
         const { username } = req.params;
 
