@@ -51,4 +51,23 @@ module.exports = {
             })
             .catch(() => onError('Une erreur est survenue'));
     },
+
+    canUserManage: (userId, to) => {
+        return db.User.findByPk(userId, {
+            include: [
+                {
+                    model: db.User,
+                    as: 'Managers',
+                    attributes: ['id'],
+                },
+            ],
+        })
+            .then((user) => {
+                if (!user) return false;
+                if (user.isAdmin) return true;
+                if (user.id === to) return true;
+                return !!user.Managers.find((m) => m.id === to);
+            })
+            .catch(() => false);
+    },
 };
