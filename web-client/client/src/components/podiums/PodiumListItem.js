@@ -5,11 +5,11 @@ import { getPositionColor } from '../../utils/utils';
 import { Col } from 'react-grid-system';
 import EditPlayerForm from './EditPlayerForm';
 
-function PodiumListItem({ podium, canAdd }) {
+function PodiumListItem({ podium, canManage }) {
     const [showForm, setShowForm] = useState(false);
 
     const openForm = () => {
-        if (!showForm && canAdd) setShowForm(true);
+        if (!showForm && canManage) setShowForm(true);
     };
 
     const closeForm = () => {
@@ -20,7 +20,7 @@ function PodiumListItem({ podium, canAdd }) {
         <Col xs={12} lg={showForm ? 12 : 4} onClick={openForm}>
             <div
                 className={`podium__player ${
-                    !showForm && canAdd ? 'podium__addPlayer' : ''
+                    !showForm && canManage ? 'podium__addPlayer' : ''
                 }`}
             >
                 {showForm ? (

@@ -6,11 +6,11 @@ import { getPositionColor } from '../../utils/utils';
 import EditRaceForm from '../admin/participations/EditRaceForm';
 import { ReactComponent as NoWifiIcon } from '../../assets/icons/wifiSlash.svg';
 
-function ParticipationRace({ race, canAdd }) {
+function ParticipationRace({ race, canManage }) {
     const [showForm, setShowForm] = useState(false);
 
     const openForm = () => {
-        if (!showForm && canAdd) setShowForm(true);
+        if (!showForm && canManage) setShowForm(true);
     };
 
     const closeForm = () => {
@@ -22,7 +22,7 @@ function ParticipationRace({ race, canAdd }) {
             <Col xs={12} onClick={openForm}>
                 <div
                     className={`participation__race ${
-                        !showForm && canAdd ? 'participation__addRace' : ''
+                        !showForm && canManage ? 'participation__addRace' : ''
                     }`}
                 >
                     <Row align="center">

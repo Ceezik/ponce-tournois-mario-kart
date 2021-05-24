@@ -11,7 +11,7 @@ import ParticipationSkeleton from './ParticipationSkeleton';
 import Error from '../utils/Error';
 import Podium from '../podiums/Podium';
 
-function Participations({ route, canAdd, userId }) {
+function Participations({ route, canManage, userId }) {
     const { socket } = useSelector((state) => state.socket);
     const { user } = useSelector((state) => state.auth);
     const [participations, setParticipations] = useState([]);
@@ -149,7 +149,7 @@ function Participations({ route, canAdd, userId }) {
                                             tournamentId={
                                                 participation.Tournament.id
                                             }
-                                            canAdd={!!user?.isAdmin}
+                                            canManage={!!user?.isAdmin}
                                         />
                                         <Participation
                                             participation={participation}
@@ -160,7 +160,7 @@ function Participations({ route, canAdd, userId }) {
                                                 participation.Tournament
                                                     .nbMaxRaces
                                             }
-                                            canAdd={canAdd}
+                                            canManage={canManage}
                                         />
                                     </>
                                 )}

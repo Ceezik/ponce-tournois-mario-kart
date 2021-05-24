@@ -13,7 +13,7 @@ function Participation({
     average = null,
     tournamentName,
     nbMaxRaces,
-    canAdd = true,
+    canManage = true,
 }) {
     const nbRaces = participation.Races.length;
 
@@ -22,13 +22,13 @@ function Participation({
             <Row>
                 <ParticipationPoints
                     participation={participation}
-                    canAdd={canAdd}
+                    canManage={canManage}
                     nbMaxRaces={nbMaxRaces}
                 />
 
                 <ParticipationGoal
                     participation={participation}
-                    canAdd={canAdd}
+                    canManage={canManage}
                     nbMaxRaces={nbMaxRaces}
                 />
             </Row>
@@ -60,11 +60,11 @@ function Participation({
                     <ParticipationRace
                         key={race.id}
                         race={race}
-                        canAdd={canAdd}
+                        canManage={canManage}
                     />
                 ))}
 
-                {canAdd &&
+                {canManage &&
                     [...Array(nbMaxRaces - nbRaces)].map((i, index) => (
                         <AddRaceBtn
                             key={index}

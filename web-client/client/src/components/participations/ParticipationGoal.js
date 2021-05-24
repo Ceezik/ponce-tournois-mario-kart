@@ -3,13 +3,13 @@ import { Row, Col } from 'react-grid-system';
 import { getParticipationNbPoints } from '../../utils/utils';
 import ParticipationGoalForm from './ParticipationGoalForm';
 
-function ParticipationGoal({ participation, nbMaxRaces, canAdd }) {
+function ParticipationGoal({ participation, nbMaxRaces, canManage }) {
     const [showForm, setShowForm] = useState(false);
     const { goal } = participation;
     const diff = getParticipationNbPoints(participation) - goal;
 
     const openForm = () => {
-        if (!showForm && canAdd) setShowForm(true);
+        if (!showForm && canManage) setShowForm(true);
     };
 
     const closeForm = () => {
@@ -20,7 +20,7 @@ function ParticipationGoal({ participation, nbMaxRaces, canAdd }) {
         <Col xs={12} onClick={openForm}>
             <div
                 className={`participation__goal ${
-                    !showForm && canAdd ? 'participation__addGoal' : ''
+                    !showForm && canManage ? 'participation__addGoal' : ''
                 }`}
             >
                 {showForm ? (

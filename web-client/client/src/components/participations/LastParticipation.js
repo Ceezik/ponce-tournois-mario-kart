@@ -6,7 +6,12 @@ import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
 import Podium from '../podiums/Podium';
-import { getRecord, getWorst, getAverage, canUserAdd } from '../../utils/utils';
+import {
+    getRecord,
+    getWorst,
+    getAverage,
+    canUserManage,
+} from '../../utils/utils';
 
 function LastParticipation({ route, userId }) {
     const { socket } = useSelector((state) => state.socket);
@@ -19,7 +24,7 @@ function LastParticipation({ route, userId }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const canAdd = canUserAdd(user, userId || ponce?.id);
+    const canManage = canUserManage(user, userId || ponce?.id);
 
     socket.off('editParticipation').on('editParticipation', (p) => {
         if (participation && p.id === participation.id)
@@ -97,7 +102,7 @@ function LastParticipation({ route, userId }) {
                 <TournamentInfos defaultTournament={participation.Tournament} />
                 <Podium
                     tournamentId={participation.Tournament.id}
-                    canAdd={!!user?.isAdmin}
+                    canManage={!!user?.isAdmin}
                 />
                 <Participation
                     participation={participation}
@@ -106,7 +111,7 @@ function LastParticipation({ route, userId }) {
                     average={average}
                     tournamentName={participation.Tournament.name}
                     nbMaxRaces={participation.Tournament.nbMaxRaces}
-                    canAdd={canAdd}
+                    canManage={canManage}
                 />
             </Col>
         </Row>

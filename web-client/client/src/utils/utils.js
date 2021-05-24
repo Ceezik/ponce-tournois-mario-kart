@@ -130,7 +130,7 @@ export const createParticipationChart = ({
     };
 };
 
-export const canUserAdd = (user, to) => {
+export const canUserManage = (user, to) => {
     if (!user) return false;
     if (user.isAdmin) return true;
     if (user.id === to) return true;

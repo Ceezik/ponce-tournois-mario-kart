@@ -25,7 +25,7 @@ function Tournament({ tournament }) {
                 </Row>
 
                 <TournamentInfos defaultTournament={tournament} />
-                <Podium tournamentId={tournament.id} canAdd={true} />
+                <Podium tournamentId={tournament.id} canManage={true} />
                 <PonceParticipation tournament={tournament} />
             </Col>
         </Row>

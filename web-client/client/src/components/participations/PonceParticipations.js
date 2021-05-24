@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
-import { canUserAdd } from '../../utils/utils';
+import { canUserManage } from '../../utils/utils';
 import Participations from './Participations';
 
 function PonceParticipations() {
     const { user } = useSelector((state) => state.auth);
     const { ponce } = useSelector((state) => state.ponce);
-    const canAdd = canUserAdd(user, ponce?.id);
+    const canManage = canUserManage(user, ponce?.id);
 
     return (
         <>
@@ -14,7 +14,10 @@ function PonceParticipations() {
                 <title>Historique</title>
             </Helmet>
 
-            <Participations canAdd={canAdd} route="getPonceParticipations" />
+            <Participations
+                canManage={canManage}
+                route="getPonceParticipations"
+            />
         </>
     );
 }
