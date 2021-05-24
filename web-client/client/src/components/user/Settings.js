@@ -232,7 +232,7 @@ function Managers() {
 
     return (
         <>
-            {user.Managers.length && (
+            {user.Managers.length > 0 && (
                 <>
                     <p>
                         Vous pouvez éditer les données des utilisateurs suivants
