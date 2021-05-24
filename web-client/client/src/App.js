@@ -37,12 +37,14 @@ import LatestPatchNote from './components/patchNotes/LatestPatchNote';
 import CGU from './components/utils/CGU';
 import { fetchTheme } from './redux/actions/settings';
 import { CSSTheme } from './utils/style';
+import { fetchPonce } from './redux/actions/ponce';
 
 function App() {
     const [showLatestPatchNote, setShowLatestPatchNote] = useState(false);
 
     const dispatch = useDispatch();
-    const { loading, user } = useSelector((state) => state.auth);
+    const { loading: loadingUser, user } = useSelector((state) => state.auth);
+    const { loading: loadingPonce } = useSelector((state) => state.ponce);
     const { theme } = useSelector((state) => state.settings);
     const { socket } = useSelector((state) => state.socket);
     const { latest: latestPatchNote } = useSelector(
@@ -51,6 +53,7 @@ function App() {
 
     useEffect(() => {
         dispatch(fetchUser());
+        dispatch(fetchPonce());
         dispatch(fetchTracks());
         dispatch(fetchLatestPatchNote());
         dispatch(fetchTheme());
@@ -108,7 +111,7 @@ function App() {
         );
     };
 
-    return loading ? (
+    return loadingUser || loadingPonce ? (
         <></>
     ) : (
         <Router>
