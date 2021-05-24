@@ -13,6 +13,7 @@ import Podium from '../podiums/Podium';
 
 function Participations({ route, canAdd, userId }) {
     const { socket } = useSelector((state) => state.socket);
+    const { user } = useSelector((state) => state.auth);
     const [participations, setParticipations] = useState([]);
     const [participation, setParticipation] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -148,7 +149,7 @@ function Participations({ route, canAdd, userId }) {
                                             tournamentId={
                                                 participation.Tournament.id
                                             }
-                                            canAdd={false}
+                                            canAdd={!!user?.isAdmin}
                                         />
                                         <Participation
                                             participation={participation}

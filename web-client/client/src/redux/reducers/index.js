@@ -6,6 +6,7 @@ import tournaments from './tournaments';
 import statistics from './statistics';
 import patchNotes from './patchNotes';
 import settings from './settings';
+import ponce from './ponce';
 
 export default combineReducers({
     tracks,
@@ -15,4 +16,5 @@ export default combineReducers({
     statistics,
     patchNotes,
     settings,
+    ponce,
 });

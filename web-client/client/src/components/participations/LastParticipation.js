@@ -6,11 +6,12 @@ import ParticipationSkeleton from '../participations/ParticipationSkeleton';
 import TournamentInfos from '../tournaments/TournamentInfos';
 import Participation from '../participations/Participation';
 import Podium from '../podiums/Podium';
-import { getRecord, getWorst, getAverage } from '../../utils/utils';
+import { getRecord, getWorst, getAverage, canUserAdd } from '../../utils/utils';
 
 function LastParticipation({ route, userId }) {
     const { socket } = useSelector((state) => state.socket);
     const { user } = useSelector((state) => state.auth);
+    const { ponce } = useSelector((state) => state.ponce);
     const [participation, setParticipation] = useState(null);
     const [record, setRecord] = useState(null);
     const [worst, setWorst] = useState(null);
@@ -18,7 +19,7 @@ function LastParticipation({ route, userId }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const canAdd = user ? user.id === userId || user.isAdmin : false;
+    const canAdd = canUserAdd(user, userId || ponce?.id);
 
     socket.off('editParticipation').on('editParticipation', (p) => {
         if (participation && p.id === participation.id)
@@ -96,7 +97,7 @@ function LastParticipation({ route, userId }) {
                 <TournamentInfos defaultTournament={participation.Tournament} />
                 <Podium
                     tournamentId={participation.Tournament.id}
-                    canAdd={canAdd}
+                    canAdd={!!user?.isAdmin}
                 />
                 <Participation
                     participation={participation}
