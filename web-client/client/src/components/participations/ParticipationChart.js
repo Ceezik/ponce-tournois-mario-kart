@@ -1,12 +1,13 @@
-import { Line } from 'react-chartjs-2';
-import 'chartjs-plugin-datalabels';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import Chart from '../utils/Chart';
 import { CSSTheme } from '../../utils/style';
 import {
-    createParticipationChart,
+    formatParticipationToChartData,
     getParticipationNbPoints,
 } from '../../utils/utils';
+import ParticipationChartLegends from './ParticipationChartLegends';
+import { useState } from 'react';
 
 function ParticipationChart({
     record,
@@ -18,132 +19,90 @@ function ParticipationChart({
     nbMaxRaces,
 }) {
     const { theme } = useSelector((state) => state.settings);
+    const [hiddenSeries, setHiddenSeries] = useState([]);
 
-    const data = {
-        labels: Array.from(Array(nbMaxRaces), (_, i) => i + 1),
-        datasets: [
-            createParticipationChart({
-                participation: current,
-                nbMaxRaces,
-                label: tournamentName,
-                fill: false,
-                borderColor: CSSTheme[theme].mainColor,
-                datalabels: {
-                    align: 'start',
-                    color: CSSTheme[theme].mainColor,
-                },
-            }),
-        ],
+    const handleHideSerie = (name) => {
+        if (hiddenSeries.length < series.length - 1)
+            setHiddenSeries([...hiddenSeries, name]);
     };
 
-    const options = {
-        scales: {
-            xAxes: [
-                {
-                    gridLines: {
-                        display: false,
-                    },
-                    ticks: {
-                        padding: 20,
-                    },
-                },
-            ],
-            yAxes: [
-                {
-                    display: false,
-                    ticks: {
-                        suggestedMin: 0,
-                        suggestedMax:
-                            record || worst || average || goal
-                                ? undefined
-                                : nbMaxRaces * 15,
-                    },
-                },
-            ],
-        },
-        elements: {
-            point: {
-                radius: 0,
-            },
-        },
-        layout: {
-            padding: {
-                left: 20,
-                right: 40,
-                top: 20,
-                bottom: 10,
-            },
-        },
+    const handleShowSerie = (name) => {
+        setHiddenSeries(hiddenSeries.filter((s) => s !== name));
     };
+
+    const series = [
+        {
+            name: tournamentName,
+            data: formatParticipationToChartData(current, nbMaxRaces),
+            color: CSSTheme[theme].mainColor,
+        },
+    ];
 
     if (record) {
-        data.datasets.push(
-            createParticipationChart({
-                participation: record,
-                nbMaxRaces,
-                label: 'Record',
-                fill: false,
-                borderColor: CSSTheme[theme].mainTextColor,
-                datalabels: {
-                    color: CSSTheme[theme].mainTextColor,
-                    align: 'end',
-                },
-            })
-        );
+        series.push({
+            name: 'Record',
+            data: formatParticipationToChartData(record, nbMaxRaces),
+            color: CSSTheme[theme].mainTextColor,
+            tournament: record.Tournament.name,
+        });
     }
 
     if (worst) {
-        data.datasets.push(
-            createParticipationChart({
-                participation: worst,
-                nbMaxRaces,
-                label: 'Pire score',
-                fill: false,
-                borderColor: CSSTheme[theme].worstChartColor,
-                datalabels: {
-                    color: CSSTheme[theme].worstChartColor,
-                    align: 'start',
-                },
-            })
-        );
+        series.push({
+            name: 'Pire score',
+            data: formatParticipationToChartData(worst, nbMaxRaces),
+            color: CSSTheme[theme].worstChartColor,
+            tournament: worst.Tournament.name,
+        });
     }
 
     if (average) {
-        data.datasets.push({
-            label: 'Moyenne',
-            fill: false,
-            borderColor: CSSTheme[theme].tertiaryTextColor,
-            datalabels: {
-                align: 'right',
-                color: CSSTheme[theme].tertiaryTextColor,
-                formatter: (value, ctx) => {
-                    return ctx.dataIndex === ctx.dataset.data.length - 1
-                        ? Math.round(value)
-                        : null;
-                },
-            },
+        series.push({
+            name: 'Moyenne',
             data: average.map(((s) => (a) => (s += a))(0)),
+            color: CSSTheme[theme].tertiaryTextColor,
         });
     }
 
     if (goal) {
-        data.datasets.push({
-            label: 'Objectif',
-            fill: false,
-            borderColor:
+        series.push({
+            name: 'Objectif',
+            data: Array(nbMaxRaces).fill(goal),
+            strokeWidth: 2,
+            color:
                 getParticipationNbPoints(current) > goal
                     ? CSSTheme[theme].successColor
                     : CSSTheme[theme].errorColor,
-            borderWidth: 2,
-            datalabels: { display: false },
-            data: Array(nbMaxRaces).fill(goal),
         });
     }
 
     return (
-        <div className="participation__chart">
-            <Line data={data} options={options} redraw />
-        </div>
+        <>
+            <ParticipationChartLegends
+                series={series}
+                hiddenSeries={hiddenSeries}
+                onHide={handleHideSerie}
+                onShow={handleShowSerie}
+            />
+
+            <div className="participation__chart">
+                <Chart
+                    type="line"
+                    series={series.filter(
+                        (s) => !hiddenSeries.includes(s.name)
+                    )}
+                    xlegends={Array.from(Array(nbMaxRaces), (_, i) => i + 1)}
+                    max={
+                        record || worst || average || goal
+                            ? undefined
+                            : nbMaxRaces * 15
+                    }
+                    maxSeriesSize={nbMaxRaces}
+                    showTooltipName
+                    showLastDatalabel
+                />
+            </div>
+        </>
     );
 }
 

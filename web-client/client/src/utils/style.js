@@ -1,10 +1,8 @@
-import { defaults } from 'react-chartjs-2';
-
 export const CSSTheme = {
     light: {
         mainColor: '#ff56a9',
         mainColorLight: '#fda3cf',
-        mainBackgroundColor: 'white',
+        mainBackgroundColor: '#ffffff',
         secondaryBackgroundColor: '#f3f3f4',
         mainTextColor: '#1d1d1d',
         tertiaryTextColor: '#989aa0',
@@ -18,18 +16,13 @@ export const CSSTheme = {
         mainColorLight: '#fda3cf',
         mainBackgroundColor: '#36393f',
         secondaryBackgroundColor: '#2f3136',
-        mainTextColor: 'white',
+        mainTextColor: '#ffffff',
         tertiaryTextColor: '#989aa0',
         borderColor: '#202225',
         successColor: '#68b684',
         errorColor: '#f3453f',
         worstChartColor: '#ea4335',
     },
-};
-
-export const setChartStyle = (theme) => {
-    defaults.global.defaultFontFamily = 'Nunito';
-    defaults.global.defaultFontColor = CSSTheme[theme].mainTextColor;
 };
 
 export const getSelectStyle = (defaultStyle, theme) => ({

@@ -1,0 +1,18 @@
+.apexcharts-tooltip {
+    box-shadow: none !important;
+    background-color: var(--secondary-background-color) !important;
+    border: 1px solid var(--border-color) !important;
+    text-align: center !important;
+    font-family: 'Nunito', sans-serif !important;
+    font-weight: 700 !important;
+}
+
+.apexcharts-tooltip-title {
+    background-color: var(--secondary-background-color) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* https://github.com/apexcharts/apexcharts.js/issues/1620 */
+.apexcharts-tooltip-title:empty {
+    display: none;
+}
