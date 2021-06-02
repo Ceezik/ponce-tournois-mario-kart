@@ -13,6 +13,32 @@
     margin-bottom: 3rem;
 }
 
+.participation__chartLegends {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.participation__chartLegend {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.participation__chartLegend--hidden {
+    text-decoration: line-through;
+}
+
+.participation__chartLegendColor {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
 .participation__chart--skeleton {
     margin-bottom: 3rem;
 }

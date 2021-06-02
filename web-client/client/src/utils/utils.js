@@ -87,7 +87,7 @@ export const getAverage = (participations) => {
             nb++;
         });
 
-        average.push(sum / nb);
+        average.push(Math.round(sum / nb));
     }
 
     return average;
@@ -99,35 +99,13 @@ export const getMaxItemsFromScreenClass = (screenClass) => {
     return 100;
 };
 
-export const createParticipationChart = ({
-    participation,
-    nbMaxRaces,
-    ...props
-}) => {
-    const {
-        datalabels: { align, ...datalabelsProps },
-        ...rest
-    } = props;
-
-    return {
-        datalabels: {
-            formatter: (value, ctx) => {
-                if (!participation.nbPoints) return value.y;
-                return ctx.dataIndex === ctx.dataset.data.length - 1
-                    ? value.y
-                    : null;
-            },
-            align: participation.nbPoints ? 'right' : align,
-            ...datalabelsProps,
-        },
-        data: participation.nbPoints
-            ? Array(nbMaxRaces).fill(participation.nbPoints)
-            : participation.Races.map(
-                  ((s) => ({ nbPoints, disconnected }) =>
-                      (s += disconnected ? 0 : nbPoints))(0)
-              ),
-        ...rest,
-    };
+export const formatParticipationToChartData = (participation, nbMaxRaces) => {
+    return participation.nbPoints
+        ? Array(nbMaxRaces).fill(participation.nbPoints)
+        : participation.Races.map(
+              ((s) => ({ nbPoints, disconnected }) =>
+                  (s += disconnected ? 0 : nbPoints))(0)
+          );
 };
 
 export const canUserManage = (user, to) => {
