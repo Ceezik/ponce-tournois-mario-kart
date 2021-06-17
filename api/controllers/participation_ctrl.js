@@ -94,6 +94,33 @@ module.exports = {
         });
     },
 
+    getParticipations: (socket, onError, participationsInfos) => {
+        const { usernames, tournamentsIds } = participationsInfos.reduce(
+            (acc, curr) => {
+                return {
+                    usernames: [...acc.usernames, curr.username],
+                    tournamentsIds: [...acc.tournamentsIds, curr.tournament],
+                };
+            },
+            { usernames: [], tournamentsIds: [] }
+        );
+
+        db.Participation.findAll({
+            include: [
+                {
+                    model: db.User,
+                    where: { username: usernames },
+                    attributes: ['id', 'username'],
+                },
+            ],
+            where: { TournamentId: tournamentsIds },
+        })
+            .then((participations) =>
+                socket.emit('getParticipations', participations)
+            )
+            .catch(() => onError('Une erreur est survenue'));
+    },
+
     update: (
         io,
         socket,
