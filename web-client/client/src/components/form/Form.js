@@ -5,11 +5,11 @@ const FormContext = createContext();
 export const useFormContext = () => useContext(FormContext);
 
 function Form({ children, onSubmit, ...rest }) {
-    const { register, handleSubmit, errors, setValue } = useForm();
+    const { handleSubmit, ...formValues } = useForm();
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} {...rest}>
-            <FormContext.Provider value={{ register, errors, setValue }}>
+            <FormContext.Provider value={formValues}>
                 {children}
             </FormContext.Provider>
         </form>

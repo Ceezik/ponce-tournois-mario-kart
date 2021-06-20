@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import Chart from '../utils/Chart';
@@ -7,7 +8,6 @@ import {
     getParticipationNbPoints,
 } from '../../utils/utils';
 import ParticipationChartLegends from './ParticipationChartLegends';
-import { useState } from 'react';
 
 function ParticipationChart({
     record,
@@ -15,8 +15,10 @@ function ParticipationChart({
     average,
     goal,
     current,
-    tournamentName,
+    tournament,
     nbMaxRaces,
+    onRemoveComparison,
+    comparisons,
 }) {
     const { theme } = useSelector((state) => state.settings);
     const [hiddenSeries, setHiddenSeries] = useState([]);
@@ -30,13 +32,15 @@ function ParticipationChart({
         setHiddenSeries(hiddenSeries.filter((s) => s !== name));
     };
 
-    const series = [
-        {
-            name: tournamentName,
+    const series = [];
+
+    if (current && tournament) {
+        series.push({
+            name: tournament.name,
             data: formatParticipationToChartData(current, nbMaxRaces),
             color: CSSTheme[theme].mainColor,
-        },
-    ];
+        });
+    }
 
     if (record) {
         series.push({
@@ -76,6 +80,17 @@ function ParticipationChart({
         });
     }
 
+    if (comparisons !== undefined) {
+        series.push(
+            ...comparisons.map((c) => ({
+                name: c.User.username,
+                data: formatParticipationToChartData(c, nbMaxRaces),
+                color: c.color || CSSTheme[theme].mainColor,
+                deletable: true,
+            }))
+        );
+    }
+
     return (
         <>
             <ParticipationChartLegends
@@ -83,6 +98,7 @@ function ParticipationChart({
                 hiddenSeries={hiddenSeries}
                 onHide={handleHideSerie}
                 onShow={handleShowSerie}
+                onRemove={onRemoveComparison}
             />
 
             <div className="participation__chart">
