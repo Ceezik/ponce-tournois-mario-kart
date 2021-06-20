@@ -12,8 +12,9 @@ import {
     getAverage,
     canUserManage,
 } from '../../utils/utils';
+import useComparisons from '../../hooks/useComparisons';
 
-function LastParticipation({ route, userId }) {
+function LastParticipation({ route, userId, parentLoading }) {
     const { socket } = useSelector((state) => state.socket);
     const { user } = useSelector((state) => state.auth);
     const { ponce } = useSelector((state) => state.ponce);
@@ -23,6 +24,17 @@ function LastParticipation({ route, userId }) {
     const [average, setAverage] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const {
+        comparisons,
+        onAddComparison,
+        onRemoveComparison,
+        setComparisons,
+        loading: loadingComparisons,
+    } = useComparisons({
+        tournament: participation?.TournamentId,
+        excludedParticipations: participation ? [participation] : undefined,
+    });
 
     const canManage = canUserManage(user, userId || ponce?.id);
 
@@ -36,6 +48,17 @@ function LastParticipation({ route, userId }) {
             const newParticipation = _.cloneDeep(participation);
             newParticipation.Races.push(race);
             setParticipation(newParticipation);
+        } else {
+            const idx = comparisons.findIndex(
+                (c) => c.id === race.ParticipationId
+            );
+            if (idx !== -1) {
+                const newComparison = _.cloneDeep(comparisons[idx]);
+                newComparison.Races.push(race);
+                const newComparisons = _.cloneDeep(comparisons);
+                newComparisons.splice(idx, 1, newComparison);
+                setComparisons(newComparisons);
+            }
         }
     });
 
@@ -46,6 +69,22 @@ function LastParticipation({ route, userId }) {
 
             newParticipation.Races.splice(index, 1, race);
             setParticipation(newParticipation);
+        } else {
+            const idx = comparisons.findIndex(
+                (c) => c.id === race.ParticipationId
+            );
+            if (idx !== -1) {
+                const newComparison = _.cloneDeep(comparisons[idx]);
+                const raceIdx = _.findIndex(newComparison.Races, {
+                    id: race.id,
+                });
+                if (raceIdx !== -1) {
+                    newComparison.Races.splice(raceIdx, 1, race);
+                    const newComparisons = _.cloneDeep(comparisons);
+                    newComparisons.splice(idx, 1, newComparison);
+                    setComparisons(newComparisons);
+                }
+            }
         }
     });
 
@@ -79,8 +118,6 @@ function LastParticipation({ route, userId }) {
         fetchParticipation();
     }, [route, userId]);
 
-    useEffect(() => {}, [participation]);
-
     const fetchParticipation = () => {
         socket.emit(route, userId, (err) => {
             setError(err);
@@ -88,7 +125,7 @@ function LastParticipation({ route, userId }) {
         });
     };
 
-    return loading ? (
+    return loading || parentLoading ? (
         <ParticipationSkeleton showButton={false} />
     ) : error ? (
         <Row justify="center">
@@ -112,6 +149,10 @@ function LastParticipation({ route, userId }) {
                     tournamentName={participation.Tournament.name}
                     nbMaxRaces={participation.Tournament.nbMaxRaces}
                     canManage={canManage}
+                    comparisons={comparisons}
+                    onAddComparison={onAddComparison}
+                    onRemoveComparison={onRemoveComparison}
+                    loadingComparisons={loadingComparisons}
                 />
             </Col>
         </Row>

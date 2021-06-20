@@ -8,10 +8,20 @@ import LastParticipation from '../participations/LastParticipation';
 function Home() {
     const { user } = useSelector((state) => state.auth);
     const [showPonce, setShowPonce] = useState(true);
+    const [loading, setLoading] = useState(true);
+
+    const handleShowPonceChange = (val) => {
+        setLoading(true);
+        setShowPonce(val);
+    };
 
     useEffect(() => {
-        if (!user && !showPonce) setShowPonce(true);
+        if (!user && !showPonce) handleShowPonceChange(true);
     }, [user]);
+
+    useEffect(() => {
+        setLoading(false);
+    }, [showPonce]);
 
     return (
         <Container className="app__container">
@@ -29,7 +39,7 @@ function Home() {
                     {user && (
                         <HomeButtons
                             showPonce={showPonce}
-                            setShowPonce={setShowPonce}
+                            setShowPonce={handleShowPonceChange}
                         />
                     )}
                 </Col>
@@ -42,6 +52,7 @@ function Home() {
                         : 'getLastPonceParticipation'
                 }
                 userId={showPonce ? undefined : user?.id}
+                parentLoading={loading}
             />
         </Container>
     );
@@ -52,7 +63,9 @@ function HomeButtons({ showPonce, setShowPonce }) {
         <Row justify="end" className="home__buttons">
             <Col xs="content">
                 <button
-                    className={!showPonce ? 'btnPrimary' : 'btnSecondary'}
+                    className={`${
+                        !showPonce ? 'btnPrimary' : 'btnSecondary'
+                    } --noTransition`}
                     onClick={() => setShowPonce(false)}
                 >
                     Moi
@@ -61,7 +74,9 @@ function HomeButtons({ showPonce, setShowPonce }) {
 
             <Col xs="content">
                 <button
-                    className={showPonce ? 'btnPrimary' : 'btnSecondary'}
+                    className={`${
+                        showPonce ? 'btnPrimary' : 'btnSecondary'
+                    } --noTransition`}
                     onClick={() => setShowPonce(true)}
                 >
                     Ponce

@@ -36,13 +36,14 @@ function Chart({
             fontFamily: 'Nunito',
             fontWeight: 700,
             foreColor: CSSTheme[theme].mainTextColor,
-            animations: { animateGradually: { enabled: false } },
+            animations: { enabled: false },
         },
         stroke: { curve: 'smooth', width: getStrokeWidths() },
         grid: {
             borderColor: CSSTheme[theme].secondaryBackgroundColor,
             padding: { right: 45, bottom: -10 },
         },
+        markers: { size: 0 },
         legend: { show: false },
         dataLabels: showLastDatalabel
             ? {

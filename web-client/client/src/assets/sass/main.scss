@@ -84,6 +84,10 @@ textarea::placeholder {
     color: var(--tertiary-text-color);
 }
 
+.--noTransition {
+    transition: none !important;
+}
+
 .btnPrimary {
     background-color: var(--main-color);
     color: white;
