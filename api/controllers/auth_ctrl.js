@@ -66,7 +66,14 @@ module.exports = {
                                                     expiresIn: '365d',
                                                 }
                                             );
-                                            return res.json({ user, token });
+                                            return res.json({
+                                                user: {
+                                                    ...user.toJSON(),
+                                                    Editors: [],
+                                                    Managers: [],
+                                                },
+                                                token,
+                                            });
                                         })
                                         .catch((err) => next(err));
                                 }
