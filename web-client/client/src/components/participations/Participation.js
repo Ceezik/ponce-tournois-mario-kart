@@ -54,36 +54,48 @@ function Participation({
                         goal={participation.goal}
                     />
 
-                    {loadingComparisons ? (
-                        <ParticipationChartSkeleton showAddComparison={false} />
-                    ) : (
-                        comparisons.length > 0 && (
-                            <ParticipationChart
-                                current={participation}
-                                tournament={{
-                                    id: participation.TournamentId,
-                                    name: tournamentName,
-                                }}
-                                nbMaxRaces={nbMaxRaces}
-                                onRemoveComparison={onRemoveComparison}
-                                comparisons={comparisons}
-                            />
-                        )
-                    )}
+                    {comparisons !== undefined && (
+                        <>
+                            {loadingComparisons ? (
+                                <ParticipationChartSkeleton
+                                    showAddComparison={false}
+                                />
+                            ) : (
+                                comparisons.length > 0 && (
+                                    <ParticipationChart
+                                        current={participation}
+                                        tournament={{
+                                            id: participation.TournamentId,
+                                            name: tournamentName,
+                                        }}
+                                        nbMaxRaces={nbMaxRaces}
+                                        onRemoveComparison={onRemoveComparison}
+                                        comparisons={comparisons}
+                                    />
+                                )
+                            )}
 
-                    <ParticipationComparison
-                        tournament={participation.TournamentId}
-                        onAddComparison={onAddComparison}
-                        comparedUsers={[
-                            ...comparisons.map((c) => c.User.id),
-                            participation.UserId,
-                        ]}
-                    />
+                            <ParticipationComparison
+                                tournament={participation.TournamentId}
+                                onAddComparison={onAddComparison}
+                                comparedUsers={[
+                                    ...comparisons.map((c) => c.User.id),
+                                    participation.UserId,
+                                ]}
+                            />
+                        </>
+                    )}
                 </Hidden>
 
                 {participation.Races.length > 0 && (
                     <>
-                        <Row className="participation__title">
+                        <Row
+                            className={`participation__title ${
+                                comparisons === undefined
+                                    ? 'participation__title--withMargin'
+                                    : ''
+                            }`}
+                        >
                             <Col xs={3}>Position</Col>
                             <Col xs={3}>Points</Col>
                             <Col xs={6}>Circuit</Col>
