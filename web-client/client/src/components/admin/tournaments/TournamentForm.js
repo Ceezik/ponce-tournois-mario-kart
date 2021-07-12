@@ -28,6 +28,7 @@ function TournamentForm({
                 label="Nom *"
                 name="name"
                 placeholder="Ave - xx"
+                autoFocus
                 defaultValue={tournament && tournament.name}
                 validationSchema={{
                     required: 'Ce champ est obligatoire',

@@ -14,6 +14,7 @@ function ParticipationPointsForm({ closeForm, nbMaxRaces, participation }) {
                 label="Nombre de points (saisie manuelle)"
                 name="nbPoints"
                 type="number"
+                autoFocus
                 defaultValue={participation.nbPoints}
                 validationSchema={{
                     min: {

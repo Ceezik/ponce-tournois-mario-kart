@@ -162,6 +162,7 @@ function AddEditorForm({ closeForm }) {
             <UsersTypeahead
                 name="username"
                 label="Nom d'utilisateur"
+                autoFocus
                 validationSchema={{
                     required: 'Ce champ est obligatoire',
                 }}

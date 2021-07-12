@@ -14,6 +14,7 @@ function ParticipationGoalForm({ closeForm, nbMaxRaces, participation }) {
                 label="Objectif"
                 name="goal"
                 type="number"
+                autoFocus
                 defaultValue={participation.goal}
                 validationSchema={{
                     min: {

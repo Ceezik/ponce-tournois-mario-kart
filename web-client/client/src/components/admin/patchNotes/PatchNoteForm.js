@@ -28,6 +28,7 @@ function PatchNoteForm({
             <Input
                 label="Version *"
                 name="version"
+                autoFocus
                 defaultValue={patchNote && patchNote.version}
                 validationSchema={{
                     required: 'Ce champ est obligatoire',

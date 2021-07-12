@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Form from '../form/Form';
-import Input from '../form/Input';
 import { Row, Col } from 'react-grid-system';
 import Button from '../form/Button';
 import { nullifyEmptyFields } from '../../utils/utils';
