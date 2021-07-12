@@ -7,7 +7,6 @@ function Chart({
     series,
     type,
     xlegends,
-    max,
     maxSeriesSize,
     showTooltipName = false,
     showLastDatalabel = false,
@@ -73,7 +72,7 @@ function Chart({
             },
         },
         xaxis: { categories: xlegends, tooltip: { enabled: false } },
-        yaxis: { max, min: 0, forceNiceScale: true },
+        yaxis: { min: 0, forceNiceScale: true },
     };
 
     return (

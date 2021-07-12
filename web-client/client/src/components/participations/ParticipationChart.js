@@ -108,11 +108,6 @@ function ParticipationChart({
                         (s) => !hiddenSeries.includes(s.name)
                     )}
                     xlegends={Array.from(Array(nbMaxRaces), (_, i) => i + 1)}
-                    max={
-                        record || worst || average || goal
-                            ? undefined
-                            : nbMaxRaces * 15
-                    }
                     maxSeriesSize={nbMaxRaces}
                     showTooltipName
                     showLastDatalabel
