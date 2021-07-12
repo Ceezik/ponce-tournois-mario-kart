@@ -23,6 +23,7 @@ function UsersTypeahead({ excluded, ...rest }) {
 
     return (
         <Typeahead
+            defaultValue=""
             {...rest}
             options={users.map((u) => ({
                 id: u.id,

@@ -1,5 +1,6 @@
 import { useFormContext } from './Form';
 import React, { useState } from 'react';
+import { Controller } from 'react-hook-form';
 import Switch from '../utils/Switch';
 import mergeRefs from '../../utils/mergeRefs';
 
@@ -25,8 +26,19 @@ const Checkbox = React.forwardRef(
 );
 
 const Input = React.forwardRef(
-    ({ children, name, validationSchema, label, type, ...rest }, ref) => {
-        const { register, errors } = useFormContext();
+    (
+        {
+            children,
+            name,
+            validationSchema,
+            label,
+            type,
+            defaultValue,
+            ...rest
+        },
+        ref
+    ) => {
+        const { register, errors, control } = useFormContext();
 
         return (
             <div className="inputWrapper">
@@ -39,12 +51,37 @@ const Input = React.forwardRef(
                         {...rest}
                     />
                 ) : (
-                    <input
+                    <Controller
                         name={name}
-                        ref={mergeRefs([register(validationSchema), ref])}
-                        className={errors[name] ? 'inputInvalid' : ''}
-                        type={type}
-                        {...rest}
+                        control={control}
+                        defaultValue={defaultValue}
+                        render={(field) => (
+                            <input
+                                name={name}
+                                ref={mergeRefs([
+                                    register(validationSchema),
+                                    ref,
+                                ])}
+                                className={errors[name] ? 'inputInvalid' : ''}
+                                type={type}
+                                defaultValue={defaultValue}
+                                min={validationSchema?.min?.value}
+                                max={validationSchema?.max?.value}
+                                onChange={(e) => {
+                                    let { value, min, max } = e.target;
+
+                                    if (type === 'number' && value) {
+                                        value = Math.max(
+                                            Number(min),
+                                            Math.min(Number(max), Number(value))
+                                        );
+                                    }
+
+                                    field.onChange(value);
+                                }}
+                                {...rest}
+                            />
+                        )}
                     />
                 )}
 

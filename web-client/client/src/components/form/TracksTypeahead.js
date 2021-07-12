@@ -8,6 +8,7 @@ function TracksTypeahead({ ...rest }) {
 
     return (
         <Typeahead
+            defaultValue=""
             {...rest}
             options={sortedTracks.map((t) => ({
                 id: t.id,
