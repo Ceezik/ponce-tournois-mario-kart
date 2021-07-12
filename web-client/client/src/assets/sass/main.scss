@@ -184,11 +184,14 @@ textarea::placeholder {
 .typeahead__suggestionsWrapper li {
     list-style: none;
     padding: 0.75rem 1.5rem;
+    cursor: pointer;
 }
 
-.typeahead__suggestionsWrapper li:hover {
-    cursor: pointer;
+.typeahead__suggestionsWrapper li:hover,
+.typeahead__suggestionsWrapper li:focus {
     background-color: var(--secondary-background-color);
+    border: none;
+    outline: none;
 }
 
 .text-- {
