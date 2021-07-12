@@ -88,26 +88,26 @@ function Participation({
                 </Hidden>
 
                 {participation.Races.length > 0 && (
-                    <>
-                        <Row
-                            className={`participation__title ${
-                                comparisons === undefined
-                                    ? 'participation__title--withMargin'
-                                    : ''
-                            }`}
-                        >
-                            <Col xs={3}>Position</Col>
-                            <Col xs={3}>Points</Col>
-                            <Col xs={6}>Circuit</Col>
-                        </Row>
-                    </>
+                    <Row
+                        className={`participation__title ${
+                            comparisons === undefined
+                                ? 'participation__title--withMargin'
+                                : ''
+                        }`}
+                    >
+                        <Col xs={2}>Num.</Col>
+                        <Col xs={2}>Pos.</Col>
+                        <Col xs={2}>Pts</Col>
+                        <Col xs={6}>Circuit</Col>
+                    </Row>
                 )}
 
-                {participation.Races.map((race) => (
+                {participation.Races.map((race, index) => (
                     <ParticipationRace
                         key={race.id}
                         race={race}
                         canManage={canManage}
+                        nbRace={index + 1}
                     />
                 ))}
 

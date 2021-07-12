@@ -6,7 +6,7 @@ import { getPositionColor } from '../../utils/utils';
 import EditRaceForm from '../admin/participations/EditRaceForm';
 import { ReactComponent as NoWifiIcon } from '../../assets/icons/wifiSlash.svg';
 
-function ParticipationRace({ race, canManage }) {
+function ParticipationRace({ race, canManage, nbRace }) {
     const [showForm, setShowForm] = useState(false);
 
     const openForm = () => {
@@ -18,7 +18,7 @@ function ParticipationRace({ race, canManage }) {
     };
 
     return (
-        <Row key={race.id}>
+        <Row>
             <Col xs={12} onClick={openForm}>
                 <div
                     className={`participation__race ${
@@ -35,7 +35,8 @@ function ParticipationRace({ race, canManage }) {
                                         <NoWifiIcon />
                                     </div>
                                 )}
-                                <Col xs={3}>
+                                <Col xs={2}>{nbRace}</Col>
+                                <Col xs={2}>
                                     {race.position <= 3 ? (
                                         <FontAwesomeIcon
                                             icon={faMedal}
@@ -47,7 +48,7 @@ function ParticipationRace({ race, canManage }) {
                                         race.position
                                     )}
                                 </Col>
-                                <Col xs={3}>{race.nbPoints}</Col>
+                                <Col xs={2}>{race.nbPoints}</Col>
                                 <Col xs={6}>{race.Track.name}</Col>
                             </>
                         )}
