@@ -111,7 +111,11 @@ function Typeahead({
                                 {suggestions.map((suggestion, idx) => (
                                     <motion.li
                                         key={suggestion.id}
+                                        tabIndex={0}
                                         onClick={() => selectItem(suggestion)}
+                                        onKeyPress={() =>
+                                            selectItem(suggestion)
+                                        }
                                         initial={{ opacity: 0, x: '-30px' }}
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: '-10px' }}
