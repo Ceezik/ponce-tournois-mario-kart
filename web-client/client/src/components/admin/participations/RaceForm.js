@@ -30,6 +30,7 @@ function RaceForm({ onSubmit, error, loading, closeForm, race = null }) {
                             name="position"
                             label="Position"
                             type="number"
+                            autoFocus
                             validationSchema={{
                                 required: 'Ce champ est obligatoire',
                                 min: {

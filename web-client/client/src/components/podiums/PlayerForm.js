@@ -22,6 +22,7 @@ function PlayerForm({ onSubmit, closeForm, error, loading, podium = null }) {
                             name="position"
                             label="Position"
                             type="number"
+                            autoFocus
                             defaultValue={podium && podium.position}
                             validationSchema={{
                                 required: 'Ce champ est obligatoire',

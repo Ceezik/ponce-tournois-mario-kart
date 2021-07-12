@@ -20,7 +20,7 @@ function Signup() {
     const [error, setError] = useState(null);
     const history = useHistory();
     const { search } = useLocation();
-    const { defaultUsername, twitchId, token } = queryString.parse(search);
+    const { defaultUsername = '', twitchId, token } = queryString.parse(search);
 
     const onSignup = () => history.push('/');
 
@@ -58,6 +58,7 @@ function Signup() {
                         <Input
                             name="username"
                             label="Nom d'utilisateur"
+                            autoFocus
                             validationSchema={{
                                 required: 'Ce champ est obligatoire',
                                 minLength: {
