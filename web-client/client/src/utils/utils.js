@@ -1,5 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
+import { COMPARISONS_COLORS } from './style';
 
 export const nullifyEmptyFields = (data) => {
     Object.keys(data).forEach((key) => {
@@ -122,3 +123,7 @@ export const generateColor = () => {
     }
     return '#' + c() + c() + c();
 };
+
+export const getComparisonColor = (alreadyUsedColors) =>
+    COMPARISONS_COLORS.find((c) => !alreadyUsedColors.includes(c)) ??
+    generateColor();
