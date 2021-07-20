@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { generateColor } from '../utils/utils';
+import { getComparisonColor } from '../utils/utils';
 
 const getFromLocalStorage = () => {
     try {
@@ -19,8 +19,8 @@ const storeInLocalStorage = (comparisons) => {
     );
 };
 
-const uniqueComparisons = (comparisons) =>
-    comparisons.filter((v, i, a) => a.findIndex((t) => t.id === v.id) === i);
+const isComparisonUnique = (comparison, comparisons) =>
+    !comparisons.some((c) => c.id === comparison.id);
 
 export default ({ tournament, excludedParticipations = [] }) => {
     const { socket } = useSelector((state) => state.socket);
@@ -30,14 +30,20 @@ export default ({ tournament, excludedParticipations = [] }) => {
     socket
         .off('getParticipations')
         .on('getParticipations', (participations) => {
-            setComparisons(
-                uniqueComparisons(
-                    participations.map((p) => ({
-                        ...p,
-                        color: generateColor(),
-                    }))
-                )
+            const { comparisons: newComparisons } = participations.reduce(
+                (acc, curr) => {
+                    if (!isComparisonUnique(curr, comparisons)) return acc;
+
+                    const color = getComparisonColor(acc.alreadyUsedColors);
+                    return {
+                        comparisons: [...acc.comparisons, { ...curr, color }],
+                        alreadyUsedColors: [...acc.alreadyUsedColors, color],
+                    };
+                },
+                { comparisons: [], alreadyUsedColors: [] }
             );
+
+            setComparisons(newComparisons);
             setLoading(false);
         });
 
@@ -66,12 +72,17 @@ export default ({ tournament, excludedParticipations = [] }) => {
     }, [tournament]);
 
     const onAddComparison = (p) => {
-        const newComparisons = uniqueComparisons([
-            ...comparisons,
-            { ...p, color: generateColor() },
-        ]);
-        storeInLocalStorage(newComparisons);
-        setComparisons(newComparisons);
+        if (isComparisonUnique(p, comparisons)) {
+            const newComparisons = [
+                ...comparisons,
+                {
+                    ...p,
+                    color: getComparisonColor(comparisons.map((c) => c.color)),
+                },
+            ];
+            storeInLocalStorage(newComparisons);
+            setComparisons(newComparisons);
+        }
     };
 
     const onRemoveComparison = (p) => {

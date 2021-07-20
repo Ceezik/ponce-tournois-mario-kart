@@ -42,3 +42,26 @@ export const getSelectStyle = (defaultStyle, theme) => ({
         neutral90: CSSTheme[theme].mainTextColor,
     },
 });
+
+export const COMPARISONS_COLORS = [
+    '#33658a',
+    '#F6AE2D',
+    '#F26419',
+    '#7A8450',
+    '#95969D',
+    '#4C2E05',
+    '#AF9BB6',
+    '#440D0F',
+    '#93E1D8',
+    '#04724D',
+    '#4CB963',
+    '#C73E1D',
+    '#C59849',
+    '#9B5DE5',
+    '#CBE896',
+    '#00BBF9',
+    '#9A8873',
+    '#610345',
+    '#E3B505',
+    '#044B7F',
+];
