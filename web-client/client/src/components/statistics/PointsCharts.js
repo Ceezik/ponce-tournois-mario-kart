@@ -5,7 +5,11 @@ import Chart from '../utils/Chart';
 
 export function TotalPointsChart({ participations }) {
     const series = [
-        { data: participations.map((p) => getParticipationNbPoints(p)) },
+        {
+            data: participations.map(
+                (p) => getParticipationNbPoints(p) || null
+            ),
+        },
     ];
 
     return (
@@ -20,8 +24,11 @@ export function TotalPointsChart({ participations }) {
 export function AveragePointsChart({ participations }) {
     const getAveragePoints = () => {
         return participations.map((p) => {
-            if (p.nbPoints) return 0;
+            if (p.nbPoints) return null;
+
             const nbRaces = p.Races.length;
+            if (!nbRaces) return null;
+
             const nbPoints = _.sumBy(p.Races, 'nbPoints');
             return nbRaces ? (nbPoints / nbRaces).toFixed(1) : 0;
         });
