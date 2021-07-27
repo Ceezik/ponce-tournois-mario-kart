@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import _ from 'lodash';
 import { getAll } from '../../services/cups';
 import RacesListItem from './RacesListItem';
@@ -65,7 +65,7 @@ function Races({ route, userId }) {
     }, [loadingCups, loadingRaces]);
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             {loading ? (
                 <RacesSkeleton />
             ) : error ? (
@@ -85,7 +85,7 @@ function Races({ route, userId }) {
                     </Col>
                 </Row>
             )}
-        </Container>
+        </div>
     );
 }
 

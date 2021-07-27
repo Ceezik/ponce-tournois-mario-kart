@@ -1,10 +1,10 @@
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import ParticipationsStatistics from './ParticipationsStatistics';
 import Pagination from './Pagination';
 
 function UserStatistics({ userId }) {
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Pagination />
 
             <Row justify="center">
@@ -15,7 +15,7 @@ function UserStatistics({ userId }) {
                     />
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 }
 

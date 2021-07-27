@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet';
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import TournamentsListItem from './TournamentsListItem';
@@ -11,7 +11,7 @@ function TournamentsWrapper() {
     );
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Helmet>
                 <title>Tournois</title>
             </Helmet>
@@ -51,7 +51,7 @@ function TournamentsWrapper() {
                     </Row>
                 </>
             )}
-        </Container>
+        </div>
     );
 }
 

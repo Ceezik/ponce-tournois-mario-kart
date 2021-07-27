@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Col, Container, Row } from 'react-grid-system';
+import { Col, Row } from 'react-grid-system';
 import { Helmet } from 'react-helmet';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -29,7 +29,7 @@ function EditPatchNoteForm({ patchNote }) {
     };
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Helmet>
                 <title>Modifier un patch note</title>
             </Helmet>
@@ -51,7 +51,7 @@ function EditPatchNoteForm({ patchNote }) {
                     />
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 }
 

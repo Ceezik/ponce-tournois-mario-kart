@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Container } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import { Helmet } from 'react-helmet';
 import {
     NavLink,
@@ -17,6 +17,7 @@ import UserStatistics from '../statistics/UserStatistics';
 import UserLastParticipation from '../participations/UserLastParticipation';
 import UserWrapperSkeleton from './UserWrapperSkeleton';
 import { canUserManage } from '../../utils/utils';
+import LastParticipation from '../participations/LastParticipation';
 
 function UserWrapper() {
     const { user: currentUser } = useSelector((state) => state.auth);
@@ -48,7 +49,7 @@ function UserWrapper() {
 
     return (
         <>
-            <Container className="app__container">
+            <div className="app__container">
                 {user && (
                     <Helmet>
                         <title>{user.username}</title>
@@ -129,7 +130,7 @@ function UserWrapper() {
                         </Col>
                     </Row>
                 )}
-            </Container>
+            </div>
 
             {!loading && user && (
                 <Switch>
@@ -137,7 +138,10 @@ function UserWrapper() {
                         exact
                         path={path}
                         render={() => (
-                            <UserLastParticipation userId={user.id} />
+                            <LastParticipation
+                                userId={user.id}
+                                route="getLastUserParticipation"
+                            />
                         )}
                     />
                     <Route

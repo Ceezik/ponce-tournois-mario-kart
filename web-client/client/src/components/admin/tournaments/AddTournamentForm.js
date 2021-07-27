@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import TournamentForm from './TournamentForm';
 import { nullifyEmptyFields, serializeTournament } from '../../../utils/utils';
 
@@ -33,7 +33,7 @@ function AddTournamentForm() {
     }, []);
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Helmet>
                 <title>Créer un tournoi</title>
             </Helmet>
@@ -50,7 +50,7 @@ function AddTournamentForm() {
                     />
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 }
 

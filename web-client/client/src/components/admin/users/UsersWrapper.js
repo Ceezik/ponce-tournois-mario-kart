@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { getAll } from '../../../services/users';
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import User from './User';
 import UsersFilter from './UsersFilter';
@@ -44,7 +44,7 @@ function UsersWrapper() {
     };
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Helmet>
                 <title>Utilisateurs</title>
             </Helmet>
@@ -102,7 +102,7 @@ function UsersWrapper() {
                     )}
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 }
 
