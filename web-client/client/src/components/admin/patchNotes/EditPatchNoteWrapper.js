@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import { useSelector } from 'react-redux';
 import EditPatchNoteForm from './EditPatchNoteForm';
 import PatchNoteFormSkeleton from './PatchNoteFormSkeleton';
@@ -13,7 +13,7 @@ function EditPatchNoteWrapper() {
     );
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             {loading ? (
                 <PatchNoteFormSkeleton />
             ) : !patchNote ? (
@@ -27,7 +27,7 @@ function EditPatchNoteWrapper() {
             ) : (
                 <EditPatchNoteForm patchNote={patchNote} />
             )}
-        </Container>
+        </div>
     );
 }
 

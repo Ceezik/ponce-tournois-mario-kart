@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { Container } from 'react-grid-system';
 import { AnimatePresence } from 'framer-motion';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import moment from 'moment';
@@ -138,38 +139,43 @@ function App() {
 
                     <Header />
                     <Analytics />
-                    <Switch>
-                        <Route exact path="/signup" component={Signup} />
-                        <Route exact path="/signin" component={Signin} />
+                    <Container>
+                        <Switch>
+                            <Route exact path="/signup" component={Signup} />
+                            <Route exact path="/signin" component={Signin} />
 
-                        <Route exact path="/" component={Home} />
-                        <Route
-                            exact
-                            path="/history"
-                            component={PonceParticipations}
-                        />
-                        <Route exact path="/races" component={PonceRaces} />
-                        <Route
-                            exact
-                            path="/statistics"
-                            component={PonceStatistics}
-                        />
+                            <Route exact path="/" component={Home} />
+                            <Route
+                                exact
+                                path="/history"
+                                component={PonceParticipations}
+                            />
+                            <Route exact path="/races" component={PonceRaces} />
+                            <Route
+                                exact
+                                path="/statistics"
+                                component={PonceStatistics}
+                            />
 
-                        <Route
-                            path="/users/:username"
-                            component={UserWrapper}
-                        />
+                            <Route
+                                path="/users/:username"
+                                component={UserWrapper}
+                            />
 
-                        <PrivateRoute
-                            exact
-                            path="/settings"
-                            component={Settings}
-                        />
+                            <PrivateRoute
+                                exact
+                                path="/settings"
+                                component={Settings}
+                            />
 
-                        <AdminRoute path="/admin" component={AdminWrapper} />
+                            <AdminRoute
+                                path="/admin"
+                                component={AdminWrapper}
+                            />
 
-                        <Route exact path="/cgu" component={CGU} />
-                    </Switch>
+                            <Route exact path="/cgu" component={CGU} />
+                        </Switch>
+                    </Container>
                 </SkeletonTheme>
             </div>
             <Footer />

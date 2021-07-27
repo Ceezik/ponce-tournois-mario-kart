@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import Form from '../form/Form';
 import Input from '../form/Input';
 import Button from '../form/Button';
@@ -36,7 +36,7 @@ function Signup() {
     };
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Helmet>
                 <title>Première connexion</title>
             </Helmet>
@@ -91,7 +91,7 @@ function Signup() {
                     </Form>
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 }
 

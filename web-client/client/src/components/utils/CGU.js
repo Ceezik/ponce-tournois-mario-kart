@@ -1,8 +1,8 @@
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 
 function CGU() {
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Row>
                 <Col>
                     <h1 className="title--noMarginTop">
@@ -144,7 +144,7 @@ function CGU() {
                     </p>
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 }
 

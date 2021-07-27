@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import EditTournamentForm from './EditTournamentForm';
 import TournamentFormSkeleton from './TournamentFormSkeleton';
 import { getTournamentById } from '../../../redux/selectors/tournaments';
@@ -13,7 +13,7 @@ function EditTournamentWrapper() {
     );
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             {loading ? (
                 <TournamentFormSkeleton />
             ) : !tournament ? (
@@ -31,7 +31,7 @@ function EditTournamentWrapper() {
                     </Col>
                 </Row>
             )}
-        </Container>
+        </div>
     );
 }
 

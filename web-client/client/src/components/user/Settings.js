@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -276,7 +276,7 @@ function Editors() {
 
 function Settings() {
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Helmet>
                 <title>Paramètres</title>
             </Helmet>
@@ -300,7 +300,7 @@ function Settings() {
                     </div>
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 }
 

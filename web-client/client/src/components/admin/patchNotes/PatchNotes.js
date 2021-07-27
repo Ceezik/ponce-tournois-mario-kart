@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Col, Container, Row } from 'react-grid-system';
+import { Col, Row } from 'react-grid-system';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import PatchNoteListItem from './PatchNoteListItem';
@@ -11,7 +11,7 @@ function PatchNotes() {
     );
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Helmet>
                 <title>Patch notes</title>
             </Helmet>
@@ -51,7 +51,7 @@ function PatchNotes() {
                     </Row>
                 </>
             )}
-        </Container>
+        </div>
     );
 }
 export default PatchNotes;

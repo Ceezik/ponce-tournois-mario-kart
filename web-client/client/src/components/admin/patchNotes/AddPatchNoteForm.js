@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Col, Container, Row } from 'react-grid-system';
+import { Col, Row } from 'react-grid-system';
 import { Helmet } from 'react-helmet';
 import PatchNoteForm from './PatchNoteForm';
 import { create } from '../../../services/patchNotes';
@@ -29,7 +29,7 @@ function AddPatchNoteForm() {
     };
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Helmet>
                 <title>Créer un patch note</title>
             </Helmet>
@@ -46,7 +46,7 @@ function AddPatchNoteForm() {
                     />
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 }
 

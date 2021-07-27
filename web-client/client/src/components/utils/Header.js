@@ -11,17 +11,24 @@ import {
 import ponceFleur from '../../assets/images/poncefleur.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { signout } from '../../redux/actions/auth';
+import AdminHeader from '../admin/AdminHeader';
 
 function Header() {
+    const { user } = useSelector((state) => state.auth);
+
     return (
-        <header>
-            <Hidden xs sm>
-                <DesktopHeader />
-            </Hidden>
-            <Hidden md lg xl xxl>
-                <MobileHeader />
-            </Hidden>
-        </header>
+        <>
+            <header>
+                <Hidden xs sm>
+                    <DesktopHeader />
+                </Hidden>
+                <Hidden md lg xl xxl>
+                    <MobileHeader />
+                </Hidden>
+            </header>
+
+            {user && user.isAdmin && <AdminHeader />}
+        </>
     );
 }
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
-import { Container, Col, Row } from 'react-grid-system';
+import { Col, Row } from 'react-grid-system';
 import LastParticipation from '../participations/LastParticipation';
 
 function Home() {
@@ -24,7 +24,7 @@ function Home() {
     }, [showPonce]);
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Helmet>
                 <title>Dernier tournoi</title>
             </Helmet>
@@ -54,7 +54,7 @@ function Home() {
                 userId={showPonce ? undefined : user?.id}
                 parentLoading={loading}
             />
-        </Container>
+        </div>
     );
 }
 

@@ -1,4 +1,4 @@
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Tournament from './Tournament';
@@ -13,7 +13,7 @@ function TournamentWrapper() {
     );
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             {loading ? (
                 <TournamentSkeleton showHistory={false} showEdit={true} />
             ) : !tournament ? (
@@ -27,7 +27,7 @@ function TournamentWrapper() {
             ) : (
                 <Tournament tournament={tournament} />
             )}
-        </Container>
+        </div>
     );
 }
 

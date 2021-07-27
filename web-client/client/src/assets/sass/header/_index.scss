@@ -8,6 +8,10 @@ header {
     border-bottom: 1px solid var(--border-color);
 }
 
+.header--admin {
+    justify-content: center !important;
+}
+
 .header__nav {
     display: flex;
     align-items: center;

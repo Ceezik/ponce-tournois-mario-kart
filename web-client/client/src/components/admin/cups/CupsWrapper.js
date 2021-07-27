@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Container, Row, Col } from 'react-grid-system';
+import { Row, Col } from 'react-grid-system';
 import { getAll } from '../../../services/cups';
 import CupsSkeleton from './CupsSkeleton';
 import CupsListItem from './CupsListItem';
@@ -33,7 +33,7 @@ function CupsWrapper() {
     };
 
     return (
-        <Container className="app__container">
+        <div className="app__container">
             <Helmet>
                 <title>Coupes et circuits</title>
             </Helmet>
@@ -89,7 +89,7 @@ function CupsWrapper() {
                     )}
                 </>
             )}
-        </Container>
+        </div>
     );
 }
 
