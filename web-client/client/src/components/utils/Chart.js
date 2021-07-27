@@ -75,19 +75,7 @@ function Chart({
         yaxis: { min: 0, forceNiceScale: true },
     };
 
-    return (
-        <div className="grid-widget-container">
-            <div className="grid-widget">
-                <div className="chart-wrapper">
-                    <ApexChart
-                        type={type}
-                        series={formattedSeries}
-                        options={options}
-                    />
-                </div>
-            </div>
-        </div>
-    );
+    return <ApexChart type={type} series={formattedSeries} options={options} />;
 }
 
 export default Chart;
