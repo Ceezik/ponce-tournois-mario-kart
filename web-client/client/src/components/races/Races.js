@@ -78,7 +78,7 @@ function Races({ route, userId }) {
                 </Row>
             ) : (
                 <Row justify="center">
-                    <Col xs={12} lg={8} className="races__wrapper">
+                    <Col xs={12} lg={10} xxl={8} className="races__wrapper">
                         {cups.map((cup) => (
                             <RacesListItem key={cup.id} cup={cup} />
                         ))}

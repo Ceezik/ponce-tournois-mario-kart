@@ -8,7 +8,7 @@ function ParticipationSkeleton({ showButton = true }) {
             <TournamentSkeleton showHistory={showButton} />
 
             <Row justify="center">
-                <Col xs={12} lg={8}>
+                <Col xs={12} lg={10} xxl={8}>
                     <AdminParticipationSkeleton />
                 </Col>
             </Row>

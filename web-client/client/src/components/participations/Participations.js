@@ -165,7 +165,7 @@ function Participations({ route, canManage, userId }) {
         <Container className="app__container">
             {!loading && !error && participations.length && (
                 <Row justify="center">
-                    <Col xs={12} lg={8}>
+                    <Col xs={12} lg={10} xxl={8}>
                         <ParticipationsButtons
                             participations={participations}
                             setParticipation={changeParticipation}
@@ -186,7 +186,7 @@ function Participations({ route, canManage, userId }) {
                 </Row>
             ) : (
                 <Row justify="center">
-                    <Col xs={12} lg={8}>
+                    <Col xs={12} lg={10} xxl={8}>
                         {participations.length === 0 ? (
                             <Error message="Vous n'avez participé à aucun tournoi." />
                         ) : loadingParticipation ? (

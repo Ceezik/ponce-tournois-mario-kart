@@ -135,7 +135,7 @@ function LastParticipation({ route, userId, parentLoading }) {
         </Row>
     ) : (
         <Row justify="center">
-            <Col xs={12} lg={8}>
+            <Col xs={12} lg={10} xxl={8}>
                 <TournamentInfos defaultTournament={participation.Tournament} />
                 <Podium
                     tournamentId={participation.Tournament.id}
