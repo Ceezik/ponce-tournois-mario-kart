@@ -5,7 +5,7 @@ module.exports = [
     {
         url: '/users',
         method: 'get',
-        func: [auth_ctrl.isAuthenticated, user_ctrl.getAll],
+        func: user_ctrl.getAll,
     },
 
     {
