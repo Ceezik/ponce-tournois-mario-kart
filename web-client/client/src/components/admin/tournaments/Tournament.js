@@ -12,7 +12,7 @@ function Tournament({ tournament }) {
                 <title>{tournament.name}</title>
             </Helmet>
 
-            <Col xs={12} lg={8}>
+            <Col xs={12} lg={10} xxl={8}>
                 <Row justify="end">
                     <Col xs="content">
                         <Link

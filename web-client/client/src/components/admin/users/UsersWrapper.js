@@ -50,7 +50,7 @@ function UsersWrapper() {
             </Helmet>
 
             <Row justify="center">
-                <Col xs={12} lg={8}>
+                <Col xs={12} lg={10} xxl={8}>
                     <h1 className="title--noMarginTop">
                         Utilisateurs {count !== undefined && `(${count})`}
                     </h1>

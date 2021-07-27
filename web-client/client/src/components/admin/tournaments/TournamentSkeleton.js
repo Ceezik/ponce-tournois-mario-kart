@@ -6,7 +6,7 @@ function TournamentSkeleton({ showHistory = true, showEdit = false }) {
 
     return (
         <Row justify="center">
-            <Col xs={12} lg={8}>
+            <Col xs={12} lg={10} xxl={8}>
                 {showHistory && (
                     <Row
                         align="center"

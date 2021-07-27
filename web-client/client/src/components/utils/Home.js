@@ -30,7 +30,7 @@ function Home() {
             </Helmet>
 
             <Row justify="center">
-                <Col xs={12} lg={8}>
+                <Col xs={12} lg={10} xxl={8}>
                     <div className="formMessage formMessage--center formMessage__info">
                         Rejoignez le tournoi avec le code{' '}
                         {process.env.REACT_APP_TOURNAMENT_CODE} !

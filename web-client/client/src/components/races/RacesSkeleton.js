@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 function RacesSkeleton() {
     return (
         <Row justify="center">
-            <Col xs={12} lg={8} className="races__wrapper--skeleton">
+            <Col xs={12} lg={10} xxl={8} className="races__wrapper--skeleton">
                 {[...Array(2)].map((i, index) => (
                     <div key={index}>
                         <h1 className="races__cup">
