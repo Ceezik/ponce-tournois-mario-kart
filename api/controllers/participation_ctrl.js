@@ -98,8 +98,12 @@ module.exports = {
         const { usernames, tournamentsIds } = participationsInfos.reduce(
             (acc, curr) => {
                 return {
-                    usernames: [...acc.usernames, curr.username],
-                    tournamentsIds: [...acc.tournamentsIds, curr.tournament],
+                    usernames: Array.from(
+                        new Set([...acc.usernames, curr.username])
+                    ),
+                    tournamentsIds: Array.from(
+                        new Set([...acc.tournamentsIds, curr.tournament])
+                    ),
                 };
             },
             { usernames: [], tournamentsIds: [] }
