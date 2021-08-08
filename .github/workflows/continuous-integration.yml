@@ -1,0 +1,34 @@
+name: Continous Integration
+
+on: [pull_request]
+
+jobs:
+  api:
+    name: 'API'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd api
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - run: npm install
+        name: Install dependencies
+      - run: npx prettier --check .
+        name: Check prettier format
+
+  web-client:
+    name: 'WEB_CLIENT'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd web-client/client
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - run: npm install
+        name: Install dependencies
+      - run: npx prettier --check .
+        name: Check prettier format
