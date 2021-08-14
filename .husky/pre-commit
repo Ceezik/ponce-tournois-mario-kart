@@ -1,0 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+cd ./api
+npm run lint
+
+cd ../web-client/client 
+npm run lint
