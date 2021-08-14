@@ -5,8 +5,13 @@ import ParticipationGoalForm from './ParticipationGoalForm';
 
 function ParticipationGoal({ participation, nbMaxRaces, canManage }) {
     const [showForm, setShowForm] = useState(false);
-    const { goal } = participation;
-    const diff = getParticipationNbPoints(participation) - goal;
+    const { goal, Races } = participation;
+    const nbPoints = getParticipationNbPoints(participation);
+    console.log((goal / nbMaxRaces) * Races.length);
+    const currentDiff = Math.floor(
+        nbPoints - (goal / nbMaxRaces) * Races.length
+    );
+    const finalDiff = nbPoints - goal;
 
     const openForm = () => {
         if (!showForm && canManage) setShowForm(true);
@@ -40,19 +45,49 @@ function ParticipationGoal({ participation, nbMaxRaces, canManage }) {
 
                         <Col xs={12} sm={6} md={4}>
                             <div className="tournament__info">
-                                <label>Écart avec l'objectif</label>
+                                <label>Écart actuel</label>
                                 <h4
                                     className={
                                         goal
-                                            ? diff >= 0
+                                            ? currentDiff >= 0
                                                 ? 'text--success'
                                                 : 'text--error'
                                             : ''
                                     }
                                 >
                                     {goal
-                                        ? `${diff > 0 ? '+' : ''}${diff} point${
-                                              diff < -1 || diff > 1 ? 's' : ''
+                                        ? `${
+                                              currentDiff > 0 ? '+' : ''
+                                          }${currentDiff} point${
+                                              currentDiff < -1 ||
+                                              currentDiff > 1
+                                                  ? 's'
+                                                  : ''
+                                          }`
+                                        : '-'}
+                                </h4>
+                            </div>
+                        </Col>
+
+                        <Col xs={12} sm={6} md={4}>
+                            <div className="tournament__info">
+                                <label>Écart final</label>
+                                <h4
+                                    className={
+                                        goal
+                                            ? finalDiff >= 0
+                                                ? 'text--success'
+                                                : 'text--error'
+                                            : ''
+                                    }
+                                >
+                                    {goal
+                                        ? `${
+                                              finalDiff > 0 ? '+' : ''
+                                          }${finalDiff} point${
+                                              finalDiff < -1 || finalDiff > 1
+                                                  ? 's'
+                                                  : ''
                                           }`
                                         : '-'}
                                 </h4>
