@@ -7,7 +7,7 @@ function ChartSkeleton() {
                 <Skeleton width="50%" />
             </h1>
 
-            <Skeleton height="20rem" />
+            <Skeleton height="30rem" />
         </>
     );
 }
