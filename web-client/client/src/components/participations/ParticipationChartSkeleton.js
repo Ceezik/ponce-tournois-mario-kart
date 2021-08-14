@@ -20,7 +20,7 @@ function ParticipationChartSkeleton({ showAddComparison = true }) {
                 ))}
             </Row>
             <Skeleton
-                height="17rem"
+                height="30rem"
                 className="participation__chart--skeleton"
             />
             {showAddComparison && (
