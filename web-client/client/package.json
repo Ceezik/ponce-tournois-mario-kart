@@ -45,7 +45,9 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "sass": "sass --watch ./src/assets/sass/main.scss:./src/style.css --style compressed",
-        "autoprefix": "postcss ./src/style.css --use autoprefixer -o ./src/style.css"
+        "autoprefix": "postcss ./src/style.css --use autoprefixer -o ./src/style.css",
+        "lint": "eslint ./src",
+        "lint:fix": "eslint ./src --fix"
     },
     "browserslist": {
         "production": [
@@ -63,8 +65,8 @@
         "autoprefixer": "^9.8.4",
         "babel-eslint": "^10.1.0",
         "eslint": "^7.15.0",
-        "eslint-config-prettier": "^6.11.0",
-        "eslint-plugin-prettier": "^3.1.4",
+        "eslint-config-prettier": "^6.15.0",
+        "eslint-plugin-prettier": "^3.4.0",
         "postcss": "^7.0.32",
         "postcss-cli": "^7.1.1",
         "prettier": "^2.0.5",
