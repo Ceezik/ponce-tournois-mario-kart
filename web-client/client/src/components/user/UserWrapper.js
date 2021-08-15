@@ -67,7 +67,7 @@ function UserWrapper() {
                     </Row>
                 ) : (
                     <Row justify="center">
-                        <Col xs={12} lg={8}>
+                        <Col xs={12} lg={10} xxl={8}>
                             <h1 className="userTitle">
                                 Profil de {user.username}
                             </h1>

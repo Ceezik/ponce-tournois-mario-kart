@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 function UserWrapperSkeleton() {
     return (
         <Row justify="center">
-            <Col xs={12} lg={8}>
+            <Col xs={12} lg={10} xxl={8}>
                 <h1 className="userTitle">
                     <Skeleton width="18rem" />
                 </h1>
