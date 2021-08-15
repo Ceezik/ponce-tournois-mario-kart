@@ -22,7 +22,7 @@ module.exports = {
     getPonce: (req, res, next) => {
         return db.User.findOne({
             where: { twitchId: process.env.PONCE_TWITCH_ID },
-            attributes: ['id'],
+            attributes: ['id', 'username'],
         })
             .then((ponce) => res.json(ponce))
             .catch((err) => next(err));
