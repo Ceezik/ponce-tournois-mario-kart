@@ -14,10 +14,9 @@ import {
 } from '../../utils/utils';
 import useComparisons from '../../hooks/useComparisons';
 
-function LastParticipation({ route, userId, parentLoading }) {
+function LastParticipation({ route, user, parentLoading }) {
     const { socket } = useSelector((state) => state.socket);
-    const { user } = useSelector((state) => state.auth);
-    const { ponce } = useSelector((state) => state.ponce);
+    const { user: currentUser } = useSelector((state) => state.auth);
     const [participation, setParticipation] = useState(null);
     const [record, setRecord] = useState(null);
     const [worst, setWorst] = useState(null);
@@ -36,7 +35,7 @@ function LastParticipation({ route, userId, parentLoading }) {
         excludedParticipations: participation ? [participation] : undefined,
     });
 
-    const canManage = canUserManage(user, userId || ponce?.id);
+    const canManage = canUserManage(currentUser, user?.id);
 
     socket.off('editParticipation').on('editParticipation', (p) => {
         if (participation && p.id === participation.id)
@@ -116,10 +115,10 @@ function LastParticipation({ route, userId, parentLoading }) {
     useEffect(() => {
         setLoading(true);
         fetchParticipation();
-    }, [route, userId]);
+    }, [route, user?.id]);
 
     const fetchParticipation = () => {
-        socket.emit(route, userId, (err) => {
+        socket.emit(route, user?.id, (err) => {
             setError(err);
             setLoading(false);
         });
@@ -139,9 +138,10 @@ function LastParticipation({ route, userId, parentLoading }) {
                 <TournamentInfos defaultTournament={participation.Tournament} />
                 <Podium
                     tournamentId={participation.Tournament.id}
-                    canManage={!!user?.isAdmin}
+                    canManage={!!currentUser?.isAdmin}
                 />
                 <Participation
+                    user={user}
                     participation={participation}
                     record={record}
                     worst={worst}

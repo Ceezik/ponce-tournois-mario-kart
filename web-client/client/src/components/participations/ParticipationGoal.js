@@ -7,7 +7,6 @@ function ParticipationGoal({ participation, nbMaxRaces, canManage }) {
     const [showForm, setShowForm] = useState(false);
     const { goal, Races } = participation;
     const nbPoints = getParticipationNbPoints(participation);
-    console.log((goal / nbMaxRaces) * Races.length);
     const currentDiff = Math.floor(
         nbPoints - (goal / nbMaxRaces) * Races.length
     );

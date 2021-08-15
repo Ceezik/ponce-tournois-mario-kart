@@ -7,6 +7,7 @@ import ParticipationSkeleton from './ParticipationSkeleton';
 
 function PonceParticipation({ tournament }) {
     const { socket } = useSelector((state) => state.socket);
+    const { ponce } = useSelector((state) => state.ponce);
     const [participation, setParticipation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -63,6 +64,7 @@ function PonceParticipation({ tournament }) {
         </Row>
     ) : (
         <Participation
+            user={ponce}
             participation={participation}
             tournamentName={tournament.name}
             nbMaxRaces={tournament.nbMaxRaces}

@@ -17,6 +17,7 @@ function PonceParticipations() {
             <Participations
                 canManage={canManage}
                 route="getPonceParticipations"
+                user={ponce}
             />
         </>
     );

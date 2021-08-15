@@ -12,9 +12,9 @@ import Error from '../utils/Error';
 import Podium from '../podiums/Podium';
 import useComparisons from '../../hooks/useComparisons';
 
-function Participations({ route, canManage, userId }) {
+function Participations({ route, canManage, user }) {
     const { socket } = useSelector((state) => state.socket);
-    const { user } = useSelector((state) => state.auth);
+    const { user: currentUser } = useSelector((state) => state.auth);
     const [participations, setParticipations] = useState([]);
     const [participation, setParticipation] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -132,7 +132,7 @@ function Participations({ route, canManage, userId }) {
     }, [search, participations]);
 
     const fetchParticipations = () => {
-        socket.emit(route, userId, (err) => {
+        socket.emit(route, user.id, (err) => {
             setError(err);
             setLoading(false);
         });
@@ -203,10 +203,11 @@ function Participations({ route, canManage, userId }) {
                                         tournamentId={
                                             participation.Tournament.id
                                         }
-                                        canManage={!!user?.isAdmin}
+                                        canManage={!!currentUser?.isAdmin}
                                     />
 
                                     <Participation
+                                        user={user}
                                         participation={participation}
                                         tournamentName={
                                             participation.Tournament.name

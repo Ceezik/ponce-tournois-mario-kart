@@ -14,7 +14,6 @@ import { getByUsername } from '../../services/users';
 import Participations from '../participations/Participations';
 import Races from '../races/Races';
 import UserStatistics from '../statistics/UserStatistics';
-import UserLastParticipation from '../participations/UserLastParticipation';
 import UserWrapperSkeleton from './UserWrapperSkeleton';
 import { canUserManage } from '../../utils/utils';
 import LastParticipation from '../participations/LastParticipation';
@@ -139,7 +138,7 @@ function UserWrapper() {
                         path={path}
                         render={() => (
                             <LastParticipation
-                                userId={user.id}
+                                user={user}
                                 route="getLastUserParticipation"
                             />
                         )}
@@ -151,7 +150,7 @@ function UserWrapper() {
                             <Participations
                                 route="getUserParticipations"
                                 canManage={canManage}
-                                userId={user.id}
+                                user={user}
                             />
                         )}
                     />

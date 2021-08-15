@@ -15,6 +15,7 @@ function ParticipationChart({
     average,
     goal,
     current,
+    user,
     tournament,
     nbMaxRaces,
     onRemoveComparison,
@@ -34,9 +35,9 @@ function ParticipationChart({
 
     const series = [];
 
-    if (current && tournament) {
+    if (current && (tournament || user)) {
         series.push({
-            name: tournament.name,
+            name: user?.username || tournament?.name,
             data: formatParticipationToChartData(current, nbMaxRaces),
             color: CSSTheme[theme].mainColor,
         });

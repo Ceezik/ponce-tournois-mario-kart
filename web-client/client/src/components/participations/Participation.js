@@ -20,6 +20,7 @@ function Participation({
     onAddComparison,
     onRemoveComparison,
     loadingComparisons,
+    user,
 }) {
     const nbRaces = participation.Races.length;
 
@@ -64,6 +65,7 @@ function Participation({
                                 comparisons.length > 0 && (
                                     <ParticipationChart
                                         current={participation}
+                                        user={user}
                                         tournament={{
                                             id: participation.TournamentId,
                                             name: tournamentName,

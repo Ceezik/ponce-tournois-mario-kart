@@ -7,6 +7,7 @@ import LastParticipation from '../participations/LastParticipation';
 
 function Home() {
     const { user } = useSelector((state) => state.auth);
+    const { ponce } = useSelector((state) => state.ponce);
     const [showPonce, setShowPonce] = useState(true);
     const [loading, setLoading] = useState(true);
 
@@ -51,7 +52,7 @@ function Home() {
                         ? 'getLastUserParticipation'
                         : 'getLastPonceParticipation'
                 }
-                userId={showPonce ? undefined : user?.id}
+                user={showPonce ? ponce : user}
                 parentLoading={loading}
             />
         </div>
