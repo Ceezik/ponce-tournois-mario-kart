@@ -48,6 +48,11 @@ module.exports = (sequelize, DataTypes) => {
             as: 'Managers',
             foreignKey: 'EditorId',
         });
+        User.belongsToMany(db.Tournament, {
+            through: db.StreamersChart,
+            as: 'TournamentsAsStreamer',
+            foreignKey: 'StreamerId',
+        });
     };
 
     User.afterCreate((user) => {

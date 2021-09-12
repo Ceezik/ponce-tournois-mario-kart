@@ -45,6 +45,11 @@ module.exports = (sequelize, DataTypes) => {
     Tournament.associate = (db) => {
         Tournament.hasMany(db.Participation);
         Tournament.hasMany(db.Podium);
+        Tournament.belongsToMany(db.User, {
+            through: db.StreamersChart,
+            as: 'Streamers',
+            foreignKey: 'TournamentId',
+        });
     };
 
     Tournament.afterCreate((tournament) => {
