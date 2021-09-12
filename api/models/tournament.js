@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     Tournament.afterCreate((tournament) => {
-        sequelize.models.User.findAll()
+        sequelize.models.User.findAll({ attributes: ['id'] })
             .then((users) => {
                 const participations = users.map((user) => ({
                     TournamentId: tournament.id,
