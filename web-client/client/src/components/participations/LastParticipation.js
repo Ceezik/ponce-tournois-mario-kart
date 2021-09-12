@@ -89,14 +89,14 @@ function LastParticipation({ route, user, parentLoading }) {
 
     socket.off(route).on(route, (p) => {
         const [participation, ...participations] = p;
-        const record = getRecord(participations);
-        const worst = getWorst(participations);
+        const r = getRecord(participations);
+        const w = getWorst(participations);
 
-        if (record?.id !== worst?.id) setWorst(worst);
+        if (r?.id !== w?.id || !w) setWorst(w);
         setAverage(
             getAverage(participations, participation.Tournament.nbMaxRaces)
         );
-        setRecord(record);
+        setRecord(r);
         setParticipation(participation);
         setLoading(false);
     });
