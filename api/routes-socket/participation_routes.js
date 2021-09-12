@@ -13,7 +13,7 @@ module.exports = (io, socket, userId, isAdmin) => {
         participation_ctrl.getPonceByTournament(socket, onError, tournamentId);
     });
 
-    socket.on('getLastPonceParticipation', (onError) => {
+    socket.on('getLastPonceParticipation', (_, onError) => {
         participation_ctrl.getLastPonceParticipation(socket, onError);
     });
 
