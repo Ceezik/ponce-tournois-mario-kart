@@ -4,6 +4,10 @@ import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import { TotalPointsChart, AveragePointsChart } from './PointsCharts';
 import ChartSkeleton from './ChartSkeleton';
+import {
+    addRaceToParticipation,
+    editRaceFromParticipation,
+} from '../../utils/utils';
 
 function ParticipationsStatistics({ route, userId }) {
     const { socket } = useSelector((state) => state.socket);
@@ -20,20 +24,18 @@ function ParticipationsStatistics({ route, userId }) {
     socket.off('addRace').on('addRace', (race) => {
         const p = _.find(participations, { id: race.ParticipationId });
         if (p) {
-            const newParticipation = _.cloneDeep(p);
-            newParticipation.Races.push(race);
-            refreshParticipation(newParticipation);
+            refreshParticipation(
+                addRaceToParticipation({ race, participation })
+            );
         }
     });
 
     socket.off('editRace').on('editRace', (race) => {
         const p = _.find(participations, { id: race.ParticipationId });
         if (p) {
-            const index = _.findIndex(p.Races, { id: race.id });
-            const newParticipation = _.cloneDeep(p);
-
-            newParticipation.Races.splice(index, 1, race);
-            refreshParticipation(newParticipation);
+            refreshParticipation(
+                editRaceFromParticipation({ race, participation })
+            );
         }
     });
 

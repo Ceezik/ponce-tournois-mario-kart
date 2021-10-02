@@ -18,7 +18,9 @@ function ParticipationSkeleton({ showPodium = true }) {
             />
 
             <div className="participation">
-                <ParticipationChartSkeleton />
+                <div className="participation__chartsWrapper--skeleton">
+                    <ParticipationChartSkeleton />
+                </div>
 
                 <Row className="participation__title">
                     <Col xs={3}>

@@ -1,6 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getComparisonColor } from '../utils/utils';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getComparisonColor, isComparisonUnique } from '../utils/utils';
+import {
+    setLoading as setLoadingAction,
+    setComparisons as setComparisonsAction,
+    onGetParticipations as onGetParticipationsAction,
+} from '../redux/actions/useComparisons';
+import useSideEffects from './useSideEffects';
 
 const getFromLocalStorage = () => {
     try {
@@ -19,33 +25,28 @@ const storeInLocalStorage = (comparisons) => {
     );
 };
 
-const isComparisonUnique = (comparison, comparisons) =>
-    !comparisons.some((c) => c.id === comparison.id);
-
 export default ({ tournament, excludedParticipations = [] }) => {
+    const dispatch = useDispatch();
     const { socket } = useSelector((state) => state.socket);
-    const [comparisons, setComparisons] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { comparisons, loading } = useSelector(
+        (state) => state.useComparisons
+    );
 
-    socket
-        .off('getParticipations')
-        .on('getParticipations', (participations) => {
-            const { comparisons: newComparisons } = participations.reduce(
-                (acc, curr) => {
-                    if (!isComparisonUnique(curr, comparisons)) return acc;
+    const setComparisons = (args) => dispatch(setComparisonsAction(args));
+    const setLoading = (args) => dispatch(setLoadingAction(args));
 
-                    const color = getComparisonColor(acc.alreadyUsedColors);
-                    return {
-                        comparisons: [...acc.comparisons, { ...curr, color }],
-                        alreadyUsedColors: [...acc.alreadyUsedColors, color],
-                    };
-                },
-                { comparisons: [], alreadyUsedColors: [] }
-            );
+    const onGetParticipations = (participations) => {
+        dispatch(onGetParticipationsAction(participations));
+    };
 
-            setComparisons(newComparisons);
-            setLoading(false);
-        });
+    useSideEffects({
+        sideEffects: [
+            {
+                event: 'getParticipations',
+                callback: onGetParticipations,
+            },
+        ],
+    });
 
     const fetchParticipations = () => {
         const usernames = getFromLocalStorage();
