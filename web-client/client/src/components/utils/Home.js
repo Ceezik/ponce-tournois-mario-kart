@@ -4,6 +4,9 @@ import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { Col, Row } from 'react-grid-system';
 import LastParticipation from '../participations/LastParticipation';
+import Tabs from './Tabs';
+
+const { Tab, TabsList } = Tabs;
 
 function Home() {
     const { user } = useSelector((state) => state.auth);
@@ -36,54 +39,49 @@ function Home() {
                         Rejoignez le tournoi avec le code{' '}
                         {process.env.REACT_APP_TOURNAMENT_CODE} !
                     </div>
-
-                    {user && (
-                        <HomeButtons
-                            showPonce={showPonce}
-                            setShowPonce={handleShowPonceChange}
-                        />
-                    )}
                 </Col>
             </Row>
 
-            <LastParticipation
-                route={
-                    !showPonce && user
-                        ? 'getLastUserParticipation'
-                        : 'getLastPonceParticipation'
-                }
-                user={showPonce ? ponce : user}
-                parentLoading={loading}
-            />
+            {user ? (
+                <Tabs
+                    defaultTab="ponce"
+                    onTabChange={(tab) => setShowPonce(tab === 'ponce')}
+                    align="end"
+                >
+                    <Row justify="center" className="home__buttons">
+                        <Col xs={12} lg={10} xxl={8}>
+                            <TabsList
+                                tabs={[
+                                    { label: 'Moi', value: 'me' },
+                                    { label: 'Ponce', value: 'ponce' },
+                                ]}
+                            />
+                        </Col>
+                    </Row>
+
+                    <Tab value="me">
+                        <LastParticipation
+                            route="getLastUserParticipation"
+                            user={user}
+                            parentLoading={loading}
+                        />
+                    </Tab>
+                    <Tab value="ponce">
+                        <LastParticipation
+                            route="getLastPonceParticipation"
+                            user={ponce}
+                            parentLoading={loading}
+                        />
+                    </Tab>
+                </Tabs>
+            ) : (
+                <LastParticipation
+                    route="getLastPonceParticipation"
+                    user={ponce}
+                    parentLoading={loading}
+                />
+            )}
         </div>
-    );
-}
-
-function HomeButtons({ showPonce, setShowPonce }) {
-    return (
-        <Row justify="end" className="home__buttons">
-            <Col xs="content">
-                <button
-                    className={`${
-                        !showPonce ? 'btnPrimary' : 'btnSecondary'
-                    } --noTransition`}
-                    onClick={() => setShowPonce(false)}
-                >
-                    Moi
-                </button>
-            </Col>
-
-            <Col xs="content">
-                <button
-                    className={`${
-                        showPonce ? 'btnPrimary' : 'btnSecondary'
-                    } --noTransition`}
-                    onClick={() => setShowPonce(true)}
-                >
-                    Ponce
-                </button>
-            </Col>
-        </Row>
     );
 }
 

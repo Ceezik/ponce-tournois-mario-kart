@@ -9,6 +9,9 @@ import ParticipationPoints from './ParticipationPoints';
 import ParticipationComparisonsChart from './ParticipationComparisonsChart';
 import ParticipationStreamersChart from './ParticipationStreamersChart';
 import { useSelector } from 'react-redux';
+import Tabs from '../utils/Tabs';
+
+const { Tab, TabsList } = Tabs;
 
 function Participation({
     participation,
@@ -21,7 +24,6 @@ function Participation({
     user,
 }) {
     const { user: currentUser } = useSelector((state) => state.auth);
-    const [chart, setChart] = useState('user');
     const nbRaces = participation.Races.length;
 
     const CHART_TABS = [
@@ -52,54 +54,40 @@ function Participation({
             <div className="participation">
                 <Hidden xs sm>
                     <div className="participation__chartsWrapper">
-                        <div>
-                            {CHART_TABS.map(({ value, label }) => (
-                                <button
-                                    key={value}
-                                    className={
-                                        chart === value
-                                            ? 'btnPrimary'
-                                            : 'btnSecondary'
-                                    }
-                                    onClick={() => setChart(value)}
-                                >
-                                    {label}
-                                </button>
-                            ))}
-                        </div>
+                        <Tabs defaultTab="user" align="center">
+                            <TabsList tabs={CHART_TABS} />
 
-                        {chart === 'user' && (
-                            <ParticipationChart
-                                record={record}
-                                worst={worst}
-                                average={average}
-                                current={participation}
-                                tournament={{
-                                    id: participation.TournamentId,
-                                    name: tournamentName,
-                                }}
-                                nbMaxRaces={nbMaxRaces}
-                                goal={participation.goal}
-                            />
-                        )}
-
-                        {chart === 'streamers' && (
-                            <ParticipationStreamersChart
-                                participation={participation}
-                                nbMaxRaces={nbMaxRaces}
-                                tournamentName={tournamentName}
-                                user={user}
-                            />
-                        )}
-
-                        {chart === 'comparisons' && (
-                            <ParticipationComparisonsChart
-                                participation={participation}
-                                nbMaxRaces={nbMaxRaces}
-                                tournamentName={tournamentName}
-                                user={user}
-                            />
-                        )}
+                            <Tab value="user">
+                                <ParticipationChart
+                                    record={record}
+                                    worst={worst}
+                                    average={average}
+                                    current={participation}
+                                    tournament={{
+                                        id: participation.TournamentId,
+                                        name: tournamentName,
+                                    }}
+                                    nbMaxRaces={nbMaxRaces}
+                                    goal={participation.goal}
+                                />
+                            </Tab>
+                            <Tab value="streamers">
+                                <ParticipationStreamersChart
+                                    participation={participation}
+                                    nbMaxRaces={nbMaxRaces}
+                                    tournamentName={tournamentName}
+                                    user={user}
+                                />
+                            </Tab>
+                            <Tab value="comparisons">
+                                <ParticipationComparisonsChart
+                                    participation={participation}
+                                    nbMaxRaces={nbMaxRaces}
+                                    tournamentName={tournamentName}
+                                    user={user}
+                                />
+                            </Tab>
+                        </Tabs>
                     </div>
                 </Hidden>
 
