@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'react-grid-system';
 import Skeleton from 'react-loading-skeleton';
 
-function ParticipationChartSkeleton({ showAddComparison = true }) {
+function ParticipationChartSkeleton({ showAddBtn = false }) {
     return (
         <>
             <Row className="participation__chartLegends--skeleton">
@@ -23,12 +23,7 @@ function ParticipationChartSkeleton({ showAddComparison = true }) {
                 height="30rem"
                 className="participation__chart--skeleton"
             />
-            {showAddComparison && (
-                <Skeleton
-                    height="2.5rem"
-                    className="participation__comparison--skeleton"
-                />
-            )}
+            {showAddBtn && <Skeleton height="2.5rem" />}
         </>
     );
 }

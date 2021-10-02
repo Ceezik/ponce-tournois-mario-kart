@@ -45,10 +45,15 @@ module.exports = (sequelize, DataTypes) => {
     Tournament.associate = (db) => {
         Tournament.hasMany(db.Participation);
         Tournament.hasMany(db.Podium);
+        Tournament.belongsToMany(db.User, {
+            through: db.StreamersChart,
+            as: 'Streamers',
+            foreignKey: 'TournamentId',
+        });
     };
 
     Tournament.afterCreate((tournament) => {
-        sequelize.models.User.findAll()
+        sequelize.models.User.findAll({ attributes: ['id'] })
             .then((users) => {
                 const participations = users.map((user) => ({
                     TournamentId: tournament.id,

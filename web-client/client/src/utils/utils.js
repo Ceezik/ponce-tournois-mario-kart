@@ -127,3 +127,48 @@ export const generateColor = () => {
 export const getComparisonColor = (alreadyUsedColors) =>
     COMPARISONS_COLORS.find((c) => !alreadyUsedColors.includes(c)) ??
     generateColor();
+
+export const isComparisonUnique = (comparison, comparisons) =>
+    !comparisons.some((c) => c.id === comparison.id);
+
+export const addRaceToParticipation = ({ race, participation }) => {
+    const newParticipation = _.cloneDeep(participation);
+    newParticipation.Races.push(race);
+    return newParticipation;
+};
+
+export const editRaceFromParticipation = ({ race, participation }) => {
+    const idx = _.findIndex(participation.Races, { id: race.id });
+    if (idx === -1) return participation;
+
+    const newParticipation = _.cloneDeep(participation);
+    newParticipation.Races.splice(idx, 1, race);
+    return newParticipation;
+};
+
+export const addRaceToComparisons = ({ race, comparisons }) => {
+    const idx = comparisons.findIndex((c) => c.id === race.ParticipationId);
+    if (idx === -1) return comparisons;
+
+    const newComparison = _.cloneDeep(comparisons[idx]);
+    newComparison.Races.push(race);
+    const newComparisons = _.cloneDeep(comparisons);
+    newComparisons.splice(idx, 1, newComparison);
+    return newComparisons;
+};
+
+export const editRaceFromComparisons = ({ race, comparisons }) => {
+    const idx = comparisons.findIndex((c) => c.id === race.ParticipationId);
+    if (idx === -1) return comparisons;
+
+    const newComparison = _.cloneDeep(comparisons[idx]);
+    const raceIdx = _.findIndex(newComparison.Races, {
+        id: race.id,
+    });
+    if (raceIdx === -1) return comparisons;
+
+    newComparison.Races.splice(raceIdx, 1, race);
+    const newComparisons = _.cloneDeep(comparisons);
+    newComparisons.splice(idx, 1, newComparison);
+    return newComparisons;
+};

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Row, Col, Hidden } from 'react-grid-system';
 import _ from 'lodash';
 import AddRaceBtn from '../admin/participations/AddRaceBtn';
@@ -5,8 +6,12 @@ import ParticipationChart from './ParticipationChart';
 import ParticipationRace from './ParticipationRace';
 import ParticipationGoal from './ParticipationGoal';
 import ParticipationPoints from './ParticipationPoints';
-import ParticipationChartSkeleton from './ParticipationChartSkeleton';
-import ParticipationComparison from './ParticipationComparison';
+import ParticipationComparisonsChart from './ParticipationComparisonsChart';
+import ParticipationStreamersChart from './ParticipationStreamersChart';
+import { useSelector } from 'react-redux';
+import Tabs from '../utils/Tabs';
+
+const { Tab, TabsList } = Tabs;
 
 function Participation({
     participation,
@@ -16,13 +21,19 @@ function Participation({
     tournamentName,
     nbMaxRaces,
     canManage = true,
-    comparisons,
-    onAddComparison,
-    onRemoveComparison,
-    loadingComparisons,
     user,
 }) {
+    const { user: currentUser } = useSelector((state) => state.auth);
     const nbRaces = participation.Races.length;
+
+    const CHART_TABS = [
+        {
+            value: 'user',
+            label: user.id === currentUser?.id ? 'Moi' : user.username,
+        },
+        { value: 'streamers', label: 'Streamers' },
+        { value: 'comparisons', label: 'Se comparer' },
+    ];
 
     return (
         <>
@@ -42,61 +53,46 @@ function Participation({
 
             <div className="participation">
                 <Hidden xs sm>
-                    <ParticipationChart
-                        record={record}
-                        worst={worst}
-                        average={average}
-                        current={participation}
-                        tournament={{
-                            id: participation.TournamentId,
-                            name: tournamentName,
-                        }}
-                        nbMaxRaces={nbMaxRaces}
-                        goal={participation.goal}
-                    />
+                    <div className="participation__chartsWrapper">
+                        <Tabs defaultTab="user" align="center">
+                            <TabsList tabs={CHART_TABS} />
 
-                    {comparisons !== undefined && (
-                        <>
-                            {loadingComparisons ? (
-                                <ParticipationChartSkeleton
-                                    showAddComparison={false}
+                            <Tab value="user">
+                                <ParticipationChart
+                                    record={record}
+                                    worst={worst}
+                                    average={average}
+                                    current={participation}
+                                    tournament={{
+                                        id: participation.TournamentId,
+                                        name: tournamentName,
+                                    }}
+                                    nbMaxRaces={nbMaxRaces}
+                                    goal={participation.goal}
                                 />
-                            ) : (
-                                comparisons.length > 0 && (
-                                    <ParticipationChart
-                                        current={participation}
-                                        user={user}
-                                        tournament={{
-                                            id: participation.TournamentId,
-                                            name: tournamentName,
-                                        }}
-                                        nbMaxRaces={nbMaxRaces}
-                                        onRemoveComparison={onRemoveComparison}
-                                        comparisons={comparisons}
-                                    />
-                                )
-                            )}
-
-                            <ParticipationComparison
-                                tournament={participation.TournamentId}
-                                onAddComparison={onAddComparison}
-                                comparedUsers={[
-                                    ...comparisons.map((c) => c.User.id),
-                                    participation.UserId,
-                                ]}
-                            />
-                        </>
-                    )}
+                            </Tab>
+                            <Tab value="streamers">
+                                <ParticipationStreamersChart
+                                    participation={participation}
+                                    nbMaxRaces={nbMaxRaces}
+                                    tournamentName={tournamentName}
+                                    user={user}
+                                />
+                            </Tab>
+                            <Tab value="comparisons">
+                                <ParticipationComparisonsChart
+                                    participation={participation}
+                                    nbMaxRaces={nbMaxRaces}
+                                    tournamentName={tournamentName}
+                                    user={user}
+                                />
+                            </Tab>
+                        </Tabs>
+                    </div>
                 </Hidden>
 
                 {participation.Races.length > 0 && (
-                    <Row
-                        className={`participation__title ${
-                            comparisons === undefined
-                                ? 'participation__title--withMargin'
-                                : ''
-                        }`}
-                    >
+                    <Row className="participation__title">
                         <Col xs={2}>Num.</Col>
                         <Col xs={2}>Pos.</Col>
                         <Col xs={2}>Pts</Col>

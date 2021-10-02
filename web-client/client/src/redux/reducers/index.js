@@ -7,6 +7,8 @@ import statistics from './statistics';
 import patchNotes from './patchNotes';
 import settings from './settings';
 import ponce from './ponce';
+import useStreamersChart from './useStreamersChart';
+import useComparisons from './useComparisons';
 
 export default combineReducers({
     tracks,
@@ -17,4 +19,6 @@ export default combineReducers({
     patchNotes,
     settings,
     ponce,
+    useStreamersChart,
+    useComparisons,
 });

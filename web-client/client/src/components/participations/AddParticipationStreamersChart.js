@@ -6,33 +6,29 @@ import Form from '../form/Form';
 import Button from '../form/Button';
 import UsersTypeahead from '../form/UsersTypeahead';
 import { useSelector } from 'react-redux';
-import useSideEffects from '../../hooks/useSideEffects';
 
-const AddComparisonForm = ({ closeForm, onAdd, tournament, comparedUsers }) => {
+const AddComparisonForm = ({
+    closeForm,
+    onAdd,
+    tournament,
+    comparedStreamers,
+}) => {
     const { socket } = useSelector((state) => state.socket);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const onGetParticipations = (participations) => {
-        if (participations.length) onAdd(participations[0]);
-        else {
-            setError('Une erreur est survenue');
-            setLoading(false);
-        }
-    };
-
-    useSideEffects({
-        sideEffects: [
-            {
-                event: 'getParticipations',
-                callback: onGetParticipations,
-            },
-        ],
+    socket.on('addToStreamersChart', (streamersChart) => {
+        setLoading(false);
+        onAdd(streamersChart);
     });
+
+    useEffect(() => {
+        return socket.off('addToStreamersChart');
+    }, []);
 
     const onSubmit = ({ username }) => {
         setLoading(true);
-        socket.emit('getParticipations', [{ username, tournament }], (err) => {
+        socket.emit('addToStreamersChart', { username, tournament }, (err) => {
             setError(err);
             setLoading(false);
         });
@@ -54,7 +50,7 @@ const AddComparisonForm = ({ closeForm, onAdd, tournament, comparedUsers }) => {
                     validationSchema={{
                         required: 'Ce champ est obligatoire',
                     }}
-                    excluded={comparedUsers}
+                    excluded={comparedStreamers}
                 />
 
                 <Row justify="end">
@@ -84,10 +80,10 @@ const AddComparisonForm = ({ closeForm, onAdd, tournament, comparedUsers }) => {
     );
 };
 
-function ParticipationComparison({
+function AddParticipationStreamersChart({
     tournament,
-    onAddComparison,
-    comparedUsers,
+    onAddStreamer,
+    comparedStreamers,
 }) {
     const [showForm, setShowForm] = useState(false);
 
@@ -99,9 +95,9 @@ function ParticipationComparison({
         setShowForm(false);
     };
 
-    const onAdd = (participation) => {
+    const onAdd = (streamer) => {
         setShowForm(false);
-        onAddComparison(participation);
+        onAddStreamer(streamer);
     };
 
     useEffect(() => {
@@ -122,7 +118,7 @@ function ParticipationComparison({
                                 closeForm={closeForm}
                                 onAdd={onAdd}
                                 tournament={tournament}
-                                comparedUsers={comparedUsers}
+                                comparedStreamers={comparedStreamers}
                             />
                         ) : (
                             <Col xs={12}>
@@ -130,7 +126,7 @@ function ParticipationComparison({
                                     icon={faPlus}
                                     className="participation__addComparisonBtn"
                                 />
-                                Comparer avec d'autres utilisateurs
+                                Comparer avec d'autres streamers
                             </Col>
                         )}
                     </Row>
@@ -140,4 +136,4 @@ function ParticipationComparison({
     );
 }
 
-export default ParticipationComparison;
+export default AddParticipationStreamersChart;

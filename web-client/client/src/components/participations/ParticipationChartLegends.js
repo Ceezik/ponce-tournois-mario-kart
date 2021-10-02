@@ -40,7 +40,7 @@ function ParticipationChartLegends({
                             {serie.tournament && ` (${serie.tournament})`}
                         </div>
 
-                        {serie.deletable && (
+                        {serie.deletable && onRemove && (
                             <FontAwesomeIcon
                                 icon={faTrashAlt}
                                 className="participation__chartLegendDelete"

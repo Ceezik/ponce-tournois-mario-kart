@@ -4,6 +4,10 @@ import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import Participation from '../../participations/Participation';
 import ParticipationSkeleton from './ParticipationSkeleton';
+import {
+    addRaceToParticipation,
+    editRaceFromParticipation,
+} from '../../../utils/utils';
 
 function PonceParticipation({ tournament }) {
     const { socket } = useSelector((state) => state.socket);
@@ -19,19 +23,15 @@ function PonceParticipation({ tournament }) {
 
     socket.off('addRace').on('addRace', (race) => {
         if (participation && race.ParticipationId === participation.id) {
-            const newParticipation = _.cloneDeep(participation);
-            newParticipation.Races.push(race);
-            setParticipation(newParticipation);
+            setParticipation(addRaceToParticipation({ race, participation }));
         }
     });
 
     socket.off('editRace').on('editRace', (race) => {
         if (participation && race.ParticipationId === participation.id) {
-            const index = _.findIndex(participation.Races, { id: race.id });
-            const newParticipation = _.cloneDeep(participation);
-
-            newParticipation.Races.splice(index, 1, race);
-            setParticipation(newParticipation);
+            setParticipation(
+                editRaceFromParticipation({ race, participation })
+            );
         }
     });
 

@@ -11,6 +11,13 @@ import ParticipationSkeleton from './ParticipationSkeleton';
 import Error from '../utils/Error';
 import Podium from '../podiums/Podium';
 import useComparisons from '../../hooks/useComparisons';
+import {
+    addRaceToComparisons,
+    addRaceToParticipation,
+    editRaceFromComparisons,
+    editRaceFromParticipation,
+} from '../../utils/utils';
+import useStreamersChart from '../../hooks/useStreamersChart';
 
 function Participations({ route, canManage, user }) {
     const { socket } = useSelector((state) => state.socket);
@@ -23,16 +30,17 @@ function Participations({ route, canManage, user }) {
     const history = useHistory();
     const { search } = useLocation();
 
-    const {
-        comparisons,
-        onAddComparison,
-        onRemoveComparison,
-        setComparisons,
-        loading: loadingComparisons,
-    } = useComparisons({
+    const { comparisons, setComparisons } = useComparisons({
         tournament: participation?.TournamentId,
         excludedParticipations: participation ? [participation] : undefined,
     });
+
+    const { streamersComparisons, setStreamersComparisons } = useStreamersChart(
+        {
+            tournament: participation?.TournamentId,
+            excludedParticipations: participation ? [participation] : undefined,
+        }
+    );
 
     socket.off('editParticipation').on('editParticipation', (participation) => {
         const p = _.find(participations, { id: participation.id });
@@ -42,47 +50,34 @@ function Participations({ route, canManage, user }) {
     socket.off('addRace').on('addRace', (race) => {
         const p = _.find(participations, { id: race.ParticipationId });
         if (p) {
-            const newParticipation = _.cloneDeep(p);
-            newParticipation.Races.push(race);
-            refreshParticipation(newParticipation);
-        } else {
-            const idx = comparisons.findIndex(
-                (c) => c.id === race.ParticipationId
+            refreshParticipation(
+                addRaceToParticipation({ race, participation: p })
             );
-            if (idx !== -1) {
-                const newComparison = _.cloneDeep(comparisons[idx]);
-                newComparison.Races.push(race);
-                const newComparisons = _.cloneDeep(comparisons);
-                newComparisons.splice(idx, 1, newComparison);
-                setComparisons(newComparisons);
-            }
+        } else {
+            setComparisons(addRaceToComparisons({ race, comparisons }));
+            setStreamersComparisons(
+                addRaceToComparisons({
+                    race,
+                    comparisons: streamersComparisons,
+                })
+            );
         }
     });
 
     socket.off('editRace').on('editRace', (race) => {
         const p = _.find(participations, { id: race.ParticipationId });
         if (p) {
-            const index = _.findIndex(p.Races, { id: race.id });
-            const newParticipation = _.cloneDeep(p);
-
-            newParticipation.Races.splice(index, 1, race);
-            refreshParticipation(newParticipation);
-        } else {
-            const idx = comparisons.findIndex(
-                (c) => c.id === race.ParticipationId
+            refreshParticipation(
+                editRaceFromParticipation({ race, participation: p })
             );
-            if (idx !== -1) {
-                const newComparison = _.cloneDeep(comparisons[idx]);
-                const raceIdx = _.findIndex(newComparison.Races, {
-                    id: race.id,
-                });
-                if (raceIdx !== -1) {
-                    newComparison.Races.splice(raceIdx, 1, race);
-                    const newComparisons = _.cloneDeep(comparisons);
-                    newComparisons.splice(idx, 1, newComparison);
-                    setComparisons(newComparisons);
-                }
-            }
+        } else {
+            setComparisons(editRaceFromComparisons({ race, comparisons }));
+            setStreamersComparisons(
+                editRaceFromComparisons({
+                    race,
+                    comparisons: streamersComparisons,
+                })
+            );
         }
     });
 
@@ -216,10 +211,6 @@ function Participations({ route, canManage, user }) {
                                             participation.Tournament.nbMaxRaces
                                         }
                                         canManage={canManage}
-                                        comparisons={comparisons}
-                                        onAddComparison={onAddComparison}
-                                        onRemoveComparison={onRemoveComparison}
-                                        loadingComparisons={loadingComparisons}
                                     />
                                 </>
                             )
