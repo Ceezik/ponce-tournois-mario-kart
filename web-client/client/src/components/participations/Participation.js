@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Row, Col, Hidden } from 'react-grid-system';
 import _ from 'lodash';
 import AddRaceBtn from '../admin/participations/AddRaceBtn';
@@ -110,7 +109,9 @@ function Participation({
                 ))}
 
                 {canManage &&
-                    [...Array(nbMaxRaces - nbRaces)].map((i, index) => (
+                    [
+                        ...Array(Math.max(nbMaxRaces - nbRaces, 0)),
+                    ].map((i, index) => (
                         <AddRaceBtn
                             key={index}
                             participationId={participation.id}
