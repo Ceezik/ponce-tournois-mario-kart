@@ -4,6 +4,7 @@ import {
     SET_LOADING_STREAMERS,
     SET_LOADING_COMPARISONS,
     ON_GET_PARTICIPATIONS,
+    RESET_STATE,
 } from '../types/useStreamersChart';
 
 export const onGetParticipations = (participations) => (dispatch) => {
@@ -24,4 +25,8 @@ export const setStreamersComparisons = (comparisons) => (dispatch) => {
 
 export const setLoadingComparisons = (loading) => (dispatch) => {
     dispatch({ type: SET_LOADING_COMPARISONS, payload: loading });
+};
+
+export const resetState = () => (dispatch) => {
+    dispatch({ type: RESET_STATE });
 };

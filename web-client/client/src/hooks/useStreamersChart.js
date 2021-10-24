@@ -6,6 +6,7 @@ import {
     setStreamersComparisons as setStreamersComparisonsAction,
     setLoadingStreamers as setLoadingStreamersAction,
     onGetParticipations as onGetParticipationsAction,
+    resetState,
 } from '../redux/actions/useStreamersChart';
 import useSideEffects from './useSideEffects';
 
@@ -57,12 +58,22 @@ export default ({ tournament, excludedParticipations = [] }) => {
 
     const fetchParticipations = () => {
         const participationsInfos = streamers
-            .filter((s) => !streamersComparisons.find((p) => p.UserId === s.id))
+            .filter(
+                (s) =>
+                    !streamersComparisons.find(
+                        (p) =>
+                            p.UserId === s.id && p.TournamentId === tournament
+                    )
+            )
             .map((streamer) => ({
                 tournament,
                 username: streamer.username,
             }));
-        if (participationsInfos.length === 0) setLoadingComparisons(false);
+        if (streamers.length === 0) {
+            setLoadingComparisons(false);
+            setStreamersComparisons([]);
+        } else if (participationsInfos.length === 0)
+            setLoadingComparisons(false);
         else {
             socket.emit('getParticipations', participationsInfos, () => {
                 setLoadingComparisons(false);
@@ -72,13 +83,17 @@ export default ({ tournament, excludedParticipations = [] }) => {
 
     useEffect(() => {
         setLoadingStreamers(true);
-        fetchStreamersChart();
+        if (tournament) fetchStreamersChart();
     }, [tournament]);
 
     useEffect(() => {
         setLoadingComparisons(true);
         fetchParticipations();
-    }, [streamers]);
+    }, [JSON.stringify(streamers)]);
+
+    useEffect(() => {
+        return () => dispatch(resetState());
+    }, []);
 
     const onAddStreamer = (streamer) => setStreamers([...streamers, streamer]);
 
