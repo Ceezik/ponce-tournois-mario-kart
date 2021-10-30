@@ -148,27 +148,27 @@ export const editRaceFromParticipation = ({ race, participation }) => {
 
 export const addRaceToComparisons = ({ race, comparisons }) => {
     const idx = comparisons.findIndex((c) => c.id === race.ParticipationId);
-    if (idx === -1) return comparisons;
+    if (idx === -1) return { shouldUpdate: false };
 
     const newComparison = _.cloneDeep(comparisons[idx]);
     newComparison.Races.push(race);
     const newComparisons = _.cloneDeep(comparisons);
     newComparisons.splice(idx, 1, newComparison);
-    return newComparisons;
+    return { shouldUpdate: true, comparisons: newComparisons };
 };
 
 export const editRaceFromComparisons = ({ race, comparisons }) => {
     const idx = comparisons.findIndex((c) => c.id === race.ParticipationId);
-    if (idx === -1) return comparisons;
+    if (idx === -1) return { shouldUpdate: false };
 
     const newComparison = _.cloneDeep(comparisons[idx]);
     const raceIdx = _.findIndex(newComparison.Races, {
         id: race.id,
     });
-    if (raceIdx === -1) return comparisons;
+    if (raceIdx === -1) return { shouldUpdate: false };
 
     newComparison.Races.splice(raceIdx, 1, race);
     const newComparisons = _.cloneDeep(comparisons);
     newComparisons.splice(idx, 1, newComparison);
-    return newComparisons;
+    return { shouldUpdate: true, comparisons: newComparisons };
 };
