@@ -5,21 +5,28 @@ import {
     SET_STREAMERS,
     SET_STREAMERS_COMPARISONS,
     ON_GET_PARTICIPATIONS,
+    RESET_STATE,
 } from '../types/useStreamersChart';
 
-const intitialState = {
+const initialState = {
     streamers: [],
     loadingStreamers: true,
     streamersComparisons: [],
     loadingComparisons: true,
 };
 
-export default function (state = intitialState, action) {
+export default function (state = initialState, action) {
     switch (action.type) {
+        case RESET_STATE:
+            return initialState;
         case ON_GET_PARTICIPATIONS:
+            const streamersComparisons = state.streamersComparisons.filter(
+                (c) => !action.payload.some((p) => p.UserId === c.UserId)
+            );
+
             const { comparisons } = action.payload.reduce(
                 (acc, curr) => {
-                    if (!isComparisonUnique(curr, state.streamersComparisons))
+                    if (!isComparisonUnique(curr, streamersComparisons))
                         return acc;
 
                     const color = getComparisonColor(acc.alreadyUsedColors);
@@ -30,19 +37,14 @@ export default function (state = intitialState, action) {
                 },
                 {
                     comparisons: [],
-                    alreadyUsedColors: state.streamersComparisons.map(
-                        (c) => c.color
-                    ),
+                    alreadyUsedColors: streamersComparisons.map((c) => c.color),
                 }
             );
 
             return {
                 ...state,
                 loadingComparisons: false,
-                streamersComparisons: [
-                    ...state.streamersComparisons,
-                    ...comparisons,
-                ],
+                streamersComparisons: [...streamersComparisons, ...comparisons],
             };
         case SET_STREAMERS:
             return { ...state, streamers: action.payload };

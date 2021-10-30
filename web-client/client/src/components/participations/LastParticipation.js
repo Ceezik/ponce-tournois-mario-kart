@@ -51,15 +51,18 @@ function LastParticipation({ route, user, parentLoading }) {
     socket.off('addRace').on('addRace', (race) => {
         if (participation && race.ParticipationId === participation.id) {
             setParticipation(addRaceToParticipation({ race, participation }));
-        } else {
-            setComparisons(addRaceToComparisons({ race, comparisons }));
-            setStreamersComparisons(
-                addRaceToComparisons({
-                    race,
-                    comparisons: streamersComparisons,
-                })
-            );
         }
+
+        const comparisonsAdd = addRaceToComparisons({ race, comparisons });
+        if (comparisonsAdd.shouldUpdate)
+            setComparisons(comparisonsAdd.comparisons);
+
+        const streamersAdd = addRaceToComparisons({
+            race,
+            comparisons: streamersComparisons,
+        });
+        if (streamersAdd.shouldUpdate)
+            setStreamersComparisons(streamersAdd.comparisons);
     });
 
     socket.off('editRace').on('editRace', (race) => {
@@ -67,15 +70,21 @@ function LastParticipation({ route, user, parentLoading }) {
             setParticipation(
                 editRaceFromParticipation({ race, participation })
             );
-        } else {
-            setComparisons(editRaceFromComparisons({ race, comparisons }));
-            setStreamersComparisons(
-                editRaceFromComparisons({
-                    race,
-                    comparisons: streamersComparisons,
-                })
-            );
         }
+
+        const comparisonsEdit = editRaceFromComparisons({
+            race,
+            comparisons,
+        });
+        if (comparisonsEdit.shouldUpdate)
+            setStreamersComparisons(comparisonsEdit.comparisons);
+
+        const streamersEdit = editRaceFromComparisons({
+            race,
+            comparisons: streamersComparisons,
+        });
+        if (streamersEdit.shouldUpdate)
+            setStreamersComparisons(streamersEdit.comparisons);
     });
 
     socket.off(route).on(route, (p) => {

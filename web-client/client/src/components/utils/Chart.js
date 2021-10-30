@@ -23,7 +23,10 @@ function Chart({
     const formattedSeries = series.map(({ data, color, name }) => ({
         name,
         data: maxSeriesSize
-            ? [...data, ...Array(maxSeriesSize - data.length).fill(null)]
+            ? [
+                  ...data,
+                  ...Array(Math.max(maxSeriesSize - data.length, 0)).fill(null),
+              ]
             : data,
         color: color || CSSTheme[theme].mainColor,
     }));

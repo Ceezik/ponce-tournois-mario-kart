@@ -53,15 +53,18 @@ function Participations({ route, canManage, user }) {
             refreshParticipation(
                 addRaceToParticipation({ race, participation: p })
             );
-        } else {
-            setComparisons(addRaceToComparisons({ race, comparisons }));
-            setStreamersComparisons(
-                addRaceToComparisons({
-                    race,
-                    comparisons: streamersComparisons,
-                })
-            );
         }
+
+        const comparisonsAdd = addRaceToComparisons({ race, comparisons });
+        if (comparisonsAdd.shouldUpdate)
+            setComparisons(comparisonsAdd.comparisons);
+
+        const streamersAdd = addRaceToComparisons({
+            race,
+            comparisons: streamersComparisons,
+        });
+        if (streamersAdd.shouldUpdate)
+            setStreamersComparisons(streamersAdd.comparisons);
     });
 
     socket.off('editRace').on('editRace', (race) => {
@@ -70,15 +73,18 @@ function Participations({ route, canManage, user }) {
             refreshParticipation(
                 editRaceFromParticipation({ race, participation: p })
             );
-        } else {
-            setComparisons(editRaceFromComparisons({ race, comparisons }));
-            setStreamersComparisons(
-                editRaceFromComparisons({
-                    race,
-                    comparisons: streamersComparisons,
-                })
-            );
         }
+
+        const comparisonsEdit = editRaceFromComparisons({ race, comparisons });
+        if (comparisonsEdit.shouldUpdate)
+            setComparisons(comparisonsEdit.comparisons);
+
+        const streamersEdit = editRaceFromComparisons({
+            race,
+            comparisons: streamersComparisons,
+        });
+        if (streamersEdit.shouldUpdate)
+            setStreamersComparisons(streamersEdit.comparisons);
     });
 
     useEffect(() => {
