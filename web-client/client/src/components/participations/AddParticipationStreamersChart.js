@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 const AddComparisonForm = ({
     closeForm,
-    onAdd,
+    onClose,
     tournament,
     comparedStreamers,
 }) => {
@@ -17,13 +17,13 @@ const AddComparisonForm = ({
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    socket.on('addToStreamersChart', (streamersChart) => {
+    socket.on('closeAddToStreamersChartForm', () => {
         setLoading(false);
-        onAdd(streamersChart);
+        onClose();
     });
 
     useEffect(() => {
-        return socket.off('addToStreamersChart');
+        return socket.off('closeAddToStreamersChartForm');
     }, []);
 
     const onSubmit = ({ username }) => {
@@ -80,11 +80,7 @@ const AddComparisonForm = ({
     );
 };
 
-function AddParticipationStreamersChart({
-    tournament,
-    onAddStreamer,
-    comparedStreamers,
-}) {
+function AddParticipationStreamersChart({ tournament, comparedStreamers }) {
     const [showForm, setShowForm] = useState(false);
 
     const openForm = () => {
@@ -95,9 +91,8 @@ function AddParticipationStreamersChart({
         setShowForm(false);
     };
 
-    const onAdd = (streamer) => {
+    const onClose = () => {
         setShowForm(false);
-        onAddStreamer(streamer);
     };
 
     useEffect(() => {
@@ -116,7 +111,7 @@ function AddParticipationStreamersChart({
                         {showForm ? (
                             <AddComparisonForm
                                 closeForm={closeForm}
-                                onAdd={onAdd}
+                                onClose={onClose}
                                 tournament={tournament}
                                 comparedStreamers={comparedStreamers}
                             />
