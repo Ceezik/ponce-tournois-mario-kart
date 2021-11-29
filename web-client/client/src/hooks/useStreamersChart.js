@@ -29,7 +29,13 @@ export default ({ tournament, excludedParticipations = [] }) => {
         dispatch(setLoadingStreamersAction(args));
 
     const onGetParticipations = (participations) => {
-        dispatch(onGetParticipationsAction(participations));
+        dispatch(
+            onGetParticipationsAction(
+                participations.filter((p) =>
+                    streamers.some((s) => s.id === p.UserId)
+                )
+            )
+        );
     };
 
     const onGetStreamersChart = (streamersChart) => {
@@ -37,13 +43,18 @@ export default ({ tournament, excludedParticipations = [] }) => {
         setLoadingStreamers(false);
     };
 
-    const onAddStreamer = (streamer) => setStreamers([...streamers, streamer]);
+    const onAddStreamer = (streamer) => {
+        if (streamer.StreamersChart.TournamentId === tournament)
+            setStreamers([...streamers, streamer]);
+    };
 
     const onRemoveStreamer = (streamer) => {
-        setStreamers(streamers.filter((s) => s.id !== streamer.id));
-        setStreamersComparisons(
-            streamersComparisons.filter((s) => s.UserId !== streamer.id)
-        );
+        if (streamer.StreamersChart.TournamentId === tournament) {
+            setStreamers(streamers.filter((s) => s.id !== streamer.id));
+            setStreamersComparisons(
+                streamersComparisons.filter((s) => s.UserId !== streamer.id)
+            );
+        }
     };
 
     useSideEffects({
@@ -68,6 +79,7 @@ export default ({ tournament, excludedParticipations = [] }) => {
         dependencies: [
             JSON.stringify(streamers),
             JSON.stringify(streamersComparisons),
+            tournament,
         ],
     });
 
@@ -127,7 +139,5 @@ export default ({ tournament, excludedParticipations = [] }) => {
         loadingComparisons,
         streamersComparisons: filteredStreamersComparisons,
         setStreamersComparisons,
-        onAddStreamer,
-        onRemoveStreamer,
     };
 };
