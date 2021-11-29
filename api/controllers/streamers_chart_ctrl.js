@@ -48,10 +48,13 @@ module.exports = {
                             );
                         return tournament
                             .addStreamer(streamer.id)
-                            .then((streamersChart) => {
+                            .then(() => {
                                 socket.emit('closeAddToStreamersChartForm');
                                 io.emit('addToStreamersChart', {
-                                    StreamersChart: streamersChart,
+                                    StreamersChart: {
+                                        TournamentId: tournamentId,
+                                        StreamerId: streamer.id,
+                                    },
                                     id: streamer.id,
                                     username: streamer.username,
                                 });
@@ -77,6 +80,10 @@ module.exports = {
                             .removeStreamer(streamer.id)
                             .then(() =>
                                 io.emit('removeFromStreamersChart', {
+                                    StreamersChart: {
+                                        TournamentId: tournamentId,
+                                        StreamerId: streamer.id,
+                                    },
                                     id: streamer.id,
                                     username: streamer.username,
                                 })
