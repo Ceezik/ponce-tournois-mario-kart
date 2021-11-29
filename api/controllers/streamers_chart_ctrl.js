@@ -49,6 +49,7 @@ module.exports = {
                         return tournament
                             .addStreamer(streamer.id)
                             .then((streamersChart) => {
+                                socket.emit('closeAddToStreamersChartForm');
                                 io.emit('addToStreamersChart', {
                                     StreamersChart: streamersChart,
                                     id: streamer.id,
