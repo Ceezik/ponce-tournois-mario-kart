@@ -18,8 +18,6 @@ function ParticipationStreamersChart({
         loadingStreamers,
         loadingComparisons,
         streamersComparisons,
-        onAddStreamer,
-        onRemoveStreamer,
     } = useStreamersChart({
         tournament: participation?.TournamentId,
         excludedParticipations: participation ? [participation] : undefined,
@@ -34,14 +32,6 @@ function ParticipationStreamersChart({
             },
             console.error
         );
-
-    socket
-        .off('removeFromStreamersChart')
-        .on('removeFromStreamersChart', onRemoveStreamer);
-
-    useEffect(() => {
-        return () => socket.off('removeFromStreamersChart');
-    }, []);
 
     return loadingStreamers || loadingComparisons ? (
         <ParticipationChartSkeleton showAddBtn />
@@ -64,7 +54,6 @@ function ParticipationStreamersChart({
             {currentUser?.isAdmin && (
                 <AddParticipationStreamersChart
                     tournament={participation.TournamentId}
-                    onAddStreamer={onAddStreamer}
                     comparedStreamers={[
                         ...streamersComparisons.map((c) => c.User.id),
                         participation.UserId,
