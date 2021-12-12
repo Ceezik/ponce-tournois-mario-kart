@@ -77,7 +77,7 @@ function LastParticipation({ route, user, parentLoading }) {
             comparisons,
         });
         if (comparisonsEdit.shouldUpdate)
-            setStreamersComparisons(comparisonsEdit.comparisons);
+            setComparisons(comparisonsEdit.comparisons);
 
         const streamersEdit = editRaceFromComparisons({
             race,

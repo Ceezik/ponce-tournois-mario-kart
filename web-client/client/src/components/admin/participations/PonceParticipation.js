@@ -5,9 +5,13 @@ import { useSelector } from 'react-redux';
 import Participation from '../../participations/Participation';
 import ParticipationSkeleton from './ParticipationSkeleton';
 import {
+    addRaceToComparisons,
     addRaceToParticipation,
+    editRaceFromComparisons,
     editRaceFromParticipation,
 } from '../../../utils/utils';
+import useComparisons from '../../../hooks/useComparisons';
+import useStreamersChart from '../../../hooks/useStreamersChart';
 
 function PonceParticipation({ tournament }) {
     const { socket } = useSelector((state) => state.socket);
@@ -15,6 +19,18 @@ function PonceParticipation({ tournament }) {
     const [participation, setParticipation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const { comparisons, setComparisons } = useComparisons({
+        tournament: participation?.TournamentId,
+        excludedParticipations: participation ? [participation] : undefined,
+    });
+
+    const { streamersComparisons, setStreamersComparisons } = useStreamersChart(
+        {
+            tournament: participation?.TournamentId,
+            excludedParticipations: participation ? [participation] : undefined,
+        }
+    );
 
     socket.off('editParticipation').on('editParticipation', (p) => {
         if (participation && p.id === participation.id)
@@ -25,6 +41,17 @@ function PonceParticipation({ tournament }) {
         if (participation && race.ParticipationId === participation.id) {
             setParticipation(addRaceToParticipation({ race, participation }));
         }
+
+        const comparisonsAdd = addRaceToComparisons({ race, comparisons });
+        if (comparisonsAdd.shouldUpdate)
+            setComparisons(comparisonsAdd.comparisons);
+
+        const streamersAdd = addRaceToComparisons({
+            race,
+            comparisons: streamersComparisons,
+        });
+        if (streamersAdd.shouldUpdate)
+            setStreamersComparisons(streamersAdd.comparisons);
     });
 
     socket.off('editRace').on('editRace', (race) => {
@@ -33,6 +60,20 @@ function PonceParticipation({ tournament }) {
                 editRaceFromParticipation({ race, participation })
             );
         }
+
+        const comparisonsEdit = editRaceFromComparisons({
+            race,
+            comparisons,
+        });
+        if (comparisonsEdit.shouldUpdate)
+            setComparisons(comparisonsEdit.comparisons);
+
+        const streamersEdit = editRaceFromComparisons({
+            race,
+            comparisons: streamersComparisons,
+        });
+        if (streamersEdit.shouldUpdate)
+            setStreamersComparisons(streamersEdit.comparisons);
     });
 
     useEffect(() => {
