@@ -51,7 +51,7 @@ module.exports = {
                     req.patchNote = patchNote;
                     return next();
                 }
-                throw { staus: 404, message: "Ce patch note n'existe pas" };
+                throw { status: 404, message: "Ce patch note n'existe pas" };
             })
             .catch((err) => next(err));
     },
