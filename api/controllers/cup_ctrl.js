@@ -35,7 +35,7 @@ module.exports = {
                     req.cup = cup;
                     return next();
                 }
-                throw { staus: 404, message: "Cette coupe n'existe pas" };
+                throw { status: 404, message: "Cette coupe n'existe pas" };
             })
             .catch((err) => next(err));
     },
