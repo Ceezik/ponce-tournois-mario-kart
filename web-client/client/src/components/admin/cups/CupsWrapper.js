@@ -73,13 +73,7 @@ function CupsWrapper() {
                             />
                         ))}
 
-                        {cups.length < 12 &&
-                            [...Array(12 - cups.length)].map((i, index) => (
-                                <AddCupBtn
-                                    key={index}
-                                    setCreating={setCreating}
-                                />
-                            ))}
+                        <AddCupBtn setCreating={setCreating} />
                     </Row>
 
                     {selectedCup && (
