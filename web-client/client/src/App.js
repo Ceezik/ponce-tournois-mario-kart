@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    useRouteMatch,
+} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { Container } from 'react-grid-system';
@@ -39,31 +44,15 @@ import CGU from './components/utils/CGU';
 import { fetchTheme } from './redux/actions/settings';
 import { CSSTheme } from './utils/style';
 import { fetchPonce } from './redux/actions/ponce';
+import OBSPluginPoints from './components/plugins/obs/points/OBSPluginPoints';
 
-function App() {
+function MainApp() {
     const [showLatestPatchNote, setShowLatestPatchNote] = useState(false);
 
-    const dispatch = useDispatch();
-    const { loading: loadingUser, user } = useSelector((state) => state.auth);
-    const { loading: loadingPonce } = useSelector((state) => state.ponce);
     const { theme } = useSelector((state) => state.settings);
-    const { socket } = useSelector((state) => state.socket);
     const { latest: latestPatchNote } = useSelector(
         (state) => state.patchNotes
     );
-
-    useEffect(() => {
-        dispatch(fetchUser());
-        dispatch(fetchPonce());
-        dispatch(fetchTracks());
-        dispatch(fetchLatestPatchNote());
-        dispatch(fetchTheme());
-    }, []);
-
-    useEffect(() => {
-        dispatch(setSocket(user));
-        if (user?.isAdmin) dispatch(fetchPatchNotes());
-    }, [user]);
 
     useEffect(() => {
         if (latestPatchNote) {
@@ -77,52 +66,13 @@ function App() {
         }
     }, [latestPatchNote]);
 
-    useEffect(() => {
-        if (socket) {
-            socket.on('getTournaments', (tournaments) =>
-                dispatch(setTournaments(tournaments))
-            );
-            socket.on('createTournament', (tournament) => {
-                dispatch(addTournament(tournament));
-            });
-            socket.on('updateTournament', (tournament) =>
-                dispatch(editTournament(tournament))
-            );
-
-            fetchTournaments();
-        }
-
-        return () => {
-            if (socket) {
-                socket.off('getTournaments');
-                socket.off('createTournament');
-                socket.off('updateTournament');
-            }
-        };
-    }, [socket]);
-
     const closePatchNote = () => {
         setShowLatestPatchNote(false);
         localStorage.setItem('latestPatchNote', latestPatchNote.createdAt);
     };
 
-    const fetchTournaments = () => {
-        socket.emit('getTournaments', {}, (err) =>
-            dispatch(setTournamentsError(err))
-        );
-    };
-
-    return loadingUser || loadingPonce ? (
-        <></>
-    ) : (
-        <Router>
-            <Helmet
-                titleTemplate="%s - Tournoi des fleurs"
-                defaultTitle="Tournoi des fleurs"
-            />
-
-            <ScrollToTop />
-
+    return (
+        <>
             <div className="container">
                 <SkeletonTheme
                     color={CSSTheme[theme].secondaryBackgroundColor}
@@ -179,6 +129,87 @@ function App() {
                 </SkeletonTheme>
             </div>
             <Footer />
+        </>
+    );
+}
+
+function PluginsApp() {
+    const match = useRouteMatch();
+
+    return (
+        <Switch>
+            <Route
+                path={`${match.url}/obs/points`}
+                component={OBSPluginPoints}
+            />
+        </Switch>
+    );
+}
+
+function App() {
+    const dispatch = useDispatch();
+    const { loading: loadingUser, user } = useSelector((state) => state.auth);
+    const { loading: loadingPonce } = useSelector((state) => state.ponce);
+    const { socket } = useSelector((state) => state.socket);
+
+    useEffect(() => {
+        dispatch(fetchUser());
+        dispatch(fetchPonce());
+        dispatch(fetchTracks());
+        dispatch(fetchLatestPatchNote());
+        dispatch(fetchTheme());
+    }, []);
+
+    useEffect(() => {
+        dispatch(setSocket(user));
+        if (user?.isAdmin) dispatch(fetchPatchNotes());
+    }, [user]);
+
+    useEffect(() => {
+        if (socket) {
+            socket.on('getTournaments', (tournaments) =>
+                dispatch(setTournaments(tournaments))
+            );
+            socket.on('createTournament', (tournament) => {
+                dispatch(addTournament(tournament));
+            });
+            socket.on('updateTournament', (tournament) =>
+                dispatch(editTournament(tournament))
+            );
+
+            fetchTournaments();
+        }
+
+        return () => {
+            if (socket) {
+                socket.off('getTournaments');
+                socket.off('createTournament');
+                socket.off('updateTournament');
+            }
+        };
+    }, [socket]);
+
+    const fetchTournaments = () => {
+        socket.emit('getTournaments', {}, (err) =>
+            dispatch(setTournamentsError(err))
+        );
+    };
+
+    if (loadingUser || loadingPonce) return <></>;
+
+    return (
+        <Router>
+            <Helmet
+                titleTemplate="%s - Tournoi des fleurs"
+                defaultTitle="Tournoi des fleurs"
+            />
+
+            <ScrollToTop />
+
+            <Switch>
+                <Route path="/plugins" component={PluginsApp} />
+                <Route path="/" component={MainApp} />
+            </Switch>
         </Router>
     );
 }

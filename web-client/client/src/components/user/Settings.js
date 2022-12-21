@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Row, Col } from 'react-grid-system';
 import { useDispatch, useSelector } from 'react-redux';
@@ -274,6 +274,82 @@ function Editors() {
     );
 }
 
+function OBSPluginSettings() {
+    const [showNbPoints, setShowNbPoints] = useState(true);
+    const [showRaces, setShowRaces] = useState(false);
+    const [hasGenerated, setHasGenerated] = useState(false);
+
+    const { user } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (hasGenerated !== true) return;
+
+        const timeout = setTimeout(() => {
+            setHasGenerated(false);
+        }, 3000);
+
+        return () => clearTimeout(timeout);
+    }, [hasGenerated]);
+
+    const generateLink = () => {
+        const link = `${window.location.host}/plugins/obs/points?userId=${user.id}&showNbPoints=${showNbPoints}&showRaces=${showRaces}`;
+        navigator.clipboard?.writeText?.(link);
+        setHasGenerated(true);
+    };
+
+    return (
+        <div>
+            <p>
+                Permet d'affiche en temps réel vos points et vos courses du
+                dernier tournoi sur votre stream ! <br /> Gérez les paramètres
+                ci-dessous puis générez un lien à mettre dans une source
+                "Navigateur" de votre OBS. N'oubliez pas d'enlever le fond vert
+                avec un filtre "Chroma key" 😉
+            </p>
+
+            <br />
+
+            <Row align="center">
+                <Col xs="content">
+                    <Switch
+                        on={showNbPoints}
+                        setOn={() => setShowNbPoints((v) => !v)}
+                    />
+                </Col>
+                <Col xs="content">
+                    <label className="inputLabel">
+                        Afficher le nombre de points
+                    </label>
+                </Col>
+            </Row>
+
+            <br />
+
+            <Row align="center">
+                <Col xs="content">
+                    <Switch
+                        on={showRaces}
+                        setOn={() => setShowRaces((v) => !v)}
+                    />
+                </Col>
+                <Col xs="content">
+                    <label className="inputLabel">
+                        Afficher les positions des courses
+                    </label>
+                </Col>
+            </Row>
+
+            <Row justify="end">
+                <Col xs="content">
+                    <button className="btnPrimary" onClick={generateLink}>
+                        {hasGenerated ? 'Lien copié !' : 'Générer mon lien'}
+                    </button>
+                </Col>
+            </Row>
+        </div>
+    );
+}
+
 function Settings() {
     return (
         <div className="app__container">
@@ -289,6 +365,11 @@ function Settings() {
                     </div>
                     <div className="settings__part">
                         <UsernameForm />
+                    </div>
+
+                    <h1 className="title--noMarginTop">Intégration OBS</h1>
+                    <div className="settings__part">
+                        <OBSPluginSettings />
                     </div>
 
                     <h1 className="title--noMarginTop">Éditeurs des données</h1>
